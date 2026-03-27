@@ -1,5 +1,5 @@
 import { cssVarV2 } from '@toeverything/theme/v2';
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 
 export const chatRoot = style({
   display: 'flex',
@@ -134,22 +134,22 @@ export const typingDots = style({
   display: 'inline-flex',
   gap: 4,
   alignItems: 'center',
-  selectors: {
-    '& span': {
-      display: 'inline-block',
-      width: 6,
-      height: 6,
-      borderRadius: '50%',
-      background: 'currentColor',
-      opacity: 0.4,
-      animationName: 'pulse',
-      animationDuration: '1s',
-      animationIterationCount: 'infinite',
-    },
-    '& span:nth-child(2)': { animationDelay: '0.2s' },
-    '& span:nth-child(3)': { animationDelay: '0.4s' },
-  },
 });
+
+globalStyle(`${typingDots} span`, {
+  display: 'inline-block',
+  width: 6,
+  height: 6,
+  borderRadius: '50%',
+  background: 'currentColor',
+  opacity: 0.4,
+  animationName: 'pulse',
+  animationDuration: '1s',
+  animationIterationCount: 'infinite',
+});
+
+globalStyle(`${typingDots} span:nth-child(2)`, { animationDelay: '0.2s' });
+globalStyle(`${typingDots} span:nth-child(3)`, { animationDelay: '0.4s' });
 
 export const chatError = style({
   fontSize: 13,
