@@ -75,6 +75,26 @@ export const AFFiNE_WORKSPACE_DB_SCHEMA = {
     spaceId: f.string().primaryKey(),
     canvasDocId: f.string(),
   },
+  /**
+   * Space Memory — pinned facts/context per Space.
+   * These are injected as system context when chatting in a Space.
+   */
+  spaceMemory: {
+    id: f.string().primaryKey().optional().default(nanoid),
+    spaceId: f.string(),
+    content: f.string(),
+    createdAt: f.number().optional(),
+  },
+  /**
+   * Space Chat History — persisted messages per Space.
+   */
+  spaceChatMessage: {
+    id: f.string().primaryKey().optional().default(nanoid),
+    spaceId: f.string(),
+    role: f.string(), // 'user' | 'assistant'
+    content: f.string(),
+    createdAt: f.number().optional(),
+  },
 } as const satisfies DBSchemaBuilder;
 export type AFFiNEWorkspaceDbSchema = typeof AFFiNE_WORKSPACE_DB_SCHEMA;
 

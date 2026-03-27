@@ -7,7 +7,14 @@ import { Header } from '@affine/core/components/pure/header';
 
 import * as styles from './index.css';
 
-export type SpaceViewMode = 'list' | 'canvas';
+export type SpaceViewMode = 'list' | 'canvas' | 'chat' | 'memory';
+
+const MODES: { key: SpaceViewMode; label: string }[] = [
+  { key: 'list', label: 'List' },
+  { key: 'canvas', label: 'Canvas' },
+  { key: 'chat', label: 'Chat' },
+  { key: 'memory', label: 'Memory' },
+];
 
 export const SpaceDetailHeader = ({
   displayPreference,
@@ -25,24 +32,21 @@ export const SpaceDetailHeader = ({
       left={<ExplorerNavigation active="spaces" />}
       right={
         <FlexWrapper gap={16} alignItems="center">
-          {/* List / Canvas mode toggle */}
+          {/* Mode toggle: List | Canvas | Chat | Memory */}
           <div className={styles.modeToggle}>
-            <button
-              className={styles.modeToggleButton}
-              data-active={viewMode === 'list'}
-              onClick={() => onViewModeChange('list')}
-            >
-              List
-            </button>
-            <button
-              className={styles.modeToggleButton}
-              data-active={viewMode === 'canvas'}
-              onClick={() => onViewModeChange('canvas')}
-            >
-              Canvas
-            </button>
+            {MODES.map(({ key, label }) => (
+              <button
+                key={key}
+                className={styles.modeToggleButton}
+                data-active={viewMode === key}
+                onClick={() => onViewModeChange(key)}
+              >
+                {label}
+              </button>
+            ))}
           </div>
-          {/* Only show explorer display options in list mode */}
+
+          {/* Explorer display options — list mode only */}
           {viewMode === 'list' && (
             <>
               <ViewToggle

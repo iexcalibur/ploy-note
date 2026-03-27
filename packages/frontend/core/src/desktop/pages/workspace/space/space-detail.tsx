@@ -13,9 +13,11 @@ import { useLiveData, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
 
 import { SpaceCanvasView } from './canvas-view';
+import { SpaceChatPanel } from './chat-panel';
 import { SpaceDetailHeader, type SpaceViewMode } from './header';
 import * as styles from './index.css';
 import { SpaceListHeader } from './list-header';
+import { SpaceMemoryPanel } from './memory-panel';
 
 export const SpaceDetail = ({ space }: { space: Space }) => {
   const [explorerContextValue] = useState(createDocExplorerContext);
@@ -47,7 +49,7 @@ export const SpaceDetail = ({ space }: { space: Space }) => {
     [explorerContextValue]
   );
 
-  // Feed Space docs into DocsExplorer via CollectionRulesService
+  // Feed Space docs into DocsExplorer via CollectionRulesService (list mode only)
   useEffect(() => {
     if (viewMode !== 'list') return;
 
@@ -84,26 +86,35 @@ export const SpaceDetail = ({ space }: { space: Space }) => {
     viewMode,
   ]);
 
+  const renderContent = () => {
+    switch (viewMode) {
+      case 'list':
+        return (
+          <FlexWrapper flexDirection="column" alignItems="stretch" width="100%">
+            <SpaceListHeader space={space} />
+            <div className={styles.scrollArea}>
+              <DocsExplorer disableMultiDelete={!isAdmin && !isOwner} />
+            </div>
+          </FlexWrapper>
+        );
+      case 'canvas':
+        return <SpaceCanvasView spaceId={space.id} spaceDocIds={spaceDocIds} />;
+      case 'chat':
+        return <SpaceChatPanel space={space} docCount={spaceDocIds.length} />;
+      case 'memory':
+        return <SpaceMemoryPanel space={space} />;
+    }
+  };
+
   return (
     <DocExplorerContext.Provider value={explorerContextValue}>
-      {/* Header with mode toggle */}
       <SpaceDetailHeader
         displayPreference={displayPreference}
         onDisplayPreferenceChange={handleDisplayPreferenceChange}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
       />
-
-      {viewMode === 'list' ? (
-        <FlexWrapper flexDirection="column" alignItems="stretch" width="100%">
-          <SpaceListHeader space={space} />
-          <div className={styles.scrollArea}>
-            <DocsExplorer disableMultiDelete={!isAdmin && !isOwner} />
-          </div>
-        </FlexWrapper>
-      ) : (
-        <SpaceCanvasView spaceId={space.id} spaceDocIds={spaceDocIds} />
-      )}
+      {renderContent()}
     </DocExplorerContext.Provider>
   );
 };
