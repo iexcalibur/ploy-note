@@ -1,9 +1,8 @@
 import { LiveData, Store } from '@toeverything/infra';
-import { map } from 'rxjs';
+import { EMPTY } from 'rxjs';
 
 import type { WorkspaceDBService } from '../../db';
 import type { FavoriteSupportTypeUnion } from '../constant';
-import { isFavoriteSupportType } from '../constant';
 
 export interface FavoriteRecord {
   type: FavoriteSupportTypeUnion;
@@ -11,97 +10,45 @@ export interface FavoriteRecord {
   index: string;
 }
 
+/**
+ * Favorites have been removed from the product.
+ * This store is a no-op stub so that dependent code continues to compile.
+ */
 export class FavoriteStore extends Store {
-  constructor(private readonly workspaceDBService: WorkspaceDBService) {
+  constructor(private readonly _workspaceDBService: WorkspaceDBService) {
     super();
   }
 
   watchIsLoading() {
-    return this.workspaceDBService.userdataDB$
-      .map(db => LiveData.from(db.favorite.isLoading$, false))
-      .flat();
+    return LiveData.from(EMPTY, false);
   }
 
   watchFavorites() {
-    return this.workspaceDBService.userdataDB$
-      .map(db => LiveData.from(db.favorite.find$(), []))
-      .flat()
-      .map(raw => {
-        return raw
-          .map(data => this.toRecord(data))
-          .filter((record): record is FavoriteRecord => !!record);
-      });
+    return LiveData.from<FavoriteRecord[]>(EMPTY, []);
   }
 
   addFavorite(
-    type: FavoriteSupportTypeUnion,
-    id: string,
-    index: string
+    _type: FavoriteSupportTypeUnion,
+    _id: string,
+    _index: string
   ): FavoriteRecord {
-    const db = this.workspaceDBService.userdataDB$.value;
-    const raw = db.favorite.create({
-      key: this.encodeKey(type, id),
-      index,
-    });
-    return this.toRecord(raw) as FavoriteRecord;
+    // no-op
+    return { type: _type, id: _id, index: _index };
   }
 
-  reorderFavorite(type: FavoriteSupportTypeUnion, id: string, index: string) {
-    const db = this.workspaceDBService.userdataDB$.value;
-    db.favorite.update(this.encodeKey(type, id), { index });
+  reorderFavorite(
+    _type: FavoriteSupportTypeUnion,
+    _id: string,
+    _index: string
+  ) {
+    // no-op
   }
 
-  removeFavorite(type: FavoriteSupportTypeUnion, id: string) {
-    const db = this.workspaceDBService.userdataDB$.value;
-    db.favorite.delete(this.encodeKey(type, id));
+  removeFavorite(_type: FavoriteSupportTypeUnion, _id: string) {
+    // no-op
   }
 
-  watchFavorite(type: FavoriteSupportTypeUnion, id: string) {
-    const db = this.workspaceDBService.userdataDB$.value;
-    return LiveData.from<FavoriteRecord | undefined>(
-      db.favorite
-        .get$(this.encodeKey(type, id))
-        .pipe(map(data => (data ? this.toRecord(data) : undefined))),
-      null as any
-    );
-  }
-
-  private toRecord(data: {
-    key: string;
-    index: string;
-  }): FavoriteRecord | undefined {
-    const key = this.parseKey(data.key);
-    if (!key) {
-      return undefined;
-    }
-    return {
-      type: key.type,
-      id: key.id,
-      index: data.index,
-    };
-  }
-
-  /**
-   * parse favorite key
-   * key format: ${type}:${id}
-   * type: collection | doc | tag
-   * @returns null if key is invalid
-   */
-  private parseKey(key: string): {
-    type: FavoriteSupportTypeUnion;
-    id: string;
-  } | null {
-    const [type, id] = key.split(':');
-    if (!type || !id) {
-      return null;
-    }
-    if (!isFavoriteSupportType(type)) {
-      return null;
-    }
-    return { type: type as FavoriteSupportTypeUnion, id };
-  }
-
-  private encodeKey(type: FavoriteSupportTypeUnion, id: string) {
-    return `${type}:${id}`;
+  watchFavorite(_type: FavoriteSupportTypeUnion, _id: string) {
+    return LiveData.from<FavoriteRecord | undefined>(EMPTY, undefined);
   }
 }

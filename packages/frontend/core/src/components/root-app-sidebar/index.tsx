@@ -32,8 +32,6 @@ import { memo, useCallback } from 'react';
 import {
   CollapsibleSection,
   NavigationPanelCollections,
-  NavigationPanelFavorites,
-  NavigationPanelMigrationFavorites,
   NavigationPanelOrganize,
   NavigationPanelTags,
 } from '../../desktop/components/navigation-panel';
@@ -226,9 +224,7 @@ export const RootAppSidebar = memo((): ReactElement => {
         </MenuItem>
       </SidebarContainer>
       <SidebarScrollableContainer>
-        <NavigationPanelFavorites />
         <NavigationPanelOrganize />
-        <NavigationPanelMigrationFavorites />
         <NavigationPanelTags />
         <NavigationPanelCollections />
         <CollapsibleSection

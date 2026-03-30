@@ -63,10 +63,6 @@ export type DocCustomPropertyInfo = ORMEntity<
 >;
 
 export const AFFiNE_WORKSPACE_USERDATA_DB_SCHEMA = {
-  favorite: {
-    key: f.string().primaryKey(),
-    index: f.string(),
-  },
   settings: {
     key: f.string().primaryKey(),
     value: f.json(),
