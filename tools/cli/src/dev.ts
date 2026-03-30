@@ -13,7 +13,6 @@ export class DevCommand extends PackageSelectorCommand {
     '@affine/mobile',
     '@affine/ios',
     '@affine/android',
-    '@affine/admin',
   ];
 
   protected deps = Option.Boolean('--deps', {

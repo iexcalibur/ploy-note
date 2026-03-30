@@ -7,6 +7,20 @@ All notable changes to the Ploy-Note project (AFFiNE fork) are documented in thi
 ## [Unreleased]
 
 ### Removed
+- **Admin dependency fully removed** — single-user, local-first product
+  - Permission entity always grants full owner+admin access
+  - Guard service always returns `true` for all actions
+  - Backend `@Admin()` guard made pass-through
+  - Deleted `packages/frontend/admin/` (~133 files) — standalone admin panel app
+  - Deleted `packages/common/graphql/src/graphql/admin/` (~20 files) — admin GraphQL queries
+  - Removed admin routes, admin menu item, admin build config, admin tsconfig reference
+  - `UserFeature.isAdmin$` always returns `true`
+- **Cloud stubbed out** — local-first only, no backend server needed
+  - Cloud workspace flavour provider removed (only local workspaces)
+  - Backend proxy (`/api`, `/socket.io`, `/graphql`) removed from dev server
+  - LocalDemoTips banner changed from cloud upsell to local data reminder
+  - TopTip component stripped of auth/cloud dependencies
+  - Cloud module kept as stub (services exist but `server` is always `null`)
 - **Favorites sidebar section** removed from desktop and mobile navigation
   - `NavigationPanelFavorites` and `NavigationPanelMigrationFavorites` removed from sidebar
   - `favorite` table dropped from `AFFiNE_WORKSPACE_USERDATA_DB_SCHEMA`

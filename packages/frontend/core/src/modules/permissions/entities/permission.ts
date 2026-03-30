@@ -1,30 +1,17 @@
-import { Permission } from '@affine/graphql';
-import {
-  backoffRetry,
-  effect,
-  Entity,
-  exhaustMapWithTrailing,
-  fromPromise,
-  LiveData,
-  onComplete,
-  onStart,
-} from '@toeverything/infra';
-import { tap } from 'rxjs';
+import { Entity, LiveData } from '@toeverything/infra';
 
 import type { WorkspaceService } from '../../workspace';
 import type { WorkspacePermissionStore } from '../stores/permission';
 
+/**
+ * Single-user local-first: the user always has full access.
+ * No roles, no permission checks.
+ */
 export class WorkspacePermission extends Entity {
-  private readonly cache$ = LiveData.from(
-    this.store.watchWorkspacePermissionCache(),
-    undefined
-  );
-  isOwner$ = this.cache$.map(cache => cache?.isOwner ?? null);
-  isAdmin$ = this.cache$.map(cache => cache?.isAdmin ?? null);
-  isOwnerOrAdmin$ = this.cache$.map(
-    cache => (cache?.isOwner ?? null) || (cache?.isAdmin ?? null)
-  );
-  isTeam$ = this.cache$.map(cache => cache?.isTeam ?? null);
+  isOwner$ = new LiveData(true);
+  isAdmin$ = new LiveData(true);
+  isOwnerOrAdmin$ = new LiveData(true);
+  isTeam$ = new LiveData(false);
   isRevalidating$ = new LiveData(false);
 
   constructor(
@@ -34,52 +21,19 @@ export class WorkspacePermission extends Entity {
     super();
   }
 
-  revalidate = effect(
-    exhaustMapWithTrailing(() => {
-      return fromPromise(async signal => {
-        if (
-          this.workspaceService.workspace.flavour !== 'local' &&
-          !this.workspaceService.workspace.openOptions.isSharedMode
-        ) {
-          const info = await this.store.fetchWorkspaceInfo(
-            this.workspaceService.workspace.id,
-            signal
-          );
+  revalidate = () => {
+    this.store.setWorkspacePermissionCache({
+      isOwner: true,
+      isAdmin: true,
+      isTeam: false,
+    });
+  };
 
-          return {
-            isOwner: info.workspace.role === Permission.Owner,
-            isAdmin: info.workspace.role === Permission.Admin,
-            isTeam: info.workspace.team,
-          };
-        } else {
-          return { isOwner: true, isAdmin: false, isTeam: false };
-        }
-      }).pipe(
-        backoffRetry({
-          count: Infinity,
-        }),
-        tap(({ isOwner, isAdmin, isTeam }) => {
-          this.store.setWorkspacePermissionCache({
-            isOwner,
-            isAdmin,
-            isTeam,
-          });
-        }),
-        onStart(() => this.isRevalidating$.setValue(true)),
-        onComplete(() => this.isRevalidating$.setValue(false))
-      );
-    })
-  );
-
-  async waitForRevalidation(signal?: AbortSignal) {
-    this.revalidate();
-    await this.isRevalidating$.waitFor(
-      isRevalidating => !isRevalidating,
-      signal
-    );
+  async waitForRevalidation(_signal?: AbortSignal) {
+    // No-op: always has full access
   }
 
   override dispose(): void {
-    this.revalidate.unsubscribe();
+    // No-op
   }
 }

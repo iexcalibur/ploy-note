@@ -97,13 +97,6 @@ function getRspackBundleConfigs(pkg: Package): MultiRspackOptions {
   assertRspackSupportedPackage(pkg);
 
   switch (pkg.name) {
-    case '@affine/admin': {
-      return [
-        createRspackHTMLTargetConfig(pkg, pkg.srcPath.join('index.tsx').value, {
-          selfhostPublicPath: '/admin/',
-        }),
-      ] as MultiRspackOptions;
-    }
     case '@affine/web':
     case '@affine/mobile': {
       const workerConfigs = getBaseWorkerConfigs(

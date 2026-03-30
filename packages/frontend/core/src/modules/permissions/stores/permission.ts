@@ -1,5 +1,5 @@
 import type { WorkspaceServerService } from '@affine/core/modules/cloud';
-import { getWorkspaceInfoQuery, leaveWorkspaceMutation } from '@affine/graphql';
+import { leaveWorkspaceMutation } from '@affine/graphql';
 import { Store } from '@toeverything/infra';
 
 import type { WorkspaceLocalState } from '../../workspace';
@@ -12,24 +12,16 @@ export class WorkspacePermissionStore extends Store {
     super();
   }
 
-  async fetchWorkspaceInfo(workspaceId: string, signal?: AbortSignal) {
-    if (!this.workspaceServerService.server) {
-      throw new Error('No Server');
-    }
-    const info = await this.workspaceServerService.server.gql({
-      query: getWorkspaceInfoQuery,
-      variables: {
-        workspaceId,
+  async fetchWorkspaceInfo(_workspaceId: string, _signal?: AbortSignal) {
+    // Single-user: always return full access
+    return {
+      workspace: {
+        role: 99, // Owner
+        team: false,
       },
-      context: { signal },
-    });
-
-    return info;
+    } as any;
   }
 
-  /**
-   * @param workspaceName for send email
-   */
   async leaveWorkspace(workspaceId: string) {
     if (!this.workspaceServerService.server) {
       throw new Error('No Server');

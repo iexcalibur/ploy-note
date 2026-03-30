@@ -1,9 +1,6 @@
 import { type Framework } from '@toeverything/infra';
 
-import { ServersService } from '../cloud/services/servers';
-import { GlobalState } from '../storage';
 import { WorkspaceFlavoursProvider } from '../workspace';
-import { CloudWorkspaceFlavoursProvider } from './impls/cloud';
 import {
   LocalWorkspaceFlavoursProvider,
   setLocalWorkspaceIds,
@@ -11,13 +8,14 @@ import {
 
 export { base64ToUint8Array, uint8ArrayToBase64 } from './utils/base64';
 
+/**
+ * Local-first only — no cloud workspace flavour registered.
+ */
 export function configureBrowserWorkspaceFlavours(framework: Framework) {
-  framework
-    .impl(WorkspaceFlavoursProvider('LOCAL'), LocalWorkspaceFlavoursProvider)
-    .impl(WorkspaceFlavoursProvider('CLOUD'), CloudWorkspaceFlavoursProvider, [
-      GlobalState,
-      ServersService,
-    ]);
+  framework.impl(
+    WorkspaceFlavoursProvider('LOCAL'),
+    LocalWorkspaceFlavoursProvider
+  );
 }
 
 /**

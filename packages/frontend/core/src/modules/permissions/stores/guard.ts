@@ -1,8 +1,6 @@
 import {
   type GetDocRolePermissionsQuery,
-  getDocRolePermissionsQuery,
   type GetWorkspaceInfoQuery,
-  getWorkspaceInfoQuery,
 } from '@affine/graphql';
 import { Store } from '@toeverything/infra';
 
@@ -19,6 +17,9 @@ export type DocPermissionActions = keyof Omit<
   '__typename'
 >;
 
+/**
+ * Single-user local-first: no permission fetching needed.
+ */
 export class GuardStore extends Store {
   constructor(
     private readonly workspaceService: WorkspaceService,
@@ -30,31 +31,12 @@ export class GuardStore extends Store {
   async getWorkspacePermissions(): Promise<
     Record<WorkspacePermissionActions, boolean>
   > {
-    if (!this.workspaceServerService.server) {
-      throw new Error('No server');
-    }
-    const data = await this.workspaceServerService.server.gql({
-      query: getWorkspaceInfoQuery,
-      variables: {
-        workspaceId: this.workspaceService.workspace.id,
-      },
-    });
-    return data.workspace.permissions;
+    return {} as Record<WorkspacePermissionActions, boolean>;
   }
 
   async getDocPermissions(
-    docId: string
+    _docId: string
   ): Promise<Record<DocPermissionActions, boolean>> {
-    if (!this.workspaceServerService.server) {
-      throw new Error('No server');
-    }
-    const data = await this.workspaceServerService.server.gql({
-      query: getDocRolePermissionsQuery,
-      variables: {
-        workspaceId: this.workspaceService.workspace.id,
-        docId,
-      },
-    });
-    return data.workspace.doc.permissions;
+    return {} as Record<DocPermissionActions, boolean>;
   }
 }

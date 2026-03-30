@@ -19,9 +19,8 @@ export class UserFeature extends Entity {
   // undefined means no user, null means loading
   features$ = new LiveData<FeatureType[] | null | undefined>(null);
 
-  isAdmin$ = this.features$.map(features =>
-    features === null ? null : features?.some(f => f === FeatureType.Admin)
-  );
+  // Single-user local-first: always admin
+  isAdmin$ = new LiveData(true);
 
   isEarlyAccess$ = this.features$.map(features =>
     features === null
