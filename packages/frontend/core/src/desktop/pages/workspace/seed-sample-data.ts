@@ -18,22 +18,46 @@ export function useSeedSampleData() {
 
   useEffect(() => {
     if (seeded.current) return;
-    seeded.current = true;
 
-    // Wait for DB to be ready, then seed if no spaces exist
-    const timer = setTimeout(() => {
-      try {
-        const existingSpaces = workspaceDBService.db.spaces.find({});
-        if (existingSpaces.length > 0) return;
-      } catch {
-        // DB not ready yet — skip
+    // Poll until DB is ready, then seed if empty
+    let attempt = 0;
+    const maxAttempts = 10;
+
+    const timer = setInterval(() => {
+      attempt++;
+      if (attempt > maxAttempts) {
+        console.warn(
+          '[Ploy-Note] Gave up waiting for DB after',
+          maxAttempts,
+          'attempts'
+        );
+        clearInterval(timer);
         return;
       }
 
+      let existingSpaces: unknown[];
+      try {
+        existingSpaces = workspaceDBService.db.spaces.find({});
+      } catch {
+        console.log('[Ploy-Note] DB not ready yet, attempt', attempt);
+        return; // retry next interval
+      }
+
+      // DB is ready — stop polling
+      clearInterval(timer);
+
+      if (existingSpaces.length > 0) {
+        console.log('[Ploy-Note] Spaces already exist, skipping seed');
+        seeded.current = true;
+        return;
+      }
+
+      seeded.current = true;
+      console.log('[Ploy-Note] No spaces found, seeding sample data...');
       seedData();
     }, 2000);
 
-    return () => clearTimeout(timer);
+    return () => clearInterval(timer);
 
     function seedData() {
       const db = workspaceDBService.db;
@@ -41,7 +65,7 @@ export function useSeedSampleData() {
       // Helper: create doc with title and assign to space
       const createDoc = (title: string, spaceId: string) => {
         const doc = docsService.createDoc({ title });
-        db.docProperties.update(doc.id, { spaceId });
+        db.docProperties.create({ id: doc.id, spaceId });
         return doc.id;
       };
 
