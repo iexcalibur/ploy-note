@@ -11,7 +11,6 @@ import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import {
   DeleteIcon,
   FilterIcon,
@@ -58,17 +57,11 @@ export const useNavigationPanelCollectionNodeOperations = (
   const createAndAddDocument = useCallback(() => {
     const newDoc = createPage();
     collectionService.addDocToCollection(collectionId, newDoc.id);
-    track.$.navigationPanel.collections.addDocToCollection({
-      control: 'button',
-    });
     onOpenCollapsed();
   }, [collectionId, collectionService, createPage, onOpenCollapsed]);
 
   const handleToggleFavoriteCollection = useCallback(() => {
     compatibleFavoriteItemsAdapter.toggle(collectionId, 'collection');
-    track.$.navigationPanel.organize.toggleFavorite({
-      type: 'collection',
-    });
   }, [compatibleFavoriteItemsAdapter, collectionId]);
 
   const handleAddDocToCollection = useCallback(() => {
@@ -86,9 +79,6 @@ export const useNavigationPanelCollectionNodeOperations = (
 
   const handleOpenInSplitView = useCallback(() => {
     workbenchService.workbench.openCollection(collectionId, { at: 'beside' });
-    track.$.navigationPanel.organize.openInSplitView({
-      type: 'collection',
-    });
   }, [collectionId, workbenchService.workbench]);
 
   const handleOpenInNewTab = useCallback(() => {
@@ -97,9 +87,6 @@ export const useNavigationPanelCollectionNodeOperations = (
 
   const handleDeleteCollection = useCallback(() => {
     collectionService.deleteCollection(collectionId);
-    track.$.navigationPanel.organize.deleteOrganizeItem({
-      type: 'collection',
-    });
   }, [collectionId, collectionService]);
 
   const handleShowEdit = useCallback(() => {

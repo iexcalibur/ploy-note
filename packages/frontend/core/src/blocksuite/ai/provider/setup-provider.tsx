@@ -16,7 +16,6 @@ import { AIProvider } from './ai-provider';
 import { type CopilotClient, Endpoint } from './copilot-client';
 import type { PromptKey } from './prompt';
 import { textToText, toImage } from './request';
-import { setupTracker } from './tracker';
 
 function toAIUserInfo(account: AuthAccountInfo | null) {
   if (!account) return null;
@@ -863,8 +862,6 @@ Could you make a new website based on these notes and send back just the html fi
       globalDialogService.open('sign-in', {});
     }
   );
-
-  setupTracker();
 
   return () => {
     disposeRequestLoginHandler.unsubscribe();

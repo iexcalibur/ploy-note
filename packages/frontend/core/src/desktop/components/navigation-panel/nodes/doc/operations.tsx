@@ -17,7 +17,6 @@ import { GuardService } from '@affine/core/modules/permissions';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import {
   DeleteIcon,
   DuplicateIcon,
@@ -93,9 +92,6 @@ export const useNavigationPanelDocNodeOperations = (
       },
       onConfirm() {
         docRecord.moveToTrash();
-        track.$.navigationPanel.docs.deleteDoc({
-          control: 'button',
-        });
         toast(t['com.affine.toastMessage.movedTrash']());
       },
     });
@@ -105,17 +101,11 @@ export const useNavigationPanelDocNodeOperations = (
     workbenchService.workbench.openDoc(docId, {
       at: 'new-tab',
     });
-    track.$.navigationPanel.organize.openInNewTab({
-      type: 'doc',
-    });
   }, [docId, workbenchService]);
 
   const handleOpenInSplitView = useCallback(() => {
     workbenchService.workbench.openDoc(docId, {
       at: 'beside',
-    });
-    track.$.navigationPanel.organize.openInSplitView({
-      type: 'doc',
     });
   }, [docId, workbenchService.workbench]);
 
@@ -138,9 +128,6 @@ export const useNavigationPanelDocNodeOperations = (
 
   const handleToggleFavoriteDoc = useCallback(() => {
     compatibleFavoriteItemsAdapter.toggle(docId, 'doc');
-    track.$.navigationPanel.organize.toggleFavorite({
-      type: 'doc',
-    });
   }, [docId, compatibleFavoriteItemsAdapter]);
 
   return useMemo(

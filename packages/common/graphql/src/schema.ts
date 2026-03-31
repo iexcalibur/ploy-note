@@ -66,91 +66,6 @@ export interface AddContextFileInput {
   contextId: Scalars['String']['input'];
 }
 
-export interface AdminAllSharedLink {
-  __typename?: 'AdminAllSharedLink';
-  docId: Scalars['String']['output'];
-  docUpdatedAt: Maybe<Scalars['DateTime']['output']>;
-  guestViews: Maybe<Scalars['SafeInt']['output']>;
-  lastAccessedAt: Maybe<Scalars['DateTime']['output']>;
-  lastUpdaterId: Maybe<Scalars['String']['output']>;
-  publishedAt: Maybe<Scalars['DateTime']['output']>;
-  shareUrl: Scalars['String']['output'];
-  title: Maybe<Scalars['String']['output']>;
-  uniqueViews: Maybe<Scalars['SafeInt']['output']>;
-  views: Maybe<Scalars['SafeInt']['output']>;
-  workspaceId: Scalars['String']['output'];
-  workspaceOwnerId: Maybe<Scalars['String']['output']>;
-}
-
-export interface AdminAllSharedLinkEdge {
-  __typename?: 'AdminAllSharedLinkEdge';
-  cursor: Scalars['String']['output'];
-  node: AdminAllSharedLink;
-}
-
-export interface AdminAllSharedLinksFilterInput {
-  analyticsWindowDays?: InputMaybe<Scalars['Int']['input']>;
-  includeTotal?: InputMaybe<Scalars['Boolean']['input']>;
-  keyword?: InputMaybe<Scalars['String']['input']>;
-  orderBy?: InputMaybe<AdminSharedLinksOrder>;
-  updatedAfter?: InputMaybe<Scalars['DateTime']['input']>;
-  workspaceId?: InputMaybe<Scalars['String']['input']>;
-}
-
-export interface AdminDashboard {
-  __typename?: 'AdminDashboard';
-  blobStorageBytes: Scalars['SafeInt']['output'];
-  blobStorageHistory: Array<AdminDashboardValueDayPoint>;
-  copilotConversations: Scalars['SafeInt']['output'];
-  generatedAt: Scalars['DateTime']['output'];
-  storageWindow: TimeWindow;
-  syncActiveUsers: Scalars['Int']['output'];
-  syncActiveUsersTimeline: Array<AdminDashboardMinutePoint>;
-  syncWindow: TimeWindow;
-  topSharedLinks: Array<AdminSharedLinkTopItem>;
-  topSharedLinksWindow: TimeWindow;
-  workspaceStorageBytes: Scalars['SafeInt']['output'];
-  workspaceStorageHistory: Array<AdminDashboardValueDayPoint>;
-}
-
-export interface AdminDashboardInput {
-  sharedLinkWindowDays?: InputMaybe<Scalars['Int']['input']>;
-  storageHistoryDays?: InputMaybe<Scalars['Int']['input']>;
-  syncHistoryHours?: InputMaybe<Scalars['Int']['input']>;
-  timezone?: InputMaybe<Scalars['String']['input']>;
-}
-
-export interface AdminDashboardMinutePoint {
-  __typename?: 'AdminDashboardMinutePoint';
-  activeUsers: Scalars['Int']['output'];
-  minute: Scalars['DateTime']['output'];
-}
-
-export interface AdminDashboardValueDayPoint {
-  __typename?: 'AdminDashboardValueDayPoint';
-  date: Scalars['DateTime']['output'];
-  value: Scalars['SafeInt']['output'];
-}
-
-export interface AdminSharedLinkTopItem {
-  __typename?: 'AdminSharedLinkTopItem';
-  docId: Scalars['String']['output'];
-  guestViews: Scalars['SafeInt']['output'];
-  lastAccessedAt: Maybe<Scalars['DateTime']['output']>;
-  publishedAt: Maybe<Scalars['DateTime']['output']>;
-  shareUrl: Scalars['String']['output'];
-  title: Maybe<Scalars['String']['output']>;
-  uniqueViews: Scalars['SafeInt']['output'];
-  views: Scalars['SafeInt']['output'];
-  workspaceId: Scalars['String']['output'];
-}
-
-export enum AdminSharedLinksOrder {
-  PublishedAtDesc = 'PublishedAtDesc',
-  UpdatedAtDesc = 'UpdatedAtDesc',
-  ViewsDesc = 'ViewsDesc',
-}
-
 export interface AdminUpdateWorkspaceInput {
   avatarKey?: InputMaybe<Scalars['String']['input']>;
   enableAi?: InputMaybe<Scalars['Boolean']['input']>;
@@ -885,19 +800,6 @@ export interface DocHistoryType {
   workspaceId: Scalars['String']['output'];
 }
 
-export interface DocMemberLastAccess {
-  __typename?: 'DocMemberLastAccess';
-  lastAccessedAt: Scalars['DateTime']['output'];
-  lastDocId: Maybe<Scalars['String']['output']>;
-  user: PublicUserType;
-}
-
-export interface DocMemberLastAccessEdge {
-  __typename?: 'DocMemberLastAccessEdge';
-  cursor: Scalars['String']['output'];
-  node: DocMemberLastAccess;
-}
-
 /** Doc mode */
 export enum DocMode {
   edgeless = 'edgeless',
@@ -908,35 +810,6 @@ export interface DocNotFoundDataType {
   __typename?: 'DocNotFoundDataType';
   docId: Scalars['String']['output'];
   spaceId: Scalars['String']['output'];
-}
-
-export interface DocPageAnalytics {
-  __typename?: 'DocPageAnalytics';
-  generatedAt: Scalars['DateTime']['output'];
-  series: Array<DocPageAnalyticsPoint>;
-  summary: DocPageAnalyticsSummary;
-  window: TimeWindow;
-}
-
-export interface DocPageAnalyticsInput {
-  timezone?: InputMaybe<Scalars['String']['input']>;
-  windowDays?: InputMaybe<Scalars['Int']['input']>;
-}
-
-export interface DocPageAnalyticsPoint {
-  __typename?: 'DocPageAnalyticsPoint';
-  date: Scalars['DateTime']['output'];
-  guestViews: Scalars['SafeInt']['output'];
-  totalViews: Scalars['SafeInt']['output'];
-  uniqueViews: Scalars['SafeInt']['output'];
-}
-
-export interface DocPageAnalyticsSummary {
-  __typename?: 'DocPageAnalyticsSummary';
-  guestViews: Scalars['SafeInt']['output'];
-  lastAccessedAt: Maybe<Scalars['DateTime']['output']>;
-  totalViews: Scalars['SafeInt']['output'];
-  uniqueViews: Scalars['SafeInt']['output'];
 }
 
 export interface DocPermissions {
@@ -973,8 +846,6 @@ export enum DocRole {
 
 export interface DocType {
   __typename?: 'DocType';
-  /** Doc page analytics in a time window */
-  analytics: DocPageAnalytics;
   createdAt: Maybe<Scalars['DateTime']['output']>;
   /** Doc create user */
   createdBy: Maybe<PublicUserType>;
@@ -983,8 +854,6 @@ export interface DocType {
   /** paginated doc granted users list */
   grantedUsersList: PaginatedGrantedDocUserType;
   id: Scalars['String']['output'];
-  /** Paginated last accessed members of the current doc */
-  lastAccessedMembers: PaginatedDocMemberLastAccess;
   /** Doc last updated user */
   lastUpdatedBy: Maybe<PublicUserType>;
   lastUpdaterId: Maybe<Scalars['String']['output']>;
@@ -999,18 +868,8 @@ export interface DocType {
   workspaceId: Scalars['String']['output'];
 }
 
-export interface DocTypeAnalyticsArgs {
-  input?: InputMaybe<DocPageAnalyticsInput>;
-}
-
 export interface DocTypeGrantedUsersListArgs {
   pagination: PaginationInput;
-}
-
-export interface DocTypeLastAccessedMembersArgs {
-  includeTotal?: InputMaybe<Scalars['Boolean']['input']>;
-  pagination: PaginationInput;
-  query?: InputMaybe<Scalars['String']['input']>;
 }
 
 export interface DocTypeEdge {
@@ -2375,14 +2234,6 @@ export interface PageInfo {
   startCursor: Maybe<Scalars['String']['output']>;
 }
 
-export interface PaginatedAdminAllSharedLink {
-  __typename?: 'PaginatedAdminAllSharedLink';
-  analyticsWindow: TimeWindow;
-  edges: Array<AdminAllSharedLinkEdge>;
-  pageInfo: PageInfo;
-  totalCount: Maybe<Scalars['Int']['output']>;
-}
-
 export interface PaginatedCommentChangeObjectType {
   __typename?: 'PaginatedCommentChangeObjectType';
   edges: Array<CommentChangeObjectTypeEdge>;
@@ -2409,13 +2260,6 @@ export interface PaginatedCopilotWorkspaceFileType {
   edges: Array<CopilotWorkspaceFileTypeEdge>;
   pageInfo: PageInfo;
   totalCount: Scalars['Int']['output'];
-}
-
-export interface PaginatedDocMemberLastAccess {
-  __typename?: 'PaginatedDocMemberLastAccess';
-  edges: Array<DocMemberLastAccessEdge>;
-  pageInfo: PageInfo;
-  totalCount: Maybe<Scalars['Int']['output']>;
 }
 
 export interface PaginatedDocType {
@@ -2484,10 +2328,6 @@ export interface PublicUserType {
 
 export interface Query {
   __typename?: 'Query';
-  /** List all shared links across workspaces for admin panel */
-  adminAllSharedLinks: PaginatedAdminAllSharedLink;
-  /** Get aggregated dashboard metrics for admin panel */
-  adminDashboard: AdminDashboard;
   /** Get workspace detail for admin */
   adminWorkspace: Maybe<AdminWorkspace>;
   /** List workspaces for admin */
@@ -2536,15 +2376,6 @@ export interface Query {
   workspaceRolePermissions: WorkspaceRolePermissions;
   /** Get all accessible workspaces for current user */
   workspaces: Array<WorkspaceType>;
-}
-
-export interface QueryAdminAllSharedLinksArgs {
-  filter?: InputMaybe<AdminAllSharedLinksFilterInput>;
-  pagination: PaginationInput;
-}
-
-export interface QueryAdminDashboardArgs {
-  input?: InputMaybe<AdminDashboardInput>;
 }
 
 export interface QueryAdminWorkspaceArgs {
@@ -2988,21 +2819,6 @@ export interface SubscriptionType {
 export enum SubscriptionVariant {
   EA = 'EA',
   Onetime = 'Onetime',
-}
-
-export enum TimeBucket {
-  Day = 'Day',
-  Minute = 'Minute',
-}
-
-export interface TimeWindow {
-  __typename?: 'TimeWindow';
-  bucket: TimeBucket;
-  effectiveSize: Scalars['Int']['output'];
-  from: Scalars['DateTime']['output'];
-  requestedSize: Scalars['Int']['output'];
-  timezone: Scalars['String']['output'];
-  to: Scalars['DateTime']['output'];
 }
 
 export interface TranscriptionItemType {
@@ -3541,124 +3357,6 @@ export type RevokeUserAccessTokenMutationVariables = Exact<{
 export type RevokeUserAccessTokenMutation = {
   __typename?: 'Mutation';
   revokeUserAccessToken: boolean;
-};
-
-export type AdminAllSharedLinksQueryVariables = Exact<{
-  pagination: PaginationInput;
-  filter?: InputMaybe<AdminAllSharedLinksFilterInput>;
-}>;
-
-export type AdminAllSharedLinksQuery = {
-  __typename?: 'Query';
-  adminAllSharedLinks: {
-    __typename?: 'PaginatedAdminAllSharedLink';
-    totalCount: number | null;
-    analyticsWindow: {
-      __typename?: 'TimeWindow';
-      from: string;
-      to: string;
-      timezone: string;
-      bucket: TimeBucket;
-      requestedSize: number;
-      effectiveSize: number;
-    };
-    pageInfo: {
-      __typename?: 'PageInfo';
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-      startCursor: string | null;
-      endCursor: string | null;
-    };
-    edges: Array<{
-      __typename?: 'AdminAllSharedLinkEdge';
-      cursor: string;
-      node: {
-        __typename?: 'AdminAllSharedLink';
-        workspaceId: string;
-        docId: string;
-        title: string | null;
-        publishedAt: string | null;
-        docUpdatedAt: string | null;
-        workspaceOwnerId: string | null;
-        lastUpdaterId: string | null;
-        shareUrl: string;
-        views: number | null;
-        uniqueViews: number | null;
-        guestViews: number | null;
-        lastAccessedAt: string | null;
-      };
-    }>;
-  };
-};
-
-export type AdminDashboardQueryVariables = Exact<{
-  input?: InputMaybe<AdminDashboardInput>;
-}>;
-
-export type AdminDashboardQuery = {
-  __typename?: 'Query';
-  adminDashboard: {
-    __typename?: 'AdminDashboard';
-    syncActiveUsers: number;
-    copilotConversations: number;
-    workspaceStorageBytes: number;
-    blobStorageBytes: number;
-    generatedAt: string;
-    syncActiveUsersTimeline: Array<{
-      __typename?: 'AdminDashboardMinutePoint';
-      minute: string;
-      activeUsers: number;
-    }>;
-    syncWindow: {
-      __typename?: 'TimeWindow';
-      from: string;
-      to: string;
-      timezone: string;
-      bucket: TimeBucket;
-      requestedSize: number;
-      effectiveSize: number;
-    };
-    workspaceStorageHistory: Array<{
-      __typename?: 'AdminDashboardValueDayPoint';
-      date: string;
-      value: number;
-    }>;
-    blobStorageHistory: Array<{
-      __typename?: 'AdminDashboardValueDayPoint';
-      date: string;
-      value: number;
-    }>;
-    storageWindow: {
-      __typename?: 'TimeWindow';
-      from: string;
-      to: string;
-      timezone: string;
-      bucket: TimeBucket;
-      requestedSize: number;
-      effectiveSize: number;
-    };
-    topSharedLinks: Array<{
-      __typename?: 'AdminSharedLinkTopItem';
-      workspaceId: string;
-      docId: string;
-      title: string | null;
-      shareUrl: string;
-      publishedAt: string | null;
-      views: number;
-      uniqueViews: number;
-      guestViews: number;
-      lastAccessedAt: string | null;
-    }>;
-    topSharedLinksWindow: {
-      __typename?: 'TimeWindow';
-      from: string;
-      to: string;
-      timezone: string;
-      bucket: TimeBucket;
-      requestedSize: number;
-      effectiveSize: number;
-    };
-  };
 };
 
 export type AdminServerConfigQueryVariables = Exact<{ [key: string]: never }>;
@@ -6138,93 +5836,6 @@ export type GetDocDefaultRoleQuery = {
   };
 };
 
-export type GetDocLastAccessedMembersQueryVariables = Exact<{
-  workspaceId: Scalars['String']['input'];
-  docId: Scalars['String']['input'];
-  pagination: PaginationInput;
-  query?: InputMaybe<Scalars['String']['input']>;
-  includeTotal?: InputMaybe<Scalars['Boolean']['input']>;
-}>;
-
-export type GetDocLastAccessedMembersQuery = {
-  __typename?: 'Query';
-  workspace: {
-    __typename?: 'WorkspaceType';
-    doc: {
-      __typename?: 'DocType';
-      lastAccessedMembers: {
-        __typename?: 'PaginatedDocMemberLastAccess';
-        totalCount: number | null;
-        pageInfo: {
-          __typename?: 'PageInfo';
-          hasNextPage: boolean;
-          hasPreviousPage: boolean;
-          startCursor: string | null;
-          endCursor: string | null;
-        };
-        edges: Array<{
-          __typename?: 'DocMemberLastAccessEdge';
-          cursor: string;
-          node: {
-            __typename?: 'DocMemberLastAccess';
-            lastAccessedAt: string;
-            lastDocId: string | null;
-            user: {
-              __typename?: 'PublicUserType';
-              id: string;
-              name: string;
-              avatarUrl: string | null;
-            };
-          };
-        }>;
-      };
-    };
-  };
-};
-
-export type GetDocPageAnalyticsQueryVariables = Exact<{
-  workspaceId: Scalars['String']['input'];
-  docId: Scalars['String']['input'];
-  input?: InputMaybe<DocPageAnalyticsInput>;
-}>;
-
-export type GetDocPageAnalyticsQuery = {
-  __typename?: 'Query';
-  workspace: {
-    __typename?: 'WorkspaceType';
-    doc: {
-      __typename?: 'DocType';
-      analytics: {
-        __typename?: 'DocPageAnalytics';
-        generatedAt: string;
-        window: {
-          __typename?: 'TimeWindow';
-          from: string;
-          to: string;
-          timezone: string;
-          bucket: TimeBucket;
-          requestedSize: number;
-          effectiveSize: number;
-        };
-        series: Array<{
-          __typename?: 'DocPageAnalyticsPoint';
-          date: string;
-          totalViews: number;
-          uniqueViews: number;
-          guestViews: number;
-        }>;
-        summary: {
-          __typename?: 'DocPageAnalyticsSummary';
-          totalViews: number;
-          uniqueViews: number;
-          guestViews: number;
-          lastAccessedAt: string | null;
-        };
-      };
-    };
-  };
-};
-
 export type GetDocSummaryQueryVariables = Exact<{
   workspaceId: Scalars['String']['input'];
   docId: Scalars['String']['input'];
@@ -7509,16 +7120,6 @@ export type Queries =
       response: ListUserAccessTokensQuery;
     }
   | {
-      name: 'adminAllSharedLinksQuery';
-      variables: AdminAllSharedLinksQueryVariables;
-      response: AdminAllSharedLinksQuery;
-    }
-  | {
-      name: 'adminDashboardQuery';
-      variables: AdminDashboardQueryVariables;
-      response: AdminDashboardQuery;
-    }
-  | {
       name: 'adminServerConfigQuery';
       variables: AdminServerConfigQueryVariables;
       response: AdminServerConfigQuery;
@@ -7732,16 +7333,6 @@ export type Queries =
       name: 'getDocDefaultRoleQuery';
       variables: GetDocDefaultRoleQueryVariables;
       response: GetDocDefaultRoleQuery;
-    }
-  | {
-      name: 'getDocLastAccessedMembersQuery';
-      variables: GetDocLastAccessedMembersQueryVariables;
-      response: GetDocLastAccessedMembersQuery;
-    }
-  | {
-      name: 'getDocPageAnalyticsQuery';
-      variables: GetDocPageAnalyticsQueryVariables;
-      response: GetDocPageAnalyticsQuery;
     }
   | {
       name: 'getDocSummaryQuery';

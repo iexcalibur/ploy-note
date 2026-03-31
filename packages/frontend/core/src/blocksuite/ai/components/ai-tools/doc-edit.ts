@@ -1,4 +1,3 @@
-import track from '@affine/track';
 import { WithDisposable } from '@blocksuite/affine/global/lit';
 import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
 import { type EditorHost, ShadowlessElement } from '@blocksuite/affine/std';
@@ -254,10 +253,6 @@ export class DocEditTool extends WithDisposable(ShadowlessElement) {
       if (!markdown) {
         return;
       }
-      track.applyModel.chat.$.apply({
-        instruction: this.data.args.instructions,
-        operation: op,
-      });
       await this.blockDiffService?.apply(this.host.store, markdown);
     } catch (error) {
       this.notificationService.notify({
@@ -276,10 +271,6 @@ export class DocEditTool extends WithDisposable(ShadowlessElement) {
       return;
     }
     // TODO: set the rejected status
-    track.applyModel.chat.$.reject({
-      instruction: this.data.args.instructions,
-      operation: op,
-    });
     this.blockDiffService?.setChangedMarkdown(null);
     this.blockDiffService?.rejectAll();
   }
@@ -303,10 +294,6 @@ export class DocEditTool extends WithDisposable(ShadowlessElement) {
       if (!changedMarkdown) {
         return;
       }
-      track.applyModel.chat.$.accept({
-        instruction: this.data.args.instructions,
-        operation: op,
-      });
       await this.blockDiffService?.apply(this.host.store, changedMarkdown);
       await this.blockDiffService?.acceptAll(this.host.store);
     } catch (error) {
@@ -329,7 +316,6 @@ export class DocEditTool extends WithDisposable(ShadowlessElement) {
     if (!this.host) {
       return;
     }
-    track.applyModel.chat.$.copy();
     const success = await copyText(removeMarkdownComments(changedMarkdown));
     if (success) {
       this.notificationService.notify({

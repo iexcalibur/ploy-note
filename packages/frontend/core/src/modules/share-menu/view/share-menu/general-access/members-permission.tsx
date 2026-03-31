@@ -11,7 +11,6 @@ import { ShareInfoService } from '@affine/core/modules/share-doc';
 import { UserFriendlyError } from '@affine/error';
 import { DocRole } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import { InformationIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import clsx from 'clsx';
@@ -61,9 +60,6 @@ export const MembersPermission = ({
   const changePermission = useAsyncCallback(
     async (docRole: DocRole) => {
       try {
-        track.$.sharePanel.$.modifyDocDefaultRole({
-          role: docRole,
-        });
         await docGrantedUsersService.updateDocDefaultRole(docRole);
         shareInfoService.shareInfo.revalidate();
       } catch (error) {

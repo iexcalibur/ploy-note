@@ -1,7 +1,6 @@
 import { toast } from '@affine/component';
 import type { TagMeta } from '@affine/core/components/page-list';
 import type { CollectionMeta } from '@affine/core/modules/collection';
-import track from '@affine/track';
 import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
 import { scrollbarStyle } from '@blocksuite/affine/shared/styles';
 import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/affine/shared/theme';
@@ -567,17 +566,7 @@ export class ChatPanelAddPopover extends SignalWatcher(
     });
   }
 
-  private _track(
-    method: EventArgs['addEmbeddingDoc']['method'],
-    type?: 'page' | 'edgeless'
-  ) {
-    const page = this.independentMode
-      ? track.$.intelligence
-      : track.$.chatPanel;
-    page.chatPanelInput.addEmbeddingDoc({
-      control: 'addButton',
-      method,
-      type,
-    });
+  private _track(_method: string, _type?: 'page' | 'edgeless') {
+    // tracking removed
   }
 }

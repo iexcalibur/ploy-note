@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -6,7 +5,7 @@ import { Controller, Get, Logger, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import isMobile from 'is-mobile';
 
-import { Config, getRequestTrackerId, metrics } from '../../base';
+import { Config, metrics } from '../../base';
 import { Models } from '../../models';
 import { htmlSanitize } from '../../native';
 import { Public } from '../auth';
@@ -65,13 +64,6 @@ export class DocRendererController {
     this.mobileAssets = this.readHtmlAssets(
       join(env.projectRoot, 'static/mobile')
     );
-  }
-
-  private buildVisitorId(req: Request, workspaceId: string, docId: string) {
-    const tracker = getRequestTrackerId(req);
-    return createHash('sha256')
-      .update(`${workspaceId}:${docId}:${tracker}`)
-      .digest('hex');
   }
 
   private async allowDocPreview(workspaceId: string, docId: string) {
@@ -139,22 +131,6 @@ export class DocRendererController {
           ? await this.getPageContent(workspaceId, sub)
           : await this.getWorkspaceContent(workspaceId);
         metrics.doc.counter('render').add(1);
-
-        if (opts && isDocPath) {
-          void this.models.workspaceAnalytics
-            .recordDocView({
-              workspaceId,
-              docId: sub,
-              visitorId: this.buildVisitorId(req, workspaceId, sub),
-              isGuest: true,
-            })
-            .catch(error => {
-              this.logger.warn(
-                `Failed to record shared page view: ${workspaceId}/${sub}`,
-                error as Error
-              );
-            });
-        }
       } catch (e) {
         this.logger.error('failed to render page', e);
       }

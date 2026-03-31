@@ -17,7 +17,6 @@ import {
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import type { DocMeta } from '@blocksuite/affine/store';
 import {
   DeleteIcon,
@@ -143,9 +142,6 @@ const PageOperationCellMenuItem = ({
 
   const onDuplicate = useCallback(() => {
     duplicate(page.id, false);
-    track.allDocs.list.docMenu.createDoc({
-      control: 'duplicate',
-    });
   }, [duplicate, page.id]);
 
   const handleRemoveFromAllowList = useCallback(() => {

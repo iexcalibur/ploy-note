@@ -11,9 +11,7 @@ import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hoo
 import { useCatchEventCallback } from '@affine/core/components/hooks/use-catch-event-hook';
 import { Upload } from '@affine/core/components/pure/file-upload';
 import { GlobalDialogService } from '@affine/core/modules/dialogs';
-import { SubscriptionPlan } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import { ArrowRightSmallIcon, CameraIcon } from '@blocksuite/icons/rc';
 import { useLiveData, useService, useServices } from '@toeverything/infra';
 import { useCallback, useEffect, useState } from 'react';
@@ -147,9 +145,6 @@ const StoragePanel = ({
   const t = useI18n();
 
   const onUpgrade = useCallback(() => {
-    track.$.settingsPanel.accountUsage.viewPlans({
-      plan: SubscriptionPlan.Pro,
-    });
     onChangeSettingState?.({
       activeTab: 'plans',
       scrollAnchor: 'cloudPricingPlan',

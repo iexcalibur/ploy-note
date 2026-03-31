@@ -3,7 +3,6 @@ import { generateSubscriptionCallbackLink } from '@affine/core/components/hooks/
 import { AuthService, SubscriptionService } from '@affine/core/modules/cloud';
 import { SubscriptionPlan, SubscriptionRecurring } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useMemo } from 'react';
 
@@ -24,12 +23,7 @@ export const AISubscribe = ({
 
   const t = useI18n();
 
-  const onBeforeCheckout = useCallback(() => {
-    track.$.settingsPanel.plans.checkout({
-      plan: SubscriptionPlan.AI,
-      recurring: SubscriptionRecurring.Yearly,
-    });
-  }, []);
+  const onBeforeCheckout = useCallback(() => {}, []);
   const checkoutOptions = useMemo(
     () => ({
       recurring: SubscriptionRecurring.Yearly,

@@ -147,7 +147,6 @@
     { "path": "./packages/frontend/media-capture-playground" },
     { "path": "./packages/frontend/native" },
     { "path": "./packages/frontend/routes" },
-    { "path": "./packages/frontend/track" },
     { "path": "./tests/affine-cloud" },
     { "path": "./tests/affine-cloud-copilot" },
     { "path": "./tests/affine-desktop" },

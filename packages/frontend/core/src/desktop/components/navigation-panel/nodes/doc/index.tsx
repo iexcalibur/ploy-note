@@ -19,7 +19,6 @@ import { GuardService } from '@affine/core/modules/permissions';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import type { AffineDNDData } from '@affine/core/types/dnd';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import {
   LiveData,
   MANUALLY_STOP,
@@ -181,12 +180,6 @@ export const NavigationPanelDocNode = ({
             return;
           }
           await docsService.addLinkedDoc(docId, data.source.data.entity.id);
-          track.$.navigationPanel.docs.linkDoc({
-            control: 'drag',
-          });
-          track.$.navigationPanel.docs.drop({
-            type: data.source.data.entity.type,
-          });
         } else {
           toast(t['com.affine.rootAppSidebar.doc.link-doc-only']());
         }
@@ -221,12 +214,6 @@ export const NavigationPanelDocNode = ({
         }
         // TODO(eyhn): timeout&error handling
         await docsService.addLinkedDoc(docId, data.source.data.entity.id);
-        track.$.navigationPanel.docs.linkDoc({
-          control: 'drag',
-        });
-        track.$.navigationPanel.docs.drop({
-          type: data.source.data.entity.type,
-        });
       } else {
         toast(t['com.affine.rootAppSidebar.doc.link-doc-only']());
       }

@@ -1,5 +1,4 @@
 import type { WorkspaceService } from '@affine/core/modules/workspace';
-import { logger } from '@sentry/react';
 import {
   catchErrorInto,
   effect,
@@ -38,7 +37,7 @@ export class EmbeddingEnabled extends Entity {
           return EMPTY;
         }),
         catchErrorInto(this.error$, error => {
-          logger.error(
+          console.error(
             'Failed to fetch workspace doc embedding enabled',
             error
           );

@@ -2,7 +2,6 @@
 import { UrlService } from '@affine/core/modules/url';
 import type { UpdateMeta } from '@affine/electron-api';
 import { apis, events } from '@affine/electron-api';
-import track from '@affine/track';
 import { appSettingAtom, useService } from '@toeverything/infra';
 import { atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithObservable, atomWithStorage } from 'jotai/utils';
@@ -150,10 +149,6 @@ export const useAppUpdater = () => {
 
   const toggleAutoDownload = useCallback(
     (enable: boolean) => {
-      track.$.settingsPanel.about.changeAppSetting({
-        key: 'autoDownload',
-        value: enable,
-      });
       setSetting({
         autoDownloadUpdate: enable,
       });
@@ -163,10 +158,6 @@ export const useAppUpdater = () => {
 
   const toggleAutoCheck = useCallback(
     (enable: boolean) => {
-      track.$.settingsPanel.about.changeAppSetting({
-        key: 'autoCheckUpdates',
-        value: enable,
-      });
       setSetting({
         autoCheckUpdate: enable,
       });

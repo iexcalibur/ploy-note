@@ -1,6 +1,4 @@
-import { UserFriendlyError } from '@affine/error';
 import type { OAuthProviderType } from '@affine/graphql';
-import track from '@affine/track';
 import { OnEvent, Service } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
 import { distinctUntilChanged, map, skip } from 'rxjs';
@@ -91,25 +89,16 @@ export class AuthService extends Service {
         },
       });
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method: 'magic-link',
-        reason: UserFriendlyError.fromAny(e).name,
-      });
       throw e;
     }
   }
 
   async signInMagicLink(email: string, token: string, byLink = true) {
-    const method = byLink ? 'magic-link' : 'otp';
     try {
       await this.store.signInMagicLink(email, token);
 
       this.session.revalidate();
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method,
-        reason: UserFriendlyError.fromAny(e).name,
-      });
       throw e;
     }
   }
@@ -137,11 +126,6 @@ export class AuthService extends Service {
 
       return await res.json();
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method: 'oauth',
-        provider,
-        reason: UserFriendlyError.fromAny(e).name,
-      });
       throw e;
     }
   }
@@ -157,11 +141,6 @@ export class AuthService extends Service {
       this.session.revalidate();
       return { redirectUri };
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method: 'oauth',
-        provider,
-        reason: UserFriendlyError.fromAny(e).name,
-      });
       throw e;
     }
   }
@@ -202,10 +181,6 @@ export class AuthService extends Service {
       await this.store.signInPassword(credential);
       this.session.revalidate();
     } catch (e) {
-      track.$.$.auth.signInFail({
-        method: 'password',
-        reason: UserFriendlyError.fromAny(e).name,
-      });
       throw e;
     }
   }

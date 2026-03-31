@@ -1229,18 +1229,6 @@ export const PackageList = [
     workspaceDependencies: [],
   },
   {
-    location: 'packages/frontend/admin',
-    name: '@affine/admin',
-    workspaceDependencies: [
-      'packages/frontend/component',
-      'packages/frontend/core',
-      'packages/common/error',
-      'packages/common/graphql',
-      'packages/frontend/routes',
-      'packages/common/infra',
-    ],
-  },
-  {
     location: 'packages/frontend/apps/android',
     name: '@affine/android',
     workspaceDependencies: [
@@ -1250,7 +1238,6 @@ export const PackageList = [
       'packages/frontend/i18n',
       'packages/frontend/apps/mobile-shared',
       'packages/common/nbstore',
-      'packages/frontend/track',
       'blocksuite/affine/all',
       'packages/common/infra',
     ],
@@ -1276,7 +1263,6 @@ export const PackageList = [
       'packages/frontend/electron-api',
       'packages/frontend/i18n',
       'packages/common/nbstore',
-      'packages/frontend/track',
       'blocksuite/affine/all',
       'packages/common/infra',
       'tools/utils',
@@ -1293,7 +1279,6 @@ export const PackageList = [
       'packages/frontend/i18n',
       'packages/frontend/apps/mobile-shared',
       'packages/common/nbstore',
-      'packages/frontend/track',
       'blocksuite/affine/all',
       'packages/common/infra',
       'tools/cli',
@@ -1310,7 +1295,6 @@ export const PackageList = [
       'packages/common/env',
       'packages/frontend/i18n',
       'packages/common/nbstore',
-      'packages/frontend/track',
       'blocksuite/affine/all',
       'packages/common/infra',
     ],
@@ -1329,7 +1313,6 @@ export const PackageList = [
       'packages/common/env',
       'packages/frontend/i18n',
       'packages/common/nbstore',
-      'packages/frontend/track',
       'packages/common/infra',
     ],
   },
@@ -1360,7 +1343,6 @@ export const PackageList = [
       'packages/common/nbstore',
       'packages/common/reader',
       'packages/frontend/templates',
-      'packages/frontend/track',
       'blocksuite/affine/all',
       'blocksuite/affine/blocks/root',
       'blocksuite/affine/components',
@@ -1404,11 +1386,6 @@ export const PackageList = [
     location: 'packages/frontend/templates',
     name: '@affine/templates',
     workspaceDependencies: [],
-  },
-  {
-    location: 'packages/frontend/track',
-    name: '@affine/track',
-    workspaceDependencies: ['packages/common/debug'],
   },
   {
     location: 'tests/affine-cloud',
@@ -1595,7 +1572,6 @@ export type PackageName =
   | '@affine/nbstore'
   | '@affine/reader'
   | '@affine/s3-compat'
-  | '@affine/admin'
   | '@affine/android'
   | '@affine/electron'
   | '@affine/electron-renderer'
@@ -1611,7 +1587,6 @@ export type PackageName =
   | '@affine/native'
   | '@affine/routes'
   | '@affine/templates'
-  | '@affine/track'
   | '@affine-test/affine-cloud'
   | '@affine-test/affine-cloud-copilot'
   | '@affine-test/affine-desktop'

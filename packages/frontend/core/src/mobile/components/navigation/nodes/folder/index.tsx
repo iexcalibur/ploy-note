@@ -21,7 +21,6 @@ import {
 } from '@affine/core/modules/organize';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import {
   DeleteIcon,
   FolderIcon,
@@ -168,9 +167,6 @@ const NavigationPanelFolderNodeFolder = ({
   );
   const handleDelete = useCallback(() => {
     node.delete();
-    track.$.navigationPanel.organize.deleteOrganizeItem({
-      type: 'folder',
-    });
     notify.success({
       title: t['com.affine.rootAppSidebar.organize.delete.notify-title']({
         name,
@@ -191,10 +187,6 @@ const NavigationPanelFolderNodeFolder = ({
   const handleNewDoc = useCallback(() => {
     const newDoc = createPage();
     node.createLink('doc', newDoc.id, node.indexAt('before'));
-    track.$.navigationPanel.organize.createOrganizeItem({
-      type: 'link',
-      target: 'doc',
-    });
     setCollapsed(false);
   }, [createPage, node, setCollapsed]);
 
@@ -242,10 +234,6 @@ const NavigationPanelFolderNodeFolder = ({
           updated && setCollapsed(false);
         }
       );
-      track.$.navigationPanel.organize.createOrganizeItem({
-        type: 'link',
-        target: type,
-      });
     },
     [children, node, setCollapsed, workspaceDialogService]
   );

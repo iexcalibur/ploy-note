@@ -6,7 +6,6 @@ import {
   SubscriptionRecurring,
   SubscriptionVariant,
 } from '@affine/graphql';
-import track from '@affine/track';
 import { effect, fromPromise, useServices } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
 import { useEffect, useMemo, useState } from 'react';
@@ -138,12 +137,6 @@ export const Component = () => {
             const account = authService.session.account$.value;
             // should never reach
             if (!account) throw new Error('No account');
-
-            track.subscriptionLanding.$.$.checkout({
-              control: 'pricing',
-              plan,
-              recurring,
-            });
 
             const checkout = await subscriptionService.createCheckoutSession({
               idempotencyKey,

@@ -13,7 +13,6 @@ import {
 import { WorkspacesService } from '@affine/core/modules/workspace';
 import { buildShowcaseWorkspace } from '@affine/core/utils/first-app-data';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import { FrameworkScope, useLiveData, useService } from '@toeverything/infra';
 import { useCallback, useState } from 'react';
 
@@ -139,10 +138,6 @@ const CustomConfirmButton = ({
   const handleConfirm = useAsyncCallback(async () => {
     if (loading) return;
     setLoading(true);
-    track.$.$.$.createWorkspace({
-      flavour: !server ? 'local' : 'affine-cloud',
-    });
-
     // this will be the last step for web for now
     // fix me later
     try {

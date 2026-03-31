@@ -12,7 +12,6 @@ import { CompatibleFavoriteItemsAdapter } from '@affine/core/modules/favorite';
 import { GuardService } from '@affine/core/modules/permissions';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import {
   DeleteIcon,
   DuplicateIcon,
@@ -121,9 +120,6 @@ const Duplicate = ({ docId }: DocOperationProps) => {
 
   const onDuplicate = useCallback(() => {
     duplicate(docId, false);
-    track.allDocs.list.docMenu.createDoc({
-      control: 'duplicate',
-    });
   }, [docId, duplicate]);
 
   return (

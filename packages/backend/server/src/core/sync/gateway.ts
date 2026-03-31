@@ -1,10 +1,4 @@
-import {
-  applyDecorators,
-  Logger,
-  OnModuleDestroy,
-  OnModuleInit,
-  UseInterceptors,
-} from '@nestjs/common';
+import { applyDecorators, Logger, UseInterceptors } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -198,11 +192,7 @@ interface UpdateAwarenessMessage {
 @WebSocketGateway()
 @UseInterceptors(ClsInterceptor)
 export class SpaceSyncGateway
-  implements
-    OnGatewayConnection,
-    OnGatewayDisconnect,
-    OnModuleInit,
-    OnModuleDestroy
+  implements OnGatewayConnection, OnGatewayDisconnect
 {
   protected logger = new Logger(SpaceSyncGateway.name);
 
@@ -210,11 +200,6 @@ export class SpaceSyncGateway
   private readonly server!: Server;
 
   private connectionCount = 0;
-  private readonly socketUsers = new Map<string, string>();
-  private readonly localUserConnectionCounts = new Map<string, number>();
-  private unresolvedPresenceSockets = 0;
-  private flushTimer?: NodeJS.Timeout;
-
   constructor(
     private readonly ac: AccessController,
     private readonly event: EventBus,
@@ -223,24 +208,6 @@ export class SpaceSyncGateway
     private readonly docReader: DocReader,
     private readonly models: Models
   ) {}
-
-  onModuleInit() {
-    this.flushTimer = setInterval(() => {
-      this.flushActiveUsersMinute().catch(error => {
-        this.logger.warn(
-          `Failed to flush active users minute: ${this.formatError(error)}`
-        );
-      });
-    }, 60_000);
-    this.flushTimer.unref?.();
-  }
-
-  onModuleDestroy() {
-    if (this.flushTimer) {
-      clearInterval(this.flushTimer);
-      this.flushTimer = undefined;
-    }
-  }
 
   private encodeUpdates(updates: Uint8Array[]) {
     return updates.map(update => Buffer.from(update).toString('base64'));
@@ -306,31 +273,15 @@ export class SpaceSyncGateway
     this.connectionCount++;
     this.logger.debug(`New connection, total: ${this.connectionCount}`);
     metrics.socketio.gauge('connections').record(this.connectionCount);
-    const userId = this.attachPresenceUserId(client);
-    this.trackConnectedSocket(client.id, userId);
-    void this.flushActiveUsersMinute({
-      aggregateAcrossCluster: false,
-    }).catch(error => {
-      this.logger.warn(
-        `Failed to flush active users minute: ${this.formatError(error)}`
-      );
-    });
+    this.attachPresenceUserId(client);
   }
 
   handleDisconnect(client: Socket) {
     this.connectionCount = Math.max(0, this.connectionCount - 1);
-    this.trackDisconnectedSocket(client.id);
     this.logger.debug(
       `Connection disconnected, total: ${this.connectionCount}`
     );
     metrics.socketio.gauge('connections').record(this.connectionCount);
-    void this.flushActiveUsersMinute({
-      aggregateAcrossCluster: false,
-    }).catch(error => {
-      this.logger.warn(
-        `Failed to flush active users minute: ${this.formatError(error)}`
-      );
-    });
   }
 
   private attachPresenceUserId(client: Socket): string | null {
@@ -347,55 +298,6 @@ export class SpaceSyncGateway
     return userId;
   }
 
-  private resolvePresenceUserId(socket: { data?: unknown }) {
-    if (!socket.data || typeof socket.data !== 'object') {
-      return null;
-    }
-
-    const userId = (socket.data as Record<string, unknown>)[
-      SOCKET_PRESENCE_USER_ID_KEY
-    ];
-    return typeof userId === 'string' && userId ? userId : null;
-  }
-
-  private trackConnectedSocket(socketId: string, userId: string | null) {
-    if (!userId) {
-      this.unresolvedPresenceSockets++;
-      return;
-    }
-
-    this.socketUsers.set(socketId, userId);
-    const prev = this.localUserConnectionCounts.get(userId) ?? 0;
-    this.localUserConnectionCounts.set(userId, prev + 1);
-  }
-
-  private trackDisconnectedSocket(socketId: string) {
-    const userId = this.socketUsers.get(socketId);
-    if (!userId) {
-      this.unresolvedPresenceSockets = Math.max(
-        0,
-        this.unresolvedPresenceSockets - 1
-      );
-      return;
-    }
-
-    this.socketUsers.delete(socketId);
-    const next = (this.localUserConnectionCounts.get(userId) ?? 1) - 1;
-    if (next <= 0) {
-      this.localUserConnectionCounts.delete(userId);
-    } else {
-      this.localUserConnectionCounts.set(userId, next);
-    }
-  }
-
-  private resolveLocalActiveUsers() {
-    if (this.unresolvedPresenceSockets > 0) {
-      return Math.max(0, this.connectionCount);
-    }
-
-    return this.localUserConnectionCounts.size;
-  }
-
   private formatError(error: unknown) {
     if (error instanceof Error) {
       return error.stack ?? error.message;
@@ -410,49 +312,6 @@ export class SpaceSyncGateway
     } catch {
       return String(error);
     }
-  }
-
-  private async flushActiveUsersMinute(options?: {
-    aggregateAcrossCluster?: boolean;
-  }) {
-    const minute = new Date();
-    minute.setSeconds(0, 0);
-
-    const aggregateAcrossCluster = options?.aggregateAcrossCluster ?? true;
-    let activeUsers = this.resolveLocalActiveUsers();
-    if (aggregateAcrossCluster) {
-      try {
-        const sockets = await this.server.fetchSockets();
-        const uniqueUsers = new Set<string>();
-        let missingUserCount = 0;
-        for (const socket of sockets) {
-          const userId = this.resolvePresenceUserId(socket);
-          if (userId) {
-            uniqueUsers.add(userId);
-          } else {
-            missingUserCount++;
-          }
-        }
-
-        if (missingUserCount > 0) {
-          activeUsers = sockets.length;
-          this.logger.warn(
-            `Unable to resolve user id for ${missingUserCount} active sockets, fallback to connection count`
-          );
-        } else {
-          activeUsers = uniqueUsers.size;
-        }
-      } catch (error) {
-        this.logger.warn(
-          `Failed to aggregate active users from sockets, using local value: ${this.formatError(error)}`
-        );
-      }
-    }
-
-    await this.models.workspaceAnalytics.upsertSyncActiveUsersMinute(
-      minute,
-      activeUsers
-    );
   }
 
   @OnEvent('doc.updates.pushed')

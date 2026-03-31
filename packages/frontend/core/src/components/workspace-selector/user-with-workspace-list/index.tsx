@@ -5,7 +5,6 @@ import { GlobalDialogService } from '@affine/core/modules/dialogs';
 import { type WorkspaceMetadata } from '@affine/core/modules/workspace';
 import { ServerFeature } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import { Logo1Icon } from '@blocksuite/icons/rc';
 import { useLiveData, useService } from '@toeverything/infra';
 import { useCallback } from 'react';
@@ -98,9 +97,6 @@ export const UserWithWorkspaceList = ({
   ]);
 
   const onAddWorkspace = useCallback(() => {
-    track.$.navigationPanel.workspaceList.createWorkspace({
-      control: 'import',
-    });
     globalDialogService.open('import-workspace', undefined, payload => {
       if (payload) {
         onCreatedWorkspace?.({ metadata: payload.workspace });

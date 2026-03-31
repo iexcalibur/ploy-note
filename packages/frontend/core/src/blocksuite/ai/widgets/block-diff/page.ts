@@ -1,4 +1,3 @@
-import track from '@affine/track';
 import { WidgetComponent, WidgetViewExtension } from '@blocksuite/affine/std';
 import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/affine-shared/theme';
 import {
@@ -84,12 +83,10 @@ export class AffineBlockDiffWidgetForPage extends WidgetComponent {
   }
 
   async _handleAcceptAll() {
-    track.applyModel.widget.page.acceptAll();
     await this.diffService.acceptAll(this.std.store);
   }
 
   _handleRejectAll() {
-    track.applyModel.widget.page.rejectAll();
     this.diffService.rejectAll();
   }
 

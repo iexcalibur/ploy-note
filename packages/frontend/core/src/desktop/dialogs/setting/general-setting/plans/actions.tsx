@@ -4,11 +4,10 @@ import { getDowngradeQuestionnaireLink } from '@affine/core/components/hooks/aff
 import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hooks';
 import { SubscriptionPlan } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import { useLiveData, useService } from '@toeverything/infra';
 import { nanoid } from 'nanoid';
 import type { PropsWithChildren } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   AuthService,
@@ -37,17 +36,8 @@ export const CancelAction = ({
   const [idempotencyKey, setIdempotencyKey] = useState(nanoid());
   const [isMutating, setIsMutating] = useState(false);
   const subscription = useService(SubscriptionService).subscription;
-  const proSubscription = useLiveData(subscription.pro$);
   const authService = useService(AuthService);
   const downgradeNotify = useDowngradeNotify();
-
-  useEffect(() => {
-    if (!open || !proSubscription) return;
-    track.$.settingsPanel.plans.cancelSubscription({
-      plan: proSubscription.plan,
-      recurring: proSubscription.recurring,
-    });
-  }, [open, proSubscription]);
 
   const downgrade = useAsyncCallback(async () => {
     try {
@@ -59,13 +49,6 @@ export const CancelAction = ({
       // refresh idempotency key
       setIdempotencyKey(nanoid());
       onOpenChange(false);
-      const proSubscription = subscription.pro$.value;
-      if (proSubscription) {
-        track.$.settingsPanel.plans.confirmCancelingSubscription({
-          plan: proSubscription.plan,
-          recurring: proSubscription.recurring,
-        });
-      }
       if (account && prevRecurring) {
         downgradeNotify(
           getDowngradeQuestionnaireLink({
@@ -196,13 +179,6 @@ export const ResumeAction = ({
       // refresh idempotency key
       setIdempotencyKey(nanoid());
       onOpenChange(false);
-      const proSubscription = subscription.pro$.value;
-      if (proSubscription) {
-        track.$.settingsPanel.plans.confirmResumingSubscription({
-          plan: proSubscription.plan,
-          recurring: proSubscription.recurring,
-        });
-      }
     } finally {
       setIsMutating(false);
     }

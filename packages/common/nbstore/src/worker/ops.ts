@@ -16,11 +16,6 @@ import type { AwarenessRecord } from '../storage/awareness';
 import type { BlobSyncBlobState, BlobSyncState } from '../sync/blob';
 import type { DocSyncDocState, DocSyncState } from '../sync/doc';
 import type { IndexerDocSyncState, IndexerSyncState } from '../sync/indexer';
-type NoopAck = { accepted: number; dropped: number };
-type NoopContext = Record<string, any>;
-type NoopEvent = Record<string, any>;
-type NoopQueueState = { pendingCount: number; totalSize: number };
-
 type StorageInitOptions = Values<{
   [key in keyof AvailableStorageImplementations]: {
     name: key;
@@ -182,9 +177,4 @@ export type WorkerManagerOps = {
     string,
   ];
   close: [string, void];
-  'noop.setContext': [NoopContext, void];
-  'noop.track': [NoopEvent, { queued: boolean }];
-  'noop.pageview': [NoopEvent, { queued: boolean }];
-  'noop.flush': [void, NoopAck];
-  'noop.getQueueState': [void, NoopQueueState];
 };

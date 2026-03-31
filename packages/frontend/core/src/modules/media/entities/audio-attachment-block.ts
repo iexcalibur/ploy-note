@@ -7,7 +7,6 @@ import { toArrayBuffer } from '@affine/core/utils/array-buffer';
 import { encodeAudioBlobToOpusSlices } from '@affine/core/utils/opus-encoding';
 import { DebugLogger } from '@affine/debug';
 import { AiJobStatus } from '@affine/graphql';
-import track from '@affine/track';
 import type { AttachmentBlockModel } from '@blocksuite/affine/model';
 import type { AffineTextAttributes } from '@blocksuite/affine/shared/types';
 import { type DeltaInsert, Text } from '@blocksuite/affine/store';
@@ -161,10 +160,6 @@ export class AudioAttachmentBlock extends Entity<AttachmentBlockModel> {
         await this.fillTranscriptionResult(status.result);
       }
     } catch (error) {
-      track.doc.editor.audioBlock.transcribeRecording({
-        type: 'Meeting record',
-        method: 'fail',
-      });
       logger.error('Error transcribing audio:', error);
       throw error;
     }

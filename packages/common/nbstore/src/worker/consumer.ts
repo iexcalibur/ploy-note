@@ -338,18 +338,6 @@ export class StoreManagerConsumer {
     string,
     { store: StoreConsumer; refCount: number }
   >();
-  private readonly noop_handler = {
-    setContext(_ctx: any) {},
-    track(_event: any) {},
-    pageview(_event: any) {},
-    flush() {
-      return Promise.resolve();
-    },
-    getQueueState() {
-      return { pendingCount: 0, totalSize: 0 };
-    },
-  };
-
   constructor(
     private readonly availableStorageImplementations: StorageConstructor[]
   ) {}
@@ -397,11 +385,6 @@ export class StoreManagerConsumer {
         workerDisposer();
         this.storeDisposers.delete(key);
       },
-      'noop.setContext': context => this.noop_handler.setContext(context),
-      'noop.track': event => this.noop_handler.track(event),
-      'noop.pageview': event => this.noop_handler.pageview(event),
-      'noop.flush': () => this.noop_handler.flush(),
-      'noop.getQueueState': () => this.noop_handler.getQueueState(),
     });
   }
 }

@@ -13,7 +13,6 @@ import { GuardService } from '@affine/core/modules/permissions';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { UserFriendlyError } from '@affine/error';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import {
   EdgelessIcon,
   HistoryIcon,
@@ -179,10 +178,6 @@ export function useRegisterBlocksuiteEditorCommands(
             : t['com.affine.pageMode.page']()
         }`,
         run() {
-          track.$.cmdk.editor.switchPageMode({
-            mode: mode === 'page' ? 'edgeless' : 'page',
-          });
-
           editor.toggleMode();
           toast(
             mode === 'page'
@@ -226,9 +221,6 @@ export function useRegisterBlocksuiteEditorCommands(
         label: t['com.affine.header.option.duplicate'](),
         run() {
           duplicate(docId);
-          track.$.cmdk.editor.createDoc({
-            control: 'duplicate',
-          });
         },
       })
     );
@@ -241,10 +233,6 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['Export to HTML'](),
         async run() {
-          track.$.cmdk.editor.export({
-            type: 'html',
-          });
-
           exportHandler('html');
         },
       })
@@ -258,10 +246,6 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['Export to PNG'](),
         async run() {
-          track.$.cmdk.editor.export({
-            type: 'png',
-          });
-
           exportHandler('png');
         },
       })
@@ -275,10 +259,6 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['Export to Markdown'](),
         async run() {
-          track.$.cmdk.editor.export({
-            type: 'markdown',
-          });
-
           exportHandler('markdown');
         },
       })
@@ -292,10 +272,6 @@ export function useRegisterBlocksuiteEditorCommands(
         icon: mode === 'page' ? <PageIcon /> : <EdgelessIcon />,
         label: t['Export to Snapshot'](),
         async run() {
-          track.$.cmdk.editor.export({
-            type: 'snapshot',
-          });
-
           exportHandler('snapshot');
         },
       })

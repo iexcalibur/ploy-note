@@ -7,7 +7,6 @@ import {
   SubscriptionVariant,
 } from '@affine/graphql';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import { useService } from '@toeverything/infra';
 import { useCallback, useMemo } from 'react';
 
@@ -17,12 +16,7 @@ export const AIRedeemCodeButton = (btnProps: ButtonProps) => {
   const t = useI18n();
   const authService = useService(AuthService);
 
-  const onBeforeCheckout = useCallback(() => {
-    track.$.settingsPanel.plans.checkout({
-      plan: SubscriptionPlan.AI,
-      recurring: SubscriptionRecurring.Yearly,
-    });
-  }, []);
+  const onBeforeCheckout = useCallback(() => {}, []);
   const checkoutOptions = useMemo(
     () => ({
       recurring: SubscriptionRecurring.Yearly,

@@ -3,8 +3,7 @@ import { useAsyncCallback } from '@affine/core/components/hooks/affine-async-hoo
 import { appIconMap } from '@affine/core/utils';
 import { apis, events } from '@affine/electron-api';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import * as styles from './styles.css';
 
@@ -56,8 +55,6 @@ const appIcon = appIconMap[BUILD_CONFIG.appBuildType];
 
 export function Recording() {
   const status = useRecordingStatus();
-  const trackedNewRecordingIdsRef = useRef<Set<number>>(new Set());
-
   const t = useI18n();
   const textElement = useMemo(() => {
     if (!status) {
@@ -99,42 +96,19 @@ export function Recording() {
       await apis?.recording?.dismissRecordingStatus(status.id);
     }
     await apis?.popup?.dismissCurrentRecording();
-    track.popup.$.recordingBar.dismissRecording({
-      type: 'Meeting record',
-      appName: status?.appName || 'System Audio',
-    });
   }, [status]);
 
   const handleStopRecording = useAsyncCallback(async () => {
     if (!status) {
       return;
     }
-    track.popup.$.recordingBar.finishRecording({
-      type: 'Meeting record',
-      appName: status.appName || 'System Audio',
-    });
     await apis?.recording?.stopRecording(status.id);
-  }, [status]);
-
-  useEffect(() => {
-    if (!status || status.status !== 'new') return;
-    if (trackedNewRecordingIdsRef.current.has(status.id)) return;
-
-    trackedNewRecordingIdsRef.current.add(status.id);
-    track.popup.$.recordingBar.toggleRecordingBar({
-      type: 'Meeting record',
-      appName: status.appName || 'System Audio',
-    });
   }, [status]);
 
   const handleStartRecording = useAsyncCallback(async () => {
     if (!status) {
       return;
     }
-    track.popup.$.recordingBar.startRecording({
-      type: 'Meeting record',
-      appName: status.appName || 'System Audio',
-    });
     await apis?.recording?.startRecording(status.appGroupId);
   }, [status]);
 

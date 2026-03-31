@@ -1,10 +1,8 @@
 import { DocsService } from '@affine/core/modules/doc';
 import { DocDisplayMetaService } from '@affine/core/modules/doc-display-meta';
-import { JournalService } from '@affine/core/modules/journal';
 import { PeekViewService } from '@affine/core/modules/peek-view/services/peek-view';
 import { useInsidePeekView } from '@affine/core/modules/peek-view/view/modal-container';
 import { WorkbenchLink } from '@affine/core/modules/workbench';
-import track from '@affine/track';
 import type { DocMode } from '@blocksuite/affine/model';
 import type { Workspace } from '@blocksuite/affine/store';
 import { LiveData, useLiveData, useService } from '@toeverything/infra';
@@ -88,9 +86,6 @@ export function AffinePageReference({
   Icon,
   onClick: userOnClick,
 }: AffinePageReferenceProps) {
-  const journalService = useService(JournalService);
-  const isJournal = !!useLiveData(journalService.journalDate$(pageId));
-
   const ref = useRef<HTMLAnchorElement>(null);
 
   const [refreshKey, setRefreshKey] = useState<string>(() => nanoid());
@@ -104,12 +99,6 @@ export function AffinePageReference({
 
       if (e.defaultPrevented) {
         return;
-      }
-
-      if (isJournal) {
-        track.doc.editor.pageRef.navigate({
-          to: 'journal',
-        });
       }
 
       if (e.shiftKey && ref.current) {
@@ -131,7 +120,7 @@ export function AffinePageReference({
 
       return;
     },
-    [isInPeekView, isJournal, peekView, userOnClick]
+    [isInPeekView, peekView, userOnClick]
   );
 
   const query = useMemo(() => {
@@ -169,9 +158,6 @@ export function AffineSharedPageReference({
 }: AffinePageReferenceProps & {
   docCollection: Workspace;
 }) {
-  const journalService = useService(JournalService);
-  const isJournal = !!useLiveData(journalService.journalDate$(pageId));
-
   const ref = useRef<HTMLAnchorElement>(null);
 
   const [refreshKey, setRefreshKey] = useState<string>(() => nanoid());
@@ -184,12 +170,6 @@ export function AffineSharedPageReference({
         return;
       }
 
-      if (isJournal) {
-        track.doc.editor.pageRef.navigate({
-          to: 'journal',
-        });
-      }
-
       // update refresh key
       setRefreshKey(nanoid());
 
@@ -198,7 +178,7 @@ export function AffineSharedPageReference({
 
       return;
     },
-    [isJournal, userOnClick]
+    [userOnClick]
   );
 
   const query = useMemo(() => {

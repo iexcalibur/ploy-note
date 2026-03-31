@@ -14,7 +14,6 @@
     "@affine/env": "workspace:*",
     "@affine/i18n": "workspace:*",
     "@affine/nbstore": "workspace:*",
-    "@affine/track": "workspace:*",
     "@emotion/react": "^11.14.0",
     "@toeverything/infra": "workspace:*",
     "react": "^19.2.1",

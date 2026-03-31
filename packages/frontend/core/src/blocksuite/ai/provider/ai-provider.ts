@@ -1,5 +1,4 @@
 import type { EditorHost } from '@blocksuite/affine/std';
-import { captureException } from '@sentry/react';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 import type { ChatContextValue } from '../components/ai-chat-content';
@@ -238,13 +237,7 @@ export class AIProvider {
                   options,
                   event: 'aborted:server-error',
                 });
-                captureException(err, {
-                  user: { id: user?.id },
-                  extra: {
-                    action: id,
-                    session: AIProvider.LAST_ACTION_SESSIONID,
-                  },
-                });
+                console.error(err);
               }
               throw err;
             }
@@ -275,13 +268,7 @@ export class AIProvider {
                 event: 'aborted:paywall',
               });
             } else {
-              captureException(err, {
-                user: { id: user?.id },
-                extra: {
-                  action: id,
-                  session: AIProvider.LAST_ACTION_SESSIONID,
-                },
-              });
+              console.error(err);
             }
             throw err;
           });

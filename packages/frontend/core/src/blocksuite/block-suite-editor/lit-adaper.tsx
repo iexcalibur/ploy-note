@@ -22,7 +22,6 @@ import { JournalService } from '@affine/core/modules/journal';
 import { useInsidePeekView } from '@affine/core/modules/peek-view';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { ServerFeature } from '@affine/graphql';
-import track from '@affine/track';
 import type { DocTitle } from '@blocksuite/affine/fragments/doc-title';
 import type { DocMode } from '@blocksuite/affine/model';
 import type { Store } from '@blocksuite/affine/store';
@@ -220,34 +219,24 @@ export const BlocksuiteDocEditor = forwardRef<
     editorSettingService.editorSetting.settings$.selector(s => s.displayDocInfo)
   );
 
-  const onPropertyChange = useCallback((property: DocCustomPropertyInfo) => {
-    track.doc.inlineDocInfo.property.editProperty({
-      type: property.type,
-    });
+  const onPropertyChange = useCallback((_property: DocCustomPropertyInfo) => {
+    // property change handler
   }, []);
 
-  const onPropertyAdded = useCallback((property: DocCustomPropertyInfo) => {
-    track.doc.inlineDocInfo.property.addProperty({
-      type: property.type,
-      control: 'at menu',
-    });
+  const onPropertyAdded = useCallback((_property: DocCustomPropertyInfo) => {
+    // property added handler
   }, []);
 
   const onDatabasePropertyChange = useCallback(
-    (_row: DatabaseRow, cell: DatabaseValueCell) => {
-      track.doc.inlineDocInfo.databaseProperty.editProperty({
-        type: cell.property.type$.value,
-      });
+    (_row: DatabaseRow, _cell: DatabaseValueCell) => {
+      // database property change handler
     },
     []
   );
 
   const onPropertyInfoChange = useCallback(
-    (property: DocCustomPropertyInfo, field: string) => {
-      track.doc.inlineDocInfo.property.editPropertyMeta({
-        type: property.type,
-        field,
-      });
+    (_property: DocCustomPropertyInfo, _field: string) => {
+      // property info change handler
     },
     []
   );

@@ -4,7 +4,6 @@ import { EditorService } from '@affine/core/modules/editor';
 import { useInsidePeekView } from '@affine/core/modules/peek-view/view/modal-container';
 import { extractEmojiIcon } from '@affine/core/utils';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import { Bound } from '@blocksuite/affine/global/gfx';
 import { type NoteBlockModel } from '@blocksuite/affine/model';
 import { GfxControllerIdentifier } from '@blocksuite/affine/std/gfx';
@@ -65,9 +64,6 @@ const EdgelessNoteToggleButton = ({ note }: { note: NoteBlockModel }) => {
   }, [gfx, note]);
 
   const toggle = useCallback(() => {
-    track.edgeless.pageBlock.headerToolbar.toggle({
-      type: collapsed ? 'expand' : 'collapse',
-    });
     note.store.transact(() => {
       if (collapsed) {
         note.props.edgeless.collapse = false;
@@ -110,7 +106,6 @@ const OpenInPageButton = () => {
   const editor = useService(EditorService).editor;
 
   const openInPage = useCallback(() => {
-    track.edgeless.pageBlock.headerToolbar.switchPageMode();
     editor.setMode('page');
   }, [editor]);
 
@@ -128,30 +123,20 @@ const OpenInPageButton = () => {
 };
 
 const PageBlockInfoButton = ({ note }: { note: NoteBlockModel }) => {
-  const trackFn = useCallback(() => {
-    track.edgeless.pageBlock.headerToolbar.openDocInfo();
-  }, []);
-
   return (
     <DocInfoButton
       docId={note.store.id}
-      trackFn={trackFn}
       data-testid="edgeless-note-info-button"
     />
   );
 };
 
 const NoteCopyLinkButton = ({ note }: { note: NoteBlockModel }) => {
-  const trackFn = useCallback(() => {
-    track.edgeless.pageBlock.headerToolbar.copyBlockToLink();
-  }, []);
-
   return (
     <CopyLinkButton
       pageId={note.store.id}
       blockId={note.id}
       mode="edgeless"
-      trackFn={trackFn}
       data-testid="edgeless-note-link-button"
     />
   );

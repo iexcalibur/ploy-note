@@ -10,7 +10,6 @@ import {
 } from '@affine/core/modules/editor-setting';
 import { FeatureFlagService } from '@affine/core/modules/feature-flag';
 import { WorkspaceService } from '@affine/core/modules/workspace';
-import track from '@affine/track';
 import { appendParagraphCommand } from '@blocksuite/affine/blocks/paragraph';
 import type { DocTitle } from '@blocksuite/affine/fragments/doc-title';
 import { DisposableGroup } from '@blocksuite/affine/global/disposable';
@@ -328,42 +327,10 @@ export const BlockSuiteEditor = (props: EditorProps) => {
         setLongerLoading(true);
       }
     }, 20 * 1000);
-    const reportErrorTimer = setTimeout(() => {
-      if (isLoading) {
-        track.doc.$.$.loadDoc({
-          workspaceId: props.page.workspace.id,
-          docId: props.page.id,
-          time: Date.now() - loadStartTime,
-          success: false,
-        });
-      }
-    }, 60 * 1000);
     return () => {
       clearTimeout(timer);
-      clearTimeout(reportErrorTimer);
     };
   }, [isLoading, loadStartTime, props.page]);
-
-  useEffect(() => {
-    workspaceService.workspace.engine.doc
-      .waitForDocLoaded(props.page.id)
-      .then(() => {
-        track.doc.$.$.loadDoc({
-          workspaceId: props.page.workspace.id,
-          docId: props.page.id,
-          time: Date.now() - loadStartTime,
-          success: true,
-        });
-      })
-      .catch(() => {
-        track.doc.$.$.loadDoc({
-          workspaceId: props.page.workspace.id,
-          docId: props.page.id,
-          time: Date.now() - loadStartTime,
-          success: false,
-        });
-      });
-  }, [loadStartTime, props.page, workspaceService]);
 
   return (
     <Slot style={{ '--affine-font-family': fontFamily } as CSSProperties}>

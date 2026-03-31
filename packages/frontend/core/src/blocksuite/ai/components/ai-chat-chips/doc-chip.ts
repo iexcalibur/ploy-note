@@ -1,4 +1,3 @@
-import track from '@affine/track';
 import { SignalWatcher, WithDisposable } from '@blocksuite/affine/global/lit';
 import { ShadowlessElement } from '@blocksuite/affine/std';
 import { Signal } from '@preact/signals-core';
@@ -82,15 +81,6 @@ export class ChatPanelDocChip extends SignalWatcher(
       this.addChip({
         ...this.chip,
         state: 'processing',
-      });
-      const mode = this.docDisplayConfig.getDocPrimaryMode(this.chip.docId);
-      const page = this.independentMode
-        ? track.$.intelligence
-        : track.$.chatPanel;
-      page.chatPanelInput.addEmbeddingDoc({
-        control: 'addButton',
-        method: 'suggestion',
-        type: mode,
       });
     }
   };

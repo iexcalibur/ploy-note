@@ -7,7 +7,6 @@ import { TagService } from '@affine/core/modules/tag';
 import { WorkbenchService } from '@affine/core/modules/workbench';
 import { WorkspaceService } from '@affine/core/modules/workspace';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import {
   DeleteIcon,
   OpenInNewIcon,
@@ -67,9 +66,6 @@ export const useNavigationPanelTagNodeOperations = (
 
   const handleToggleFavoriteTag = useCallback(() => {
     favoriteService.favoriteList.toggle('tag', tagId);
-    track.$.navigationPanel.organize.toggleFavorite({
-      type: 'tag',
-    });
   }, [favoriteService, tagId]);
 
   const handleOpenInNewTab = useCallback(() => {

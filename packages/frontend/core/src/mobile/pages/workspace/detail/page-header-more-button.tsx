@@ -15,7 +15,6 @@ import { EditorService } from '@affine/core/modules/editor';
 import { ViewService } from '@affine/core/modules/workbench/services/view';
 import { preventDefault } from '@affine/core/utils';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import {
   DeleteIcon,
   EdgelessIcon,
@@ -59,9 +58,6 @@ export const PageHeaderMenuButton = () => {
     // TODO(@JimmFly): remove setMode when there has view mode switch
     editorService.editor.setMode(mode);
     editorService.editor.doc.setPrimaryMode(mode);
-    track.$.header.docOptions.switchPageMode({
-      mode,
-    });
     notify.success({
       title:
         primaryMode === 'page'
@@ -106,9 +102,6 @@ export const PageHeaderMenuButton = () => {
       },
       onConfirm() {
         doc.moveToTrash();
-        track.$.navigationPanel.docs.deleteDoc({
-          control: 'button',
-        });
         toast(t['com.affine.toastMessage.movedTrash']());
         // navigate back
         history.back();

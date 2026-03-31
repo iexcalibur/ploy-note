@@ -6,7 +6,6 @@ import {
   ErrorNames,
 } from '@affine/graphql';
 import { I18n, i18nTime } from '@affine/i18n';
-import track from '@affine/track';
 import type { DocMode } from '@blocksuite/affine/model';
 import { DocModeProvider } from '@blocksuite/affine/shared/services';
 import type { AffineInlineEditor } from '@blocksuite/affine/shared/types';
@@ -160,9 +159,6 @@ export class AtMenuConfigService extends Service {
           close();
           const page = createPage('page');
           this.insertDoc(inlineEditor, page.id);
-          track.doc.editor.atMenu.createDoc({
-            mode: 'page',
-          });
         },
       },
       {
@@ -175,9 +171,6 @@ export class AtMenuConfigService extends Service {
           close();
           const page = createPage('edgeless');
           this.insertDoc(inlineEditor, page.id);
-          track.doc.editor.atMenu.createDoc({
-            mode: 'edgeless',
-          });
         },
       },
     ];
@@ -248,10 +241,6 @@ export class AtMenuConfigService extends Service {
             onSelect: date => {
               if (date) {
                 onSelectDate(date);
-                track.doc.editor.atMenu.linkDoc({
-                  journal: true,
-                  type: 'specific date',
-                });
                 this.dialogService.close(id);
               }
             },
@@ -286,10 +275,6 @@ export class AtMenuConfigService extends Service {
               >`
           : dateDisplay,
         action: () => {
-          track.doc.editor.atMenu.linkDoc({
-            journal: true,
-            type: alias,
-          });
           onSelectDate(dateString);
         },
       });
@@ -399,10 +384,6 @@ export class AtMenuConfigService extends Service {
 
           close();
 
-          track.doc.editor.atMenu.mentionMember({
-            type: 'member',
-          });
-
           const inlineRange = inlineEditor.getInlineRange();
           if (!inlineRange || inlineRange.length !== 0) return;
 
@@ -485,11 +466,6 @@ export class AtMenuConfigService extends Service {
                         key: 'invite',
                         label: 'Invite',
                         onClick: async () => {
-                          track.$.sharePanel.$.inviteUserDocRole({
-                            control: 'member list',
-                            role: 'reader',
-                          });
-
                           try {
                             await this.docGrantedUsersService.updateUserRole(
                               id,
@@ -553,10 +529,6 @@ export class AtMenuConfigService extends Service {
       icon: UserIcon(),
       action: () => {
         close();
-
-        track.doc.editor.atMenu.mentionMember({
-          type: 'invite',
-        });
 
         this.dialogService.open('setting', {
           activeTab: 'workspace:members',

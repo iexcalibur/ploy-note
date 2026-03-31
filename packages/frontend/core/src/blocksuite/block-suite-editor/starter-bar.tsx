@@ -12,7 +12,6 @@ import {
   TemplateListMenuAdd,
 } from '@affine/core/modules/template-doc/view/template-list-menu';
 import { useI18n } from '@affine/i18n';
-import track from '@affine/track';
 import { PageRootBlockComponent } from '@blocksuite/affine/blocks/root';
 import type { Store } from '@blocksuite/affine/store';
 import {
@@ -86,7 +85,6 @@ const StarterBarNotEmpty = ({ doc }: { doc: Store }) => {
   }, [doc.id, docsService.list, editorService.editor]);
 
   const onTemplateMenuOpenChange = useCallback((open: boolean) => {
-    if (open) track.doc.editor.starterBar.openTemplateListMenu();
     setTemplateMenuOpen(open);
   }, []);
 
