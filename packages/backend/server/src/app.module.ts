@@ -46,7 +46,6 @@ import { SelfhostModule } from './core/selfhost';
 import { StaticFileModule } from './core/static-files';
 import { StorageModule } from './core/storage';
 import { SyncModule } from './core/sync';
-import { TelemetryModule } from './core/telemetry';
 import { UserModule } from './core/user';
 import { VersionModule } from './core/version';
 import { WorkspaceModule } from './core/workspaces';
@@ -180,11 +179,7 @@ export function buildAppModule(env: Env) {
     // renderer server and front server
     .useIf(() => env.flavors.renderer || env.flavors.front, DocRendererModule)
     // sync server and front server
-    .useIf(
-      () => env.flavors.sync || env.flavors.front,
-      SyncModule,
-      TelemetryModule
-    )
+    .useIf(() => env.flavors.sync || env.flavors.front, SyncModule)
     // graphql server only
     .useIf(
       () => env.flavors.graphql,
@@ -200,7 +195,6 @@ export function buildAppModule(env: Env) {
       OAuthModule,
       CalendarModule,
       CustomerIoModule,
-      TelemetryModule,
       CommentModule,
       AccessTokenModule,
       QueueDashboardModule

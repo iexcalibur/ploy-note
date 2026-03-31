@@ -6,7 +6,6 @@ import { SpaceStorage } from '../storage';
 import type { AwarenessRecord } from '../storage/awareness';
 import { Sync } from '../sync';
 import type { PeerStorageOptions } from '../sync/types';
-import { TelemetryManager } from '../telemetry/manager';
 import { MANUALLY_STOP } from '../utils/throw-if-aborted';
 import type { StoreInitOptions, WorkerManagerOps, WorkerOps } from './ops';
 
@@ -339,7 +338,18 @@ export class StoreManagerConsumer {
     string,
     { store: StoreConsumer; refCount: number }
   >();
-  private readonly telemetry = new TelemetryManager();
+  // Telemetry removed — no-op stubs
+  private readonly telemetry = {
+    setContext(_ctx: any) {},
+    track(_event: any) {},
+    pageview(_event: any) {},
+    flush() {
+      return Promise.resolve();
+    },
+    getQueueState() {
+      return { pendingCount: 0, totalSize: 0 };
+    },
+  };
 
   constructor(
     private readonly availableStorageImplementations: StorageConstructor[]

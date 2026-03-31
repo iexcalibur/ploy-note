@@ -28,12 +28,11 @@ import type { AwarenessSync } from '../sync/awareness';
 import type { BlobSync } from '../sync/blob';
 import type { DocSync } from '../sync/doc';
 import type { IndexerPreferOptions, IndexerSync } from '../sync/indexer';
-import type {
-  TelemetryAck,
-  TelemetryContext,
-  TelemetryEvent,
-  TelemetryQueueState,
-} from '../telemetry/types';
+// Telemetry types — stubbed (telemetry removed)
+type TelemetryAck = { accepted: number; dropped: number };
+type TelemetryContext = Record<string, any>;
+type TelemetryEvent = Record<string, any>;
+type TelemetryQueueState = { pendingCount: number; totalSize: number };
 import type { StoreInitOptions, WorkerManagerOps, WorkerOps } from './ops';
 
 export type { StoreInitOptions as WorkerInitOptions } from './ops';

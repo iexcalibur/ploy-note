@@ -4,7 +4,9 @@ import {
 } from 'socket.io-client';
 
 import { AutoReconnectConnection } from '../../connection';
-import type { TelemetryAck, TelemetryBatch } from '../../telemetry/types';
+// Telemetry types — stubbed (telemetry removed)
+type TelemetryAck = { accepted: number; dropped: number };
+type TelemetryBatch = { events: any[] };
 import { throwIfAborted } from '../../utils/throw-if-aborted';
 
 // TODO(@forehalo): use [UserFriendlyError]

@@ -16,12 +16,11 @@ import type { AwarenessRecord } from '../storage/awareness';
 import type { BlobSyncBlobState, BlobSyncState } from '../sync/blob';
 import type { DocSyncDocState, DocSyncState } from '../sync/doc';
 import type { IndexerDocSyncState, IndexerSyncState } from '../sync/indexer';
-import type {
-  TelemetryAck,
-  TelemetryContext,
-  TelemetryEvent,
-  TelemetryQueueState,
-} from '../telemetry/types';
+// Telemetry types — stubbed (telemetry removed)
+type TelemetryAck = { accepted: number; dropped: number };
+type TelemetryContext = Record<string, any>;
+type TelemetryEvent = Record<string, any>;
+type TelemetryQueueState = { pendingCount: number; totalSize: number };
 
 type StorageInitOptions = Values<{
   [key in keyof AvailableStorageImplementations]: {

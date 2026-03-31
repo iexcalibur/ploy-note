@@ -59,7 +59,6 @@ import {
 } from './storage';
 import { configureSystemFontFamilyModule } from './system-font-family';
 import { configureTagModule } from './tag';
-import { configureTelemetryModule } from './telemetry';
 import { configureTemplateDocModule } from './template-doc';
 import { configureAppThemeModule } from './theme';
 import { configureThemeEditorModule } from './theme-editor';
@@ -87,7 +86,6 @@ export function configureCommonModules(framework: Framework) {
   configurePermissionsModule(framework);
   configureShareDocsModule(framework);
   configureShareSettingModule(framework);
-  configureTelemetryModule(framework);
   configurePDFModule(framework);
   configurePeekViewModule(framework);
   configureExplorerIconModule(framework);
