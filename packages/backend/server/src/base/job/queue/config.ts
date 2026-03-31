@@ -6,8 +6,8 @@ import { Queue } from './def';
 declare global {
   interface AppConfigSchema {
     job: {
-      queue: ConfigItem<Omit<DefaultJobOptions, 'connection' | 'telemetry'>>;
-      worker: ConfigItem<Omit<WorkerOptions, 'connection' | 'telemetry'>>;
+      queue: ConfigItem<Omit<DefaultJobOptions, 'connection'>>;
+      worker: ConfigItem<Omit<WorkerOptions, 'connection'>>;
       queues: {
         [key in Queue]: ConfigItem<{
           concurrency: number;
