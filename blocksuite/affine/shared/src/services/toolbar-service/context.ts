@@ -19,7 +19,6 @@ import type {
 import { DocModeProvider } from '../doc-mode-service';
 import { EditPropsStore } from '../edit-props-store';
 import { FeatureFlagService } from '../feature-flag-service';
-import { TelemetryProvider, type TelemetryService } from '../telemetry-service';
 import { ThemeProvider } from '../theme-service';
 import { ToolbarRegistryIdentifier } from './registry';
 
@@ -278,20 +277,6 @@ abstract class ToolbarContextBase {
     this.flags.reset();
     this.message$.value = null;
   }
-
-  get telemetryProvider() {
-    return this.std.getOptional(TelemetryProvider);
-  }
-
-  track = (...[name, props]: Parameters<TelemetryService['track']>) => {
-    const segment = this.hasSelectedSurfaceModels ? 'whiteboard' : 'doc';
-    this.telemetryProvider?.track(name, {
-      segment,
-      page: `${segment} editor`,
-      module: 'toolbar',
-      ...props,
-    });
-  };
 }
 
 export class ToolbarContext extends ToolbarContextBase {}

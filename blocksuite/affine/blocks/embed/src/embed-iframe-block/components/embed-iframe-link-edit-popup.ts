@@ -1,7 +1,4 @@
-import {
-  DocModeProvider,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { DocModeProvider } from '@blocksuite/affine-shared/services';
 import { unsafeCSSVar, unsafeCSSVarV2 } from '@blocksuite/affine-shared/theme';
 import { SignalWatcher } from '@blocksuite/global/lit';
 import { DoneIcon } from '@blocksuite/icons/lit';
@@ -71,16 +68,7 @@ export class EmbedIframeLinkEditPopup extends SignalWatcher(
     }
   `;
 
-  protected override track(status: 'success' | 'failure') {
-    this.telemetryService?.track('EditLink', {
-      type: 'embed iframe block',
-      page: this.editorMode === 'page' ? 'doc editor' : 'whiteboard editor',
-      segment: 'editor',
-      module: 'embed block',
-      control: 'edit button',
-      result: status,
-    });
-  }
+  protected override track(status: 'success' | 'failure') {}
 
   override render() {
     const isInputEmpty = this.isInputEmpty();
@@ -108,10 +96,6 @@ export class EmbedIframeLinkEditPopup extends SignalWatcher(
         </div>
       </div>
     `;
-  }
-
-  get telemetryService() {
-    return this.std.getOptional(TelemetryProvider);
   }
 
   get editorMode() {

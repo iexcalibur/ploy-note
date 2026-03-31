@@ -28,11 +28,7 @@ import * as Y from 'yjs';
 
 import { REFERENCE_NODE } from '../../consts';
 import { ImageSelection } from '../../selection';
-import {
-  ParseDocUrlProvider,
-  type ParseDocUrlService,
-  TelemetryProvider,
-} from '../../services';
+import { ParseDocUrlProvider, type ParseDocUrlService } from '../../services';
 import type { AffineTextAttributes } from '../../types';
 import { matchModels, referenceToNode } from '../../utils';
 
@@ -447,12 +443,6 @@ class PasteTr {
 
       if (!pageId) {
         // External link
-        this.std.getOptional(TelemetryProvider)?.track('Link', {
-          page: 'doc editor',
-          category: 'pasted link',
-          other: 'external link',
-          type: 'link',
-        });
 
         return { ...op };
       }
@@ -467,19 +457,13 @@ class PasteTr {
       }
 
       const extractedParams = extractSearchParams(link);
-      const isLinkedBlock = extractedParams
+      const _isLinkedBlock = extractedParams
         ? referenceToNode({ pageId, ...extractedParams })
         : false;
 
       Object.assign(reference, extractedParams);
 
       // Internal link
-      this.std.getOptional(TelemetryProvider)?.track('LinkedDocCreated', {
-        page: 'doc editor',
-        category: 'pasted link',
-        other: 'existing doc',
-        type: isLinkedBlock ? 'block' : 'doc',
-      });
 
       transformed = true;
 

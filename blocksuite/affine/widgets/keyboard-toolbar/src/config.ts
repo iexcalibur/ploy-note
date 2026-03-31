@@ -47,7 +47,6 @@ import {
   getTextSelectionCommand,
 } from '@blocksuite/affine-shared/commands';
 import { REFERENCE_NODE } from '@blocksuite/affine-shared/consts';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import type { AffineTextStyleAttributes } from '@blocksuite/affine-shared/types';
 import {
   createDefaultDoc,
@@ -274,12 +273,7 @@ const textToolActionItems: KeyboardToolbarActionItem[] = [
           removeEmptyLine: true,
         })
         .pipe(({ insertedTableBlockId }) => {
-          if (insertedTableBlockId) {
-            const telemetry = std.getOptional(TelemetryProvider);
-            telemetry?.track('BlockCreated', {
-              blockType: 'affine:table',
-            });
-          }
+          void insertedTableBlockId;
         })
         .run();
     },
@@ -523,7 +517,6 @@ const embedToolGroup: KeyboardToolPanelGroup = {
             linkInputPopupOptions: {
               showCloseButton: true,
               variant: 'mobile',
-              telemetrySegment: 'keyboard toolbar',
             },
           })
           .run();

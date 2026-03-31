@@ -1,9 +1,6 @@
 import { DefaultTool } from '@blocksuite/affine-block-surface';
 import type { TextElementModel } from '@blocksuite/affine-model';
-import {
-  FeatureFlagService,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { FeatureFlagService } from '@blocksuite/affine-shared/services';
 import { Bound } from '@blocksuite/global/gfx';
 import type { PointerEventState } from '@blocksuite/std';
 import { BaseTool, type GfxController } from '@blocksuite/std/gfx';
@@ -54,13 +51,5 @@ export class TextTool extends BaseTool {
     } else {
       addText(this.gfx, e);
     }
-
-    this.gfx.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-      control: 'canvas:draw',
-      page: 'whiteboard editor',
-      module: 'toolbar',
-      segment: 'toolbar',
-      type: 'text',
-    });
   }
 }

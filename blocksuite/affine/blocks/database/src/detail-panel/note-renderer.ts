@@ -6,7 +6,6 @@ import {
   type RootBlockModel,
 } from '@blocksuite/affine-model';
 import { REFERENCE_NODE } from '@blocksuite/affine-shared/consts';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import type { AffineTextAttributes } from '@blocksuite/affine-shared/types';
 import { createDefaultDoc, matchModels } from '@blocksuite/affine-shared/utils';
 import type { DetailSlotProps, SingleView } from '@blocksuite/data-view';
@@ -81,12 +80,6 @@ export class NoteRenderer
           );
       }
       // Track when a linked doc is created in database title column
-      this.host.std.getOptional(TelemetryProvider)?.track('LinkedDocCreated', {
-        segment: 'database',
-        module: 'center peek in database',
-        type: 'turn into',
-        parentFlavour: 'affine:database',
-      });
     }
   }
 

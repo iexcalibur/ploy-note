@@ -1727,8 +1727,6 @@
   "com.affine.tags.delete-tags.toast": "Etichetta eliminata",
   "com.affine.tags.edit-tag.toast.success": "Etichetta aggiornata",
   "com.affine.tags.empty.new-tag-button": "Nuova etichetta",
-  "com.affine.telemetry.enable": "Abilita telemetria",
-  "com.affine.telemetry.enable.desc": "La telemetria è una funzione che ci consente di raccogliere dati su come usi l'app. Questi dati ci aiutano a migliorare l'app e a fornire funzionalità migliori.",
   "com.affine.themeSettings.dark": "Scuro",
   "com.affine.themeSettings.light": "Chiaro",
   "com.affine.themeSettings.system": "Sistema",

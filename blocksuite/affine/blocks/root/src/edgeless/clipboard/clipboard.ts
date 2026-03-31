@@ -32,7 +32,6 @@ import {
 import {
   EmbedOptionProvider,
   ParseDocUrlProvider,
-  TelemetryProvider,
 } from '@blocksuite/affine-shared/services';
 import {
   convertToPng,
@@ -262,14 +261,6 @@ export class EdgelessClipboardController extends PageClipboard {
         await addAttachments(this.std, [...files], point, false);
       }
 
-      this.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-        control: 'canvas:paste',
-        page: 'whiteboard editor',
-        module: 'toolbar',
-        segment: 'toolbar',
-        type: attachmentFiles.length === 0 ? 'image' : 'attachment',
-      });
-
       return;
     }
 
@@ -324,23 +315,13 @@ export class EdgelessClipboardController extends PageClipboard {
 
       const id = this.crud.addBlock(flavour, options, this.surface.model.id);
 
-      this.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-        control: 'canvas:paste',
+      this.std?.track(isInternalLink ? 'LinkedDocCreated' : 'Link', {
         page: 'whiteboard editor',
-        module: 'toolbar',
-        segment: 'toolbar',
-        type: flavour.split(':')[1],
+        segment: 'whiteboard',
+        category: 'pasted link',
+        other: isInternalLink ? 'existing doc' : 'external link',
+        type: isInternalLink ? (isLinkedBlock ? 'block' : 'doc') : 'link',
       });
-
-      this.std
-        .getOptional(TelemetryProvider)
-        ?.track(isInternalLink ? 'LinkedDocCreated' : 'Link', {
-          page: 'whiteboard editor',
-          segment: 'whiteboard',
-          category: 'pasted link',
-          other: isInternalLink ? 'existing doc' : 'external link',
-          type: isInternalLink ? (isLinkedBlock ? 'block' : 'doc') : 'link',
-        });
 
       this.selectionManager.set({
         editing: false,
@@ -626,14 +607,6 @@ export class EdgelessClipboardController extends PageClipboard {
       noteProps,
       this.doc.root!.id
     );
-
-    this.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-      control: 'canvas:paste',
-      page: 'whiteboard editor',
-      module: 'toolbar',
-      segment: 'toolbar',
-      type: 'note',
-    });
 
     if (typeof content === 'string') {
       splitIntoLines(content).forEach((line, idx) => {

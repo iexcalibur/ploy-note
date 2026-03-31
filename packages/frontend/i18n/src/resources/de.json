@@ -1760,8 +1760,6 @@
   "com.affine.tags.delete-tags.toast": "Tag gelöscht",
   "com.affine.tags.edit-tag.toast.success": "Tag aktualisiert",
   "com.affine.tags.empty.new-tag-button": "Neues Tag",
-  "com.affine.telemetry.enable": "Telemetrie aktivieren",
-  "com.affine.telemetry.enable.desc": "Telemetrie ist eine Funktion, mit der wir Daten darüber sammeln können, wie du die App nutzt. Diese Daten helfen uns, die App zu verbessern und bessere Funktionen bereitzustellen.",
   "com.affine.themeSettings.dark": "Dunkel",
   "com.affine.themeSettings.light": "Hell",
   "com.affine.themeSettings.system": "System",

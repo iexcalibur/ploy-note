@@ -1,14 +1,3 @@
-import { type Container, createIdentifier } from '@blocksuite/global/di';
-import { type BlockStdScope, StdIdentifier } from '@blocksuite/std';
-import { type BlockModel, Extension } from '@blocksuite/store';
-
-import { DocModeProvider } from '../doc-mode-service';
-import type {
-  CitationEvents,
-  CitationEventType,
-} from '../telemetry-service/citation';
-import { TelemetryProvider } from '../telemetry-service/telemetry-service';
-
 const CitationEventTypeMap = {
   Hover: 'AICitationHoverSource',
   Expand: 'AICitationExpandSource',
@@ -56,10 +45,6 @@ export class CitationService extends Extension implements CitationViewService {
     return this.std.getOptional(DocModeProvider);
   }
 
-  get telemetryService() {
-    return this.std.getOptional(TelemetryProvider);
-  }
-
   isCitationModel = (model: BlockModel) => {
     return (
       'footnoteIdentifier' in model.props &&
@@ -70,15 +55,9 @@ export class CitationService extends Extension implements CitationViewService {
   };
 
   trackEvent<T extends EventType>(
-    type: T,
-    properties?: CitationEvents[EventTypeMapping[T]]
+    _type: T,
+    _properties?: CitationEvents[EventTypeMapping[T]]
   ) {
-    const editorMode = this.docModeService?.getEditorMode() ?? 'page';
-    this.telemetryService?.track(CitationEventTypeMap[type], {
-      page: editorMode === 'page' ? 'doc editor' : 'whiteboard editor',
-      module: 'AI Result',
-      control: 'Source',
-      ...properties,
-    });
+    // no-op
   }
 }

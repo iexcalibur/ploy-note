@@ -159,9 +159,6 @@ class ViewProvider {
     const peekViewService = framework?.get(PeekViewService);
 
     this._manager.configure(FoundationViewExtension, {
-      telemetry: {
-        track: (_eventName, _props) => {},
-      },
       fontConfig: AffineCanvasTextFonts.map(font => ({
         ...font,
         url: environment.publicPath + 'fonts/' + font.url.split('/').pop(),

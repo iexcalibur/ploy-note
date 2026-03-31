@@ -1,7 +1,6 @@
 import { SurfaceBlockModel } from '@blocksuite/affine-block-surface';
 import { FileDropConfigExtension } from '@blocksuite/affine-components/drop-indicator';
 import { AttachmentBlockSchema } from '@blocksuite/affine-model';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import {
   isInsideEdgelessEditor,
   matchModels,
@@ -34,14 +33,6 @@ export const AttachmentDropOption = FileDropConfigExtension({
       const gfx = std.get(GfxControllerIdentifier);
       point = gfx.viewport.toViewCoordFromClientCoord(point);
       addAttachments(std, attachmentFiles, point).catch(console.error);
-
-      std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-        control: 'canvas:drop',
-        page: 'whiteboard editor',
-        module: 'toolbar',
-        segment: 'toolbar',
-        type: 'attachment',
-      });
 
       return true;
     }

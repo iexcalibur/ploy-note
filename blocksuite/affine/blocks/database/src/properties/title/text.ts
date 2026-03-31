@@ -1,9 +1,6 @@
 import { DefaultInlineManagerExtension } from '@blocksuite/affine-inline-preset';
 import type { RichText } from '@blocksuite/affine-rich-text';
-import {
-  ParseDocUrlProvider,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { ParseDocUrlProvider } from '@blocksuite/affine-shared/services';
 import { getViewportElement } from '@blocksuite/affine-shared/utils';
 import { BaseCellRenderer } from '@blocksuite/data-view';
 import { IS_MAC } from '@blocksuite/global/env';
@@ -146,12 +143,6 @@ export class HeaderAreaTextCell extends BaseCellRenderer<Text, string> {
         });
 
         // Track when a linked doc is created in database title column
-        std?.getOptional(TelemetryProvider)?.track('LinkedDocCreated', {
-          module: 'database title cell',
-          type: 'paste',
-          segment: 'database',
-          parentFlavour: 'affine:database',
-        });
         return;
       }
     }

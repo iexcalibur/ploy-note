@@ -1,7 +1,4 @@
-import {
-  FeatureFlagService,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { FeatureFlagService } from '@blocksuite/affine-shared/services';
 import {
   type GfxInteractivityContext,
   InteractivityExtension,
@@ -39,14 +36,6 @@ export class DblClickAddEdgelessText extends InteractivityExtension {
           addText(edgelessView, e);
         }
       }
-
-      this.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-        control: 'canvas:dbclick',
-        page: 'whiteboard editor',
-        module: 'toolbar',
-        segment: 'toolbar',
-        type: 'text',
-      });
     });
   }
 }

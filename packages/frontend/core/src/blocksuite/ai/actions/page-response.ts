@@ -15,7 +15,6 @@ import type {
   MindmapElementModel,
   ShapeElementModel,
 } from '@blocksuite/affine/model';
-import { TelemetryProvider } from '@blocksuite/affine/shared/services';
 import { type EditorHost, TextSelection } from '@blocksuite/affine/std';
 import {
   GfxBlockElementModel,
@@ -94,15 +93,6 @@ function responseToBrainstormMindmap(
       const frameBound = expandBound(new Bound(...targetBound), PADDING);
       addSurfaceRefBlock(host, frameBound, place);
     }, 0);
-  });
-
-  const telemetryService = host.std.getOptional(TelemetryProvider);
-  telemetryService?.track('CanvasElementAdded', {
-    control: 'ai',
-    page: 'doc editor',
-    module: 'toolbar',
-    segment: 'toolbar',
-    type: 'mindmap',
   });
 }
 

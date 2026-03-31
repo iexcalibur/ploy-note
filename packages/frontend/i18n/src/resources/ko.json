@@ -1715,8 +1715,6 @@
   "com.affine.tags.delete-tags.toast": "태그 삭제됨",
   "com.affine.tags.edit-tag.toast.success": "태그 업데이트됨",
   "com.affine.tags.empty.new-tag-button": "새 태그",
-  "com.affine.telemetry.enable": "원격 측정 활성화",
-  "com.affine.telemetry.enable.desc": "원격 측정은 앱 사용 방법에 대한 데이터를 수집할 수 있는 기능입니다. 이 데이터는 앱을 개선하고 더 나은 기능을 제공하는 데 도움이 됩니다.",
   "com.affine.themeSettings.dark": "다크",
   "com.affine.themeSettings.light": "라이트",
   "com.affine.themeSettings.system": "시스템",

@@ -1708,8 +1708,6 @@
   "com.affine.tags.delete-tags.toast": "Tagg raderad",
   "com.affine.tags.edit-tag.toast.success": "Tagg uppdaterad",
   "com.affine.tags.empty.new-tag-button": "Ny tagg",
-  "com.affine.telemetry.enable": "Aktivera telemetri",
-  "com.affine.telemetry.enable.desc": "Telemetri är en funktion som låter oss samla data om hur du använder appen. Denna data hjälper oss att förbättra appen och ge bättre funktioner.",
   "com.affine.themeSettings.dark": "Mörk",
   "com.affine.themeSettings.light": "Ljus",
   "com.affine.themeSettings.system": "System",

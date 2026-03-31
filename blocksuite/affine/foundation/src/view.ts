@@ -26,8 +26,6 @@ import {
   LinkPreviewCacheExtension,
   LinkPreviewService,
   PageViewportServiceExtension,
-  TelemetryExtension,
-  type TelemetryService,
   ThemeService,
   ToolbarRegistryExtension,
 } from '@blocksuite/affine-shared/services';
@@ -40,7 +38,6 @@ import { effects } from './effects';
 const optionsSchema = z.object({
   linkPreviewCacheConfig: z.optional(LinkPreviewCacheConfigSchema),
   fontConfig: z.optional(z.array(fontConfigSchema)),
-  telemetry: z.optional(z.custom<TelemetryService>()),
   peekView: z.optional(z.custom<PeekViewService>()),
 });
 
@@ -92,10 +89,6 @@ export class FoundationViewExtension extends ViewExtensionProvider<FoundationVie
     const linkPreviewCacheConfig = options?.linkPreviewCacheConfig;
     if (linkPreviewCacheConfig) {
       context.register(LinkPreviewCacheExtension(linkPreviewCacheConfig));
-    }
-    const telemetry = options?.telemetry;
-    if (telemetry) {
-      context.register(TelemetryExtension(telemetry));
     }
     const peekView = options?.peekView;
     if (peekView) {

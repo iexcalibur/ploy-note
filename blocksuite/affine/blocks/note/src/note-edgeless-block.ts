@@ -3,7 +3,6 @@ import type { DocTitle } from '@blocksuite/affine-fragment-doc-title';
 import { NoteBlockSchema, NoteDisplayMode } from '@blocksuite/affine-model';
 import { focusTextModel } from '@blocksuite/affine-rich-text';
 import { EDGELESS_BLOCK_CHILD_PADDING } from '@blocksuite/affine-shared/consts';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import {
   handleNativeRangeAtPoint,
   stopPropagation,
@@ -214,10 +213,7 @@ export class EdgelessNoteBlockComponent extends toGfxBlockComponent(
 
   override updated(changedProperties: PropertyValues) {
     if (changedProperties.has('_editing') && this._editing) {
-      this.std.getOptional(TelemetryProvider)?.track('EdgelessNoteEditing', {
-        page: 'edgeless',
-        segment: this.model.isPageBlock() ? 'page' : 'note',
-      });
+      // no-op
     }
   }
 

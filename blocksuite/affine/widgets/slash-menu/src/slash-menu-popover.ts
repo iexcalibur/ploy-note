@@ -4,10 +4,7 @@ import {
   getInlineEditorByModel,
   getTextContentFromInlineRange,
 } from '@blocksuite/affine-rich-text';
-import {
-  DocModeProvider,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { DocModeProvider } from '@blocksuite/affine-shared/services';
 import type { AffineInlineEditor } from '@blocksuite/affine-shared/types';
 import {
   createKeydownObserver,
@@ -70,10 +67,6 @@ type InnerSlashMenuContext = SlashMenuContext & {
 export class SlashMenu extends WithDisposable(LitElement) {
   static override styles = styles;
 
-  private get _telemetry() {
-    return this.context.std.getOptional(TelemetryProvider);
-  }
-
   private get _editorMode() {
     return this.context.std.get(DocModeProvider).getEditorMode();
   }
@@ -91,15 +84,6 @@ export class SlashMenu extends WithDisposable(LitElement) {
       .waitForUpdate()
       .then(() => {
         item.action(this.context);
-        this._telemetry?.track('SelectSlashMenuItem', {
-          page: this._editorMode ?? undefined,
-          segment:
-            this.context.model.flavour === 'affine:edgeless-text'
-              ? 'edgeless-text'
-              : 'doc',
-          module: 'slash menu',
-          control: item.name,
-        });
         this.abortController.abort();
       })
       .catch(console.error);
@@ -298,12 +282,6 @@ export class SlashMenu extends WithDisposable(LitElement) {
         );
       },
       onAbort: () => this.abortController.abort(),
-    });
-
-    this._telemetry?.track('OpenSlashMenu', {
-      page: this._editorMode ?? undefined,
-      type: this.context.model.flavour.split(':').pop(),
-      module: 'slash menu',
     });
   }
 

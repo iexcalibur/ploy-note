@@ -23,7 +23,6 @@ import { ConnectorMode } from '@blocksuite/affine/model';
 import {
   DocModeProvider,
   NotificationProvider,
-  TelemetryProvider,
 } from '@blocksuite/affine/shared/services';
 import type { EditorHost } from '@blocksuite/affine/std';
 import { html, LitElement, nothing, type PropertyValues } from 'lit';
@@ -267,16 +266,6 @@ export class AIChatBlockPeekView extends LitElement {
       controllers: [],
       source: { id: this.blockId },
       target: { id: forkBlockId },
-    });
-
-    const telemetryService = this.host.std.getOptional(TelemetryProvider);
-    telemetryService?.track('CanvasElementAdded', {
-      control: 'conversation',
-      page: 'whiteboard editor',
-      module: 'canvas',
-      segment: 'whiteboard',
-      type: 'chat block',
-      category: 'branch',
     });
   };
 

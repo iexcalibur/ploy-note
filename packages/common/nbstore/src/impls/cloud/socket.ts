@@ -4,9 +4,6 @@ import {
 } from 'socket.io-client';
 
 import { AutoReconnectConnection } from '../../connection';
-// Telemetry types — stubbed (telemetry removed)
-type TelemetryAck = { accepted: number; dropped: number };
-type TelemetryBatch = { events: any[] };
 import { throwIfAborted } from '../../utils/throw-if-aborted';
 
 // TODO(@forehalo): use [UserFriendlyError]
@@ -116,8 +113,6 @@ interface ClientEvents {
     },
   ];
   'space:delete-doc': { spaceType: string; spaceId: string; docId: string };
-
-  'telemetry:batch': [TelemetryBatch, TelemetryAck];
 }
 
 export type ServerEventsMap = {

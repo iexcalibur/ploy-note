@@ -1859,8 +1859,6 @@
   "com.affine.tags.delete-tags.toast": "Etiqueta eliminada",
   "com.affine.tags.edit-tag.toast.success": "Etiqueta actualitzada",
   "com.affine.tags.empty.new-tag-button": "Nova etiqueta",
-  "com.affine.telemetry.enable": "Habilitar telemetria",
-  "com.affine.telemetry.enable.desc": "La telemetria és una funció que ens permet recopilar dades sobre com uses l'aplicació. Aquestes dades ens ajuden a millorar l'aplicació i oferir millors funcions.",
   "com.affine.template-journal-onboarding.select": "Seleccionar",
   "com.affine.template-journal-onboarding.title": "Establir una plantilla per al Diari",
   "com.affine.template-list.create-new": "Crear nova plantilla",

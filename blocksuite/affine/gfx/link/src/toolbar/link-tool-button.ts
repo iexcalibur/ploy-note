@@ -3,7 +3,6 @@ import { insertEmbedCard } from '@blocksuite/affine-block-embed';
 import { DefaultTool } from '@blocksuite/affine-block-surface';
 import { toggleEmbedCardCreateModal } from '@blocksuite/affine-components/embed-card-modal';
 import { LinkIcon } from '@blocksuite/affine-components/icons';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import { QuickToolMixin } from '@blocksuite/affine-widget-edgeless-toolbar';
 import { GfxControllerIdentifier } from '@blocksuite/std/gfx';
 import { css, html, LitElement } from 'lit';
@@ -55,26 +54,22 @@ export class EdgelessLinkToolButton extends QuickToolMixin(LitElement) {
         const flavour = type?.flavour;
         if (!flavour) return;
 
-        this.edgeless.std
-          .getOptional(TelemetryProvider)
-          ?.track('CanvasElementAdded', {
-            control: 'toolbar:general',
-            page: 'whiteboard editor',
-            module: 'toolbar',
-            segment: 'toolbar',
-            type: flavour.split(':')[1],
-          });
+        this.edgeless.std?.track('CanvasElementAdded', {
+          control: 'toolbar:general',
+          page: 'whiteboard editor',
+          module: 'toolbar',
+          segment: 'toolbar',
+          type: flavour.split(':')[1],
+        });
 
-        this.edgeless.std
-          .getOptional(TelemetryProvider)
-          ?.track('LinkedDocCreated', {
-            control: 'links',
-            page: 'whiteboard editor',
-            module: 'edgeless toolbar',
-            segment: 'whiteboard',
-            type: flavour.split(':')[1],
-            other: 'existing doc',
-          });
+        this.edgeless.std?.track('LinkedDocCreated', {
+          control: 'links',
+          page: 'whiteboard editor',
+          module: 'edgeless toolbar',
+          segment: 'whiteboard',
+          type: flavour.split(':')[1],
+          other: 'existing doc',
+        });
       })
       .catch(console.error);
   }

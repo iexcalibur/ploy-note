@@ -1,9 +1,6 @@
 import { createLitPortal } from '@blocksuite/affine-components/portal';
 import type { EmbedIframeBlockModel } from '@blocksuite/affine-model';
-import {
-  DocModeProvider,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { DocModeProvider } from '@blocksuite/affine-shared/services';
 import { unsafeCSSVarV2 } from '@blocksuite/affine-shared/theme';
 import { WithDisposable } from '@blocksuite/global/lit';
 import { EditIcon, InformationIcon, ResetIcon } from '@blocksuite/icons/lit';
@@ -211,17 +208,9 @@ export class EmbedIframeErrorCard extends WithDisposable(LitElement) {
 
   private readonly _handleRetry = async (e: MouseEvent) => {
     e.stopPropagation();
-    const success = await this.onRetry();
+    await this.onRetry();
 
     // track retry event
-    this.telemetryService?.track('ReloadLink', {
-      type: 'embed iframe block',
-      page: this.editorMode === 'page' ? 'doc editor' : 'whiteboard editor',
-      segment: 'editor',
-      module: 'embed block',
-      control: 'reload button',
-      result: success ? 'success' : 'failure',
-    });
   };
 
   override render() {
@@ -283,10 +272,6 @@ export class EmbedIframeErrorCard extends WithDisposable(LitElement) {
 
   get readonly() {
     return this.model.store.readonly;
-  }
-
-  get telemetryService() {
-    return this.std.getOptional(TelemetryProvider);
   }
 
   get editorMode() {

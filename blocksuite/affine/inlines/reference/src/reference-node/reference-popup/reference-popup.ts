@@ -1,11 +1,7 @@
 import type { EditorIconButton } from '@blocksuite/affine-components/toolbar';
 import type { ReferenceInfo } from '@blocksuite/affine-model';
 import { REFERENCE_NODE } from '@blocksuite/affine-shared/consts';
-import {
-  type LinkEventType,
-  type TelemetryEvent,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { type LinkEventType } from '@blocksuite/affine-shared/services';
 import { fontXSStyle, panelBaseStyle } from '@blocksuite/affine-shared/styles';
 import type { AffineTextAttributes } from '@blocksuite/affine-shared/types';
 import { stopPropagation } from '@blocksuite/affine-shared/utils';
@@ -267,16 +263,7 @@ export class ReferencePopup extends SignalWatcher(
 }
 
 function track(
-  std: BlockStdScope,
-  event: LinkEventType,
-  props: Partial<TelemetryEvent>
-) {
-  std.getOptional(TelemetryProvider)?.track(event, {
-    segment: 'doc',
-    page: 'doc editor',
-    module: 'toolbar',
-    category: 'linked doc',
-    type: 'inline view',
-    ...props,
-  });
-}
+  _std: BlockStdScope,
+  _event: LinkEventType,
+  _props: Partial<TelemetryEvent>
+) {}

@@ -1,7 +1,6 @@
 import { SurfaceBlockModel } from '@blocksuite/affine-block-surface';
 import { FileDropConfigExtension } from '@blocksuite/affine-components/drop-indicator';
 import { ImageBlockSchema, MAX_IMAGE_WIDTH } from '@blocksuite/affine-model';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import {
   isInsideEdgelessEditor,
   matchModels,
@@ -27,15 +26,7 @@ export const ImageDropOption = FileDropConfigExtension({
       const gfx = std.get(GfxControllerIdentifier);
       point = gfx.viewport.toViewCoordFromClientCoord(point);
       addImages(std, files, { point, maxWidth: MAX_IMAGE_WIDTH })
-        .then(() => {
-          std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-            control: 'canvas:drop',
-            page: 'whiteboard editor',
-            module: 'toolbar',
-            segment: 'toolbar',
-            type: 'image',
-          });
-        })
+        .then(() => {})
         .catch(console.error);
 
       return true;

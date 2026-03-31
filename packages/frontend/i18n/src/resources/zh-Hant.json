@@ -1711,8 +1711,6 @@
   "com.affine.tags.delete-tags.toast": "標籤已刪除",
   "com.affine.tags.edit-tag.toast.success": "標籤已更新",
   "com.affine.tags.empty.new-tag-button": "新建標籤",
-  "com.affine.telemetry.enable": "啟用遙測",
-  "com.affine.telemetry.enable.desc": "遙測功能使我們能夠收集有關您如何使用該應用程序的數據。這些數據有助於我們改進應用程序並提供更好的功能。",
   "com.affine.themeSettings.dark": "深色",
   "com.affine.themeSettings.light": "淺色",
   "com.affine.themeSettings.system": "跟隨系統",

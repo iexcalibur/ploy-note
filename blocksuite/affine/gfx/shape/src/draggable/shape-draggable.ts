@@ -10,7 +10,6 @@ import {
 } from '@blocksuite/affine-model';
 import {
   EditPropsStore,
-  TelemetryProvider,
   ThemeProvider,
   ViewportElementProvider,
 } from '@blocksuite/affine-shared/services';
@@ -190,18 +189,16 @@ export class EdgelessToolbarShapeDraggable extends EdgelessToolbarToolMixin(
           radius: getShapeRadius(shape.name),
         });
         if (!id) return;
-        this.edgeless.std
-          .getOptional(TelemetryProvider)
-          ?.track('CanvasElementAdded', {
-            control: 'toolbar:dnd',
-            page: 'whiteboard editor',
-            module: 'toolbar',
-            segment: 'toolbar',
-            type: 'shape',
-            other: {
-              shapeType: getShapeType(shape.name),
-            },
-          });
+        this.edgeless.std?.track('CanvasElementAdded', {
+          control: 'toolbar:dnd',
+          page: 'whiteboard editor',
+          module: 'toolbar',
+          segment: 'toolbar',
+          type: 'shape',
+          other: {
+            shapeType: getShapeType(shape.name),
+          },
+        });
 
         this._setShapeOverlayLock(false);
         this.readyToDrop = false;

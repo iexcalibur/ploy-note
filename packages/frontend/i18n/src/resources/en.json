@@ -1760,8 +1760,6 @@
   "com.affine.tags.delete-tags.toast": "Tag deleted",
   "com.affine.tags.edit-tag.toast.success": "Tag updated",
   "com.affine.tags.empty.new-tag-button": "New tag",
-  "com.affine.telemetry.enable": "Enable telemetry",
-  "com.affine.telemetry.enable.desc": "Telemetry is a feature that allows us to collect data on how you use the app. This data helps us improve the app and provide better features.",
   "com.affine.themeSettings.dark": "Dark",
   "com.affine.themeSettings.light": "Light",
   "com.affine.themeSettings.system": "System",

@@ -5,7 +5,6 @@ import {
   type MindmapNode,
   type MindmapRoot,
 } from '@blocksuite/affine-model';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import { requestThrottledConnectedFrame } from '@blocksuite/affine-shared/utils';
 import { Bound } from '@blocksuite/global/gfx';
 import type { PointerEventState } from '@blocksuite/std';
@@ -302,17 +301,8 @@ export class MindMapView extends GfxElementModelView<MindmapElementModel> {
       });
       buttonView.on('click', evt => {
         const latestNode = this.model.getNode(node.id);
-        const telemetry = this.gfx.std.getOptional(TelemetryProvider);
 
         if (latestNode && isOnElementBound(evt)) {
-          if (telemetry) {
-            telemetry.track('ExpandedAndCollapsed', {
-              page: 'whiteboard editor',
-              segment: 'mind map',
-              type: latestNode.detail.collapsed ? 'expand' : 'collapse',
-            });
-          }
-
           this.model.toggleCollapse(latestNode!, { layout: true });
         }
       });

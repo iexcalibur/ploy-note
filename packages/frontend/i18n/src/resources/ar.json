@@ -2043,8 +2043,6 @@
   "com.affine.tags.delete-tags.toast": "تم حذف العلامة",
   "com.affine.tags.edit-tag.toast.success": "تم تحديث العلامة",
   "com.affine.tags.empty.new-tag-button": "علامة جديدة",
-  "com.affine.telemetry.enable": "تمكين Telemetry",
-  "com.affine.telemetry.enable.desc": "Telemetry هي ميزة تتيح لنا جمع البيانات حول كيفية استخدامك للتطبيق. تساعدنا هذه البيانات في تحسين التطبيق وتقديم ميزات أفضل.",
   "com.affine.template-journal-onboarding.select": "تحديد",
   "com.affine.template-journal-onboarding.title": "تعيين نموذج للمجلة",
   "com.affine.template-list.create-new": "إنشاء نموذج جديد",

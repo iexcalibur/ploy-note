@@ -7,10 +7,7 @@ import {
 import { toast } from '@blocksuite/affine-components/toast';
 import { StoreExtensionManagerIdentifier } from '@blocksuite/affine-ext-loader';
 import { insertLinkedNode } from '@blocksuite/affine-inline-reference';
-import {
-  DocModeProvider,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { DocModeProvider } from '@blocksuite/affine-shared/services';
 import type { AffineInlineEditor } from '@blocksuite/affine-shared/types';
 import {
   createDefaultDoc,
@@ -101,14 +98,12 @@ export function createLinkedDocMenuGroup(
           inlineEditor,
           docId: doc.id,
         });
-        editorHost.std
-          .getOptional(TelemetryProvider)
-          ?.track('LinkedDocCreated', {
-            control: 'linked doc',
-            module: 'inline @',
-            type: 'doc',
-            other: 'existing doc',
-          });
+        editorHost.std?.track('LinkedDocCreated', {
+          control: 'linked doc',
+          module: 'inline @',
+          type: 'doc',
+          other: 'existing doc',
+        });
       },
     })),
     maxDisplay: MAX_DOCS,
@@ -142,18 +137,6 @@ export function createNewDocMenuGroup(
         insertLinkedNode({
           inlineEditor,
           docId: newDoc.id,
-        });
-        const telemetryService = editorHost.std.getOptional(TelemetryProvider);
-        telemetryService?.track('LinkedDocCreated', {
-          control: 'new doc',
-          module: 'inline @',
-          type: 'doc',
-          other: 'new doc',
-        });
-        telemetryService?.track('DocCreated', {
-          control: 'new doc',
-          module: 'inline @',
-          type: 'doc',
         });
       },
     },

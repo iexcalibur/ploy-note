@@ -15,8 +15,6 @@ import {
   DocModeProvider,
   FeatureFlagService,
   NotificationProvider,
-  type TelemetryEventMap,
-  TelemetryProvider,
 } from '@blocksuite/affine-shared/services';
 import { getDropResult } from '@blocksuite/affine-widget-drag-handle';
 import {
@@ -437,13 +435,7 @@ export class DatabaseBlockComponent extends CaptionedBlockComponent<DatabaseBloc
             }
           },
         },
-        eventTrace: (key, params) => {
-          const telemetryService = this.std.getOptional(TelemetryProvider);
-          telemetryService?.track(key, {
-            ...(params as TelemetryEventMap[typeof key]),
-            blockId: this.blockId,
-          });
-        },
+        eventTrace: (_key, _params) => {},
         detailPanelConfig: {
           openDetailPanel: (target, data) => {
             const peekViewService = this.std.getOptional(PeekViewProvider);

@@ -21,7 +21,6 @@ import {
   CitationProvider,
   DocModeProvider,
   FileSizeLimitProvider,
-  TelemetryProvider,
 } from '@blocksuite/affine-shared/services';
 import {
   formatSize,
@@ -284,16 +283,14 @@ export class AttachmentBlockComponent extends CaptionedBlockComponent<Attachment
               const mode =
                 this.std.get(DocModeProvider).getEditorMode() ?? 'page';
               const segment = mode === 'page' ? 'doc' : 'whiteboard';
-              this.std
-                .getOptional(TelemetryProvider)
-                ?.track('AttachmentUpgradedEvent', {
-                  segment,
-                  page: `${segment} editor`,
-                  module: 'attachment',
-                  control: 'upgrade',
-                  category: 'card',
-                  type: this.model.props.name.split('.').pop() ?? '',
-                });
+              this.std?.track('AttachmentUpgradedEvent', {
+                segment,
+                page: `${segment} editor`,
+                module: 'attachment',
+                control: 'upgrade',
+                category: 'card',
+                type: this.model.props.name.split('.').pop() ?? '',
+              });
             }
           }}
         >
@@ -325,16 +322,14 @@ export class AttachmentBlockComponent extends CaptionedBlockComponent<Attachment
             const mode =
               this.std.get(DocModeProvider).getEditorMode() ?? 'page';
             const segment = mode === 'page' ? 'doc' : 'whiteboard';
-            this.std
-              .getOptional(TelemetryProvider)
-              ?.track('AttachmentReloadedEvent', {
-                segment,
-                page: `${segment} editor`,
-                module: 'attachment',
-                control: label,
-                category: 'card',
-                type: this.filetype,
-              });
+            this.std?.track('AttachmentReloadedEvent', {
+              segment,
+              page: `${segment} editor`,
+              module: 'attachment',
+              control: label,
+              category: 'card',
+              type: this.filetype,
+            });
           }
         }}
       >

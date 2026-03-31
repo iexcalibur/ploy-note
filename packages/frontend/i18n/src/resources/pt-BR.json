@@ -1704,8 +1704,6 @@
   "com.affine.tags.delete-tags.toast": "Tag excluída",
   "com.affine.tags.edit-tag.toast.success": "Tag atualizada",
   "com.affine.tags.empty.new-tag-button": "Nova tag",
-  "com.affine.telemetry.enable": "Ativar telemetria",
-  "com.affine.telemetry.enable.desc": "Telemetria é um recurso que nos permite coletar dados sobre como você usa o aplicativo. Esses dados nos ajudam a melhorar o aplicativo e fornecer melhores recursos.",
   "com.affine.themeSettings.dark": "Escuro",
   "com.affine.themeSettings.light": "Claro",
   "com.affine.themeSettings.system": "Sistema",

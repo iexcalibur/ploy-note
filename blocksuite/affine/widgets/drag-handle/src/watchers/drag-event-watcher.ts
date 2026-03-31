@@ -23,9 +23,7 @@ import {
 } from '@blocksuite/affine-shared/consts';
 import {
   DndApiExtensionIdentifier,
-  DocModeProvider,
   EmbedIframeService,
-  TelemetryProvider,
 } from '@blocksuite/affine-shared/services';
 import {
   captureEventTarget,
@@ -1302,17 +1300,7 @@ export class DragEventWatcher {
           },
           noteId
         )
-          .then(() => {
-            const telemetry = this.std.getOptional(TelemetryProvider);
-            telemetry?.track('CanvasElementAdded', {
-              page: 'whiteboard editor',
-              module: 'canvas',
-              segment: 'whiteboard',
-              control: 'canvas:drop',
-              type: 'note',
-              other: 'split-from-note',
-            });
-          })
+          .then(() => {})
           .catch(console.error);
       }
     }
@@ -1341,17 +1329,6 @@ export class DragEventWatcher {
     if (!isNewBlock) {
       return;
     }
-
-    const mode =
-      this.std.getOptional(DocModeProvider)?.getEditorMode() ?? 'page';
-
-    const telemetryService = this.std.getOptional(TelemetryProvider);
-    telemetryService?.track('LinkedDocCreated', {
-      control: `drop on ${mode}`,
-      module: 'drag and drop',
-      type: 'doc',
-      other: 'new doc',
-    });
   };
 
   private readonly _setOpacityOfDraggedBlocks = (snapshot: SliceSnapshot) => {

@@ -14,10 +14,7 @@ import {
   NoteDisplayMode,
 } from '@blocksuite/affine-model';
 import { focusTextModel } from '@blocksuite/affine-rich-text';
-import {
-  EditPropsStore,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { EditPropsStore } from '@blocksuite/affine-shared/services';
 import type { NoteChildrenFlavour } from '@blocksuite/affine-shared/types';
 import {
   handleNativeRangeAtPoint,
@@ -317,14 +314,6 @@ function addNoteAtPoint(
     parentId,
     noteIndex
   );
-
-  std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-    control: 'canvas:draw',
-    page: 'whiteboard editor',
-    module: 'toolbar',
-    segment: 'toolbar',
-    type: 'note',
-  });
 
   return blockId;
 }

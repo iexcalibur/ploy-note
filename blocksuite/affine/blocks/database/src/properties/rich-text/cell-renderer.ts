@@ -1,9 +1,6 @@
 import { DefaultInlineManagerExtension } from '@blocksuite/affine-inline-preset';
 import type { RichText } from '@blocksuite/affine-rich-text';
-import {
-  ParseDocUrlProvider,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { ParseDocUrlProvider } from '@blocksuite/affine-shared/services';
 import type {
   AffineInlineEditor,
   AffineTextAttributes,
@@ -295,12 +292,6 @@ export class RichTextCell extends BaseCellRenderer<Text, string> {
         });
 
         // Track when a linked doc is created in database rich-text column
-        std?.getOptional(TelemetryProvider)?.track('LinkedDocCreated', {
-          module: 'database rich-text cell',
-          type: 'paste',
-          segment: 'database',
-          parentFlavour: 'affine:database',
-        });
         return;
       }
     }

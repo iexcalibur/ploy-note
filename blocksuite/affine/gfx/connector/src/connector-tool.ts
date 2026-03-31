@@ -11,7 +11,6 @@ import {
   ShapeElementModel,
   ShapeType,
 } from '@blocksuite/affine-model';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import type { IBound, IVec } from '@blocksuite/global/gfx';
 import { Bound } from '@blocksuite/global/gfx';
 import type { PointerEventState } from '@blocksuite/std';
@@ -71,14 +70,6 @@ export class ConnectorTool extends BaseTool<ConnectorToolOptions> {
       controllers: [],
       source: this._source,
       target: { position: this._startPoint },
-    });
-
-    this.gfx.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-      control: 'canvas:draw',
-      page: 'whiteboard editor',
-      module: 'toolbar',
-      segment: 'toolbar',
-      type: CanvasElementType.CONNECTOR,
     });
 
     const connector = this.gfx.getElementById(id);

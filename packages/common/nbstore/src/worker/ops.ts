@@ -16,11 +16,10 @@ import type { AwarenessRecord } from '../storage/awareness';
 import type { BlobSyncBlobState, BlobSyncState } from '../sync/blob';
 import type { DocSyncDocState, DocSyncState } from '../sync/doc';
 import type { IndexerDocSyncState, IndexerSyncState } from '../sync/indexer';
-// Telemetry types — stubbed (telemetry removed)
-type TelemetryAck = { accepted: number; dropped: number };
-type TelemetryContext = Record<string, any>;
-type TelemetryEvent = Record<string, any>;
-type TelemetryQueueState = { pendingCount: number; totalSize: number };
+type NoopAck = { accepted: number; dropped: number };
+type NoopContext = Record<string, any>;
+type NoopEvent = Record<string, any>;
+type NoopQueueState = { pendingCount: number; totalSize: number };
 
 type StorageInitOptions = Values<{
   [key in keyof AvailableStorageImplementations]: {
@@ -183,9 +182,9 @@ export type WorkerManagerOps = {
     string,
   ];
   close: [string, void];
-  'telemetry.setContext': [TelemetryContext, void];
-  'telemetry.track': [TelemetryEvent, { queued: boolean }];
-  'telemetry.pageview': [TelemetryEvent, { queued: boolean }];
-  'telemetry.flush': [void, TelemetryAck];
-  'telemetry.getQueueState': [void, TelemetryQueueState];
+  'noop.setContext': [NoopContext, void];
+  'noop.track': [NoopEvent, { queued: boolean }];
+  'noop.pageview': [NoopEvent, { queued: boolean }];
+  'noop.flush': [void, NoopAck];
+  'noop.getQueueState': [void, NoopQueueState];
 };

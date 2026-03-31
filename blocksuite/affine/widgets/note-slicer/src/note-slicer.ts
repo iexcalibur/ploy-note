@@ -10,7 +10,6 @@ import {
   type RootBlockModel,
 } from '@blocksuite/affine-model';
 import { EDGELESS_BLOCK_CHILD_PADDING } from '@blocksuite/affine-shared/consts';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import { getRectByBlockComponent } from '@blocksuite/affine-shared/utils';
 import type { EdgelessSelectedRectWidget } from '@blocksuite/affine-widget-edgeless-selected-rect';
 import { DisposableGroup } from '@blocksuite/global/disposable';
@@ -196,10 +195,6 @@ export class NoteSlicer extends WidgetComponent<RootBlockModel> {
     this._selection.set({
       elements: [newNoteId],
       editing: false,
-    });
-
-    this.std.getOptional(TelemetryProvider)?.track('SplitNote', {
-      control: 'NoteSlicer',
     });
   }
 

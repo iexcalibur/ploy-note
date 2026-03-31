@@ -3,7 +3,6 @@ import { insertLinkByQuickSearchCommand } from '@blocksuite/affine-block-bookmar
 import { addImages } from '@blocksuite/affine-block-image';
 import { DefaultTool } from '@blocksuite/affine-block-surface';
 import { MAX_IMAGE_WIDTH } from '@blocksuite/affine-model';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import type { NoteChildrenFlavour } from '@blocksuite/affine-shared/types';
 import {
   getImageFilesFromLocal,
@@ -75,14 +74,12 @@ export class EdgelessNoteMenu extends EdgelessToolbarToolMixin(LitElement) {
         const flavour = type?.flavour;
         if (!flavour) return;
 
-        this.edgeless.std
-          .getOptional(TelemetryProvider)
-          ?.track('CanvasElementAdded', {
-            control: 'toolbar:general',
-            page: 'whiteboard editor',
-            module: 'toolbar',
-            type: flavour.split(':')[1],
-          });
+        this.edgeless.std?.track('CanvasElementAdded', {
+          control: 'toolbar:general',
+          page: 'whiteboard editor',
+          module: 'toolbar',
+          type: flavour.split(':')[1],
+        });
       })
       .catch(console.error);
   }
@@ -143,15 +140,13 @@ export class EdgelessNoteMenu extends EdgelessToolbarToolMixin(LitElement) {
                 if (!file) return;
                 await addAttachments(this.edgeless.std, [file]);
                 this.gfx.tool.setTool(DefaultTool);
-                this.edgeless.std
-                  .getOptional(TelemetryProvider)
-                  ?.track('CanvasElementAdded', {
-                    control: 'toolbar:general',
-                    page: 'whiteboard editor',
-                    module: 'toolbar',
-                    segment: 'toolbar',
-                    type: 'attachment',
-                  });
+                this.edgeless.std?.track('CanvasElementAdded', {
+                  control: 'toolbar:general',
+                  page: 'whiteboard editor',
+                  module: 'toolbar',
+                  segment: 'toolbar',
+                  type: 'attachment',
+                });
               }}
             >
               ${AttachmentIcon()}

@@ -15,7 +15,6 @@ import {
   NoteDisplayMode,
   type ShapeElementModel,
 } from '@blocksuite/affine/model';
-import { TelemetryProvider } from '@blocksuite/affine/shared/services';
 import type { EditorHost } from '@blocksuite/affine/std';
 import { GfxControllerIdentifier } from '@blocksuite/affine/std/gfx';
 import { Text } from '@blocksuite/affine/store';
@@ -445,15 +444,6 @@ function responseToBrainstormMindmap(host: EditorHost, ctx: AIContext) {
     mindmap.childElements.forEach(shape => {
       fitContent(shape as ShapeElementModel);
     });
-  });
-
-  const telemetryService = host.std.getOptional(TelemetryProvider);
-  telemetryService?.track('CanvasElementAdded', {
-    control: 'ai',
-    page: 'whiteboard editor',
-    module: 'toolbar',
-    segment: 'toolbar',
-    type: 'mindmap',
   });
 
   // This is a workaround to make sure mindmap and other microtask are done

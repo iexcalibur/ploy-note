@@ -13,10 +13,7 @@ import {
   type MindmapStyle,
   TextElementModel,
 } from '@blocksuite/affine-model';
-import {
-  FeatureFlagService,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { FeatureFlagService } from '@blocksuite/affine-shared/services';
 import { openSingleFileWith } from '@blocksuite/affine-shared/utils';
 import { Bound, type IVec } from '@blocksuite/global/gfx';
 import type { BlockComponent } from '@blocksuite/std';
@@ -99,14 +96,6 @@ export const getMindmapRender =
       children: root,
     }) as string;
 
-    edgeless.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-      control: 'toolbar:dnd', // for now we use toolbar:dnd for all mindmap creation here
-      page: 'whiteboard editor',
-      module: 'toolbar',
-      segment: 'toolbar',
-      type: 'mindmap',
-    });
-
     return mindmapId;
   };
 
@@ -143,14 +132,6 @@ export const textRender: DraggableTool['render'] = async (bound, edgeless) => {
     }
     mountTextElementEditor(textElement, edgeless);
   }
-
-  edgeless.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-    control: 'toolbar:dnd',
-    page: 'whiteboard editor',
-    module: 'toolbar',
-    segment: 'toolbar',
-    type: 'text',
-  });
 
   return id;
 };

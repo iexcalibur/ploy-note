@@ -4,11 +4,7 @@ import {
   EmbedSyncedDocModel,
   isInternalEmbedModel,
 } from '@blocksuite/affine-model';
-import {
-  type LinkEventType,
-  type TelemetryEvent,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { type LinkEventType } from '@blocksuite/affine-shared/services';
 import { fontSMStyle, fontXSStyle } from '@blocksuite/affine-shared/styles';
 import { unsafeCSSVarV2 } from '@blocksuite/affine-shared/theme';
 import {
@@ -451,18 +447,9 @@ declare global {
 }
 
 function track(
-  std: BlockStdScope,
-  model: LinkableEmbedModel,
-  viewType: string,
-  event: LinkEventType,
-  props: Partial<TelemetryEvent>
-) {
-  std.getOptional(TelemetryProvider)?.track(event, {
-    segment: 'toolbar',
-    page: 'doc editor',
-    module: 'embed card edit popup',
-    type: `${viewType} view`,
-    category: isInternalEmbedModel(model) ? 'linked doc' : 'link',
-    ...props,
-  });
-}
+  _std: BlockStdScope,
+  _model: LinkableEmbedModel,
+  _viewType: string,
+  _event: LinkEventType,
+  _props: Partial<TelemetryEvent>
+) {}

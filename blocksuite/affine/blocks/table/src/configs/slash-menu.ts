@@ -1,5 +1,4 @@
 import { getSelectedModelsCommand } from '@blocksuite/affine-shared/commands';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import { isInsideBlockByFlavour } from '@blocksuite/affine-shared/utils';
 import type { SlashMenuConfig } from '@blocksuite/affine-widget-slash-menu';
 import { TableIcon } from '@blocksuite/icons/lit';
@@ -30,12 +29,7 @@ export const tableSlashMenuConfig: SlashMenuConfig = {
             removeEmptyLine: true,
           })
           .pipe(({ insertedTableBlockId }) => {
-            if (insertedTableBlockId) {
-              const telemetry = std.getOptional(TelemetryProvider);
-              telemetry?.track('BlockCreated', {
-                blockType: 'affine:table',
-              });
-            }
+            void insertedTableBlockId;
           })
           .run();
       },

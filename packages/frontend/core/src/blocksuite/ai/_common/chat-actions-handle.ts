@@ -20,7 +20,6 @@ import {
   DocModeProvider,
   EditPropsStore,
   NotificationProvider,
-  TelemetryProvider,
 } from '@blocksuite/affine/shared/services';
 import {
   type BlockComponent,
@@ -406,15 +405,6 @@ const SAVE_AS_BLOCK: ChatAction = {
         return false;
       }
 
-      const telemetryService = host.std.getOptional(TelemetryProvider);
-      telemetryService?.track('CanvasElementAdded', {
-        control: 'manually save',
-        page: 'whiteboard editor',
-        module: 'ai chat panel',
-        segment: 'right sidebar',
-        type: 'chat block',
-        category: 'root',
-      });
       return true;
     } catch (err) {
       console.error(err);

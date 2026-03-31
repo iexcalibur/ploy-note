@@ -1704,8 +1704,6 @@
   "com.affine.tags.delete-tags.toast": "Η ετικέτα διαγράφηκε",
   "com.affine.tags.edit-tag.toast.success": "Η ετικέτα ενημερώθηκε",
   "com.affine.tags.empty.new-tag-button": "Νέα ετικέτα",
-  "com.affine.telemetry.enable": "Ενεργοποίηση τηλεμετρίας",
-  "com.affine.telemetry.enable.desc": "Η τηλεμετρία είναι μια δυνατότητα που μας επιτρέπει να συλλέγουμε δεδομένα για το πώς χρησιμοποιείτε την εφαρμογή. Αυτά τα δεδομένα μας βοηθούν να βελτιώσουμε την εφαρμογή και να παρέχουμε καλύτερες δυνατότητες.",
   "com.affine.themeSettings.dark": "Σκούρο",
   "com.affine.themeSettings.light": "Φωτεινό",
   "com.affine.themeSettings.system": "Σύστημα",

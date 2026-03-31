@@ -12,7 +12,6 @@ import {
 } from '@blocksuite/affine-model';
 import {
   EditPropsStore,
-  TelemetryProvider,
   ThemeProvider,
 } from '@blocksuite/affine-shared/services';
 import { hasClassNameInList } from '@blocksuite/affine-shared/utils';
@@ -80,17 +79,6 @@ export class ShapeTool extends BaseTool<ShapeToolOption> {
       shapeType: getShapeType(shapeName),
       xywh: bound.serialize(),
       radius: attributes.radius,
-    });
-
-    this.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-      control: 'canvas:draw',
-      page: 'whiteboard editor',
-      module: 'toolbar',
-      segment: 'toolbar',
-      type: CanvasElementType.SHAPE,
-      other: {
-        shapeName,
-      },
     });
 
     return id;

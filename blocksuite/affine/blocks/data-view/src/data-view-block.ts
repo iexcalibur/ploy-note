@@ -16,8 +16,6 @@ import { EDGELESS_TOP_CONTENTEDITABLE_SELECTOR } from '@blocksuite/affine-shared
 import {
   DocModeProvider,
   NotificationProvider,
-  type TelemetryEventMap,
-  TelemetryProvider,
 } from '@blocksuite/affine-shared/services';
 import {
   createRecordDetail,
@@ -264,13 +262,7 @@ export class DataViewBlockComponent extends CaptionedBlockComponent<DataViewBloc
         }
       },
     },
-    eventTrace: (key, params) => {
-      const telemetryService = this.std.getOptional(TelemetryProvider);
-      telemetryService?.track(key, {
-        ...(params as TelemetryEventMap[typeof key]),
-        blockId: this.blockId,
-      });
-    },
+    eventTrace: (_key, _params) => {},
     detailPanelConfig: {
       openDetailPanel: (target, data) => {
         const peekViewService = this.std.getOptional(PeekViewProvider);

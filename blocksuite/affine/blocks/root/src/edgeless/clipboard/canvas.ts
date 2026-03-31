@@ -4,7 +4,6 @@ import {
   EdgelessCRUDIdentifier,
 } from '@blocksuite/affine-block-surface';
 import type { Connection } from '@blocksuite/affine-model';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import { Bound, type SerializedXYWH, Vec } from '@blocksuite/global/gfx';
 import type { BlockStdScope } from '@blocksuite/std';
 import type {
@@ -101,13 +100,6 @@ export function createCanvasElement(
   if (!id) {
     return null;
   }
-  std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-    control: 'canvas:paste',
-    page: 'whiteboard editor',
-    module: 'toolbar',
-    segment: 'toolbar',
-    type: clipboardData.type as string,
-  });
   const element = crud.getElementById(id) as GfxPrimitiveElementModel;
   if (!element) {
     console.error(`Copy failed: cannot find the copied element, id: ${id}`);

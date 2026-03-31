@@ -15,7 +15,6 @@ export type AppSetting = {
   enableNoisyBackground: boolean;
   autoCheckUpdate: boolean;
   autoDownloadUpdate: boolean;
-  enableTelemetry: boolean;
   showLinkedDocInSidebar: boolean;
   disableImageAntialiasing: boolean;
 };
@@ -34,7 +33,6 @@ const appSettingBaseAtom = atomWithStorage<AppSetting>(
     enableNoisyBackground: true,
     autoCheckUpdate: true,
     autoDownloadUpdate: true,
-    enableTelemetry: true,
     showLinkedDocInSidebar: true,
     disableImageAntialiasing: false,
   },

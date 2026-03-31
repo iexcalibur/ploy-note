@@ -1726,8 +1726,6 @@
   "com.affine.tags.delete-tags.toast": "Тег удалён",
   "com.affine.tags.edit-tag.toast.success": "Тег обновлён",
   "com.affine.tags.empty.new-tag-button": "Новый тег",
-  "com.affine.telemetry.enable": "Включить телеметрию",
-  "com.affine.telemetry.enable.desc": "Телеметрия — это функция, позволяющая нам собирать данные о том, как вы используете приложение. Эти данные помогают нам улучшать приложение и предоставлять лучшие функции.",
   "com.affine.themeSettings.dark": "Тёмная",
   "com.affine.themeSettings.light": "Светлая",
   "com.affine.themeSettings.system": "Системная",

@@ -3,10 +3,7 @@ import {
   OverlayIdentifier,
 } from '@blocksuite/affine-block-surface';
 import type { FrameBlockModel } from '@blocksuite/affine-model';
-import {
-  EditPropsStore,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { EditPropsStore } from '@blocksuite/affine-shared/services';
 import type { IPoint, IVec } from '@blocksuite/global/gfx';
 import { Bound, Vec } from '@blocksuite/global/gfx';
 import type { PointerEventState } from '@blocksuite/std';
@@ -81,13 +78,6 @@ export class FrameTool extends BaseTool {
 
       const id = this.doc.addBlock('affine:frame', props, this.gfx.surface);
 
-      this.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-        control: 'canvas:draw',
-        page: 'whiteboard editor',
-        module: 'toolbar',
-        segment: 'toolbar',
-        type: 'frame',
-      });
       this._frame = this.gfx.getElementById(id) as FrameBlockModel;
       this._frame.stash('xywh');
       return;

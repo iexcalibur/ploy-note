@@ -1,5 +1,4 @@
 import { getSelectedModelsCommand } from '@blocksuite/affine-shared/commands';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import { isInsideBlockByFlavour } from '@blocksuite/affine-shared/utils';
 import { type SlashMenuConfig } from '@blocksuite/affine-widget-slash-menu';
 import { viewPresets } from '@blocksuite/data-view/view-presets';
@@ -36,12 +35,7 @@ export const databaseSlashMenuConfig: SlashMenuConfig = {
             removeEmptyLine: true,
           })
           .pipe(({ insertedDatabaseBlockId }) => {
-            if (insertedDatabaseBlockId) {
-              const telemetry = std.getOptional(TelemetryProvider);
-              telemetry?.track('BlockCreated', {
-                blockType: 'affine:database',
-              });
-            }
+            void insertedDatabaseBlockId;
           })
           .run();
       },
@@ -69,12 +63,7 @@ export const databaseSlashMenuConfig: SlashMenuConfig = {
             removeEmptyLine: true,
           })
           .pipe(({ insertedDatabaseBlockId }) => {
-            if (insertedDatabaseBlockId) {
-              const telemetry = std.getOptional(TelemetryProvider);
-              telemetry?.track('BlockCreated', {
-                blockType: 'affine:database',
-              });
-            }
+            void insertedDatabaseBlockId;
           })
           .run();
       },

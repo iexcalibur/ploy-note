@@ -1728,8 +1728,6 @@
   "com.affine.tags.delete-tags.toast": "Tag supprimé",
   "com.affine.tags.edit-tag.toast.success": "Tag mis à jour",
   "com.affine.tags.empty.new-tag-button": "Nouveau Tag",
-  "com.affine.telemetry.enable": "Activer la collecte des données",
-  "com.affine.telemetry.enable.desc": "La collecte des données nous permet de collecter des données sur la façon dont vous utilisez l'application. Ces données nous aident à améliorer l'application et à proposer de meilleures fonctionnalités.",
   "com.affine.themeSettings.dark": "Sombre",
   "com.affine.themeSettings.light": "Clair",
   "com.affine.themeSettings.system": "Système",

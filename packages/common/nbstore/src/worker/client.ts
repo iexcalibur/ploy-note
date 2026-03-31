@@ -28,11 +28,6 @@ import type { AwarenessSync } from '../sync/awareness';
 import type { BlobSync } from '../sync/blob';
 import type { DocSync } from '../sync/doc';
 import type { IndexerPreferOptions, IndexerSync } from '../sync/indexer';
-// Telemetry types — stubbed (telemetry removed)
-type TelemetryAck = { accepted: number; dropped: number };
-type TelemetryContext = Record<string, any>;
-type TelemetryEvent = Record<string, any>;
-type TelemetryQueueState = { pendingCount: number; totalSize: number };
 import type { StoreInitOptions, WorkerManagerOps, WorkerOps } from './ops';
 
 export type { StoreInitOptions as WorkerInitOptions } from './ops';
@@ -46,11 +41,7 @@ export class StoreManagerClient {
     }
   >();
 
-  constructor(private readonly client: OpClient<WorkerManagerOps>) {
-    this.telemetry = new TelemetryClient(this.client);
-  }
-
-  readonly telemetry: TelemetryClient;
+  constructor(private readonly client: OpClient<WorkerManagerOps>) {}
 
   open(key: string, options: StoreInitOptions) {
     const { port1, port2 } = new MessageChannel();
@@ -110,30 +101,6 @@ export class StoreManagerClient {
         console.error('error resuming', err);
       });
     });
-  }
-}
-
-class TelemetryClient {
-  constructor(private readonly client: OpClient<WorkerManagerOps>) {}
-
-  setContext(context: TelemetryContext): Promise<void> {
-    return this.client.call('telemetry.setContext', context);
-  }
-
-  track(event: TelemetryEvent): Promise<{ queued: boolean }> {
-    return this.client.call('telemetry.track', event);
-  }
-
-  pageview(event: TelemetryEvent): Promise<{ queued: boolean }> {
-    return this.client.call('telemetry.pageview', event);
-  }
-
-  flush(): Promise<TelemetryAck> {
-    return this.client.call('telemetry.flush');
-  }
-
-  getQueueState(): Promise<TelemetryQueueState> {
-    return this.client.call('telemetry.getQueueState');
   }
 }
 

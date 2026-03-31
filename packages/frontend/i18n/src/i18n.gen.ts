@@ -7044,14 +7044,6 @@ export function useAFFiNEI18N(): {
       */
     ["com.affine.tags.empty.new-tag-button"](): string;
     /**
-      * `Enable telemetry`
-      */
-    ["com.affine.telemetry.enable"](): string;
-    /**
-      * `Telemetry is a feature that allows us to collect data on how you use the app. This data helps us improve the app and provide better features.`
-      */
-    ["com.affine.telemetry.enable.desc"](): string;
-    /**
       * `Dark`
       */
     ["com.affine.themeSettings.dark"](): string;

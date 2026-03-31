@@ -43,10 +43,7 @@ import {
   NoteDisplayMode,
   type ShapeElementModel,
 } from '@blocksuite/affine-model';
-import {
-  EditPropsStore,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { EditPropsStore } from '@blocksuite/affine-shared/services';
 import { matchModels } from '@blocksuite/affine-shared/utils';
 import { IS_MAC } from '@blocksuite/global/env';
 import { Bound, getCommonBound } from '@blocksuite/global/gfx';
@@ -153,15 +150,13 @@ export class EdgelessPageKeyboardManager extends PageKeyboardManager {
           ) {
             const frame = rootComponent.service.frame.createFrameOnSelected();
             if (!frame) return;
-            this.rootComponent.std
-              .getOptional(TelemetryProvider)
-              ?.track('CanvasElementAdded', {
-                control: 'shortcut',
-                page: 'whiteboard editor',
-                module: 'toolbar',
-                segment: 'toolbar',
-                type: 'frame',
-              });
+            this.rootComponent.std?.track('CanvasElementAdded', {
+              control: 'shortcut',
+              page: 'whiteboard editor',
+              module: 'toolbar',
+              segment: 'toolbar',
+              type: 'frame',
+            });
             rootComponent.surface.fitToViewport(Bound.deserialize(frame.xywh));
           } else if (!this.rootComponent.service.selection.editing) {
             this._setEdgelessTool(FrameTool);
@@ -197,15 +192,13 @@ export class EdgelessPageKeyboardManager extends PageKeyboardManager {
               const flavour = type?.flavour;
               if (!flavour) return;
 
-              rootComponent.std
-                .getOptional(TelemetryProvider)
-                ?.track('CanvasElementAdded', {
-                  control: 'shortcut',
-                  page: 'whiteboard editor',
-                  module: 'toolbar',
-                  segment: 'toolbar',
-                  type: flavour.split(':')[1],
-                });
+              rootComponent.std?.track('CanvasElementAdded', {
+                control: 'shortcut',
+                page: 'whiteboard editor',
+                module: 'toolbar',
+                segment: 'toolbar',
+                type: flavour.split(':')[1],
+              });
             })
             .catch(console.error);
         },

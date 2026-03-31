@@ -1,6 +1,5 @@
 import { CanvasElementType } from '@blocksuite/affine-block-surface';
 import type { HighlighterElementModel } from '@blocksuite/affine-model';
-import { TelemetryProvider } from '@blocksuite/affine-shared/services';
 import type { IVec } from '@blocksuite/global/gfx';
 import type { PointerEventState } from '@blocksuite/std';
 import { BaseTool } from '@blocksuite/std/gfx';
@@ -167,13 +166,5 @@ export class HighlighterTool extends BaseTool {
     this._lastPopLength = 0;
   }
 
-  override activate() {
-    this.std.getOptional(TelemetryProvider)?.track('EdgelessToolPicked', {
-      page: 'whiteboard editor',
-      module: 'global toolbar',
-      segment: 'global toolbar',
-      control: 'drawing',
-      type: CanvasElementType.HIGHLIGHTER,
-    });
-  }
+  override activate() {}
 }

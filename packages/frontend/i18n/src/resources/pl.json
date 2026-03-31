@@ -1728,8 +1728,6 @@
   "com.affine.tags.delete-tags.toast": "Etykieta usunięta",
   "com.affine.tags.edit-tag.toast.success": "Etykieta zaktualizowana",
   "com.affine.tags.empty.new-tag-button": "Nowa etykieta",
-  "com.affine.telemetry.enable": "Włącz telemetry",
-  "com.affine.telemetry.enable.desc": "Telemetry to funkcja, która pozwala nam zbierać dane o tym, jak używasz aplikacji. Te dane pomagają nam ulepszać aplikację i dostarczać lepsze funkcje.",
   "com.affine.themeSettings.dark": "Ciemny",
   "com.affine.themeSettings.light": "Jasny",
   "com.affine.themeSettings.system": "System",

@@ -8,11 +8,7 @@ import {
   EMBED_CARD_HEIGHT,
   EMBED_CARD_WIDTH,
 } from '@blocksuite/affine-shared/consts';
-import {
-  type AttachmentUploadedEvent,
-  FileSizeLimitProvider,
-  TelemetryProvider,
-} from '@blocksuite/affine-shared/services';
+import { FileSizeLimitProvider } from '@blocksuite/affine-shared/services';
 import { formatSize } from '@blocksuite/affine-shared/utils';
 import { Bound, type IVec, Vec } from '@blocksuite/global/gfx';
 import type { BlockStdScope } from '@blocksuite/std';
@@ -104,10 +100,9 @@ async function buildPropsWith(
   std: BlockStdScope,
   file: File,
   embed?: boolean,
-  mode: 'doc' | 'whiteboard' = 'doc'
+  _mode: 'doc' | 'whiteboard' = 'doc'
 ) {
   let type = file.type;
-  let category: AttachmentUploadedEvent['category'] = 'success';
 
   try {
     const { name, size } = file;
@@ -122,19 +117,8 @@ async function buildPropsWith(
       sourceId,
       embed,
     } satisfies Partial<AttachmentBlockProps>;
-  } catch (err) {
-    category = 'failure';
-    throw err;
   } finally {
     // TODO(@fundon): should change event name because this is just a local operation.
-    std.getOptional(TelemetryProvider)?.track('AttachmentUploadedEvent', {
-      page: `${mode} editor`,
-      module: 'attachment',
-      segment: mode,
-      control: 'uploader',
-      type,
-      category,
-    });
   }
 }
 

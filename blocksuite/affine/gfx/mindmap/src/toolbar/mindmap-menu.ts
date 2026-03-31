@@ -5,7 +5,6 @@ import type { MindmapStyle } from '@blocksuite/affine-model';
 import {
   EditPropsStore,
   FeatureFlagService,
-  TelemetryProvider,
 } from '@blocksuite/affine-shared/services';
 import {
   EdgelessDraggableElementController,
@@ -189,22 +188,9 @@ export class EdgelessMindmapMenu extends EdgelessToolbarToolMixin(
     this.gfx.viewport.element?.append(placeholder);
 
     this.onImportMindMap?.(bound)
-      .then(() => {
-        this.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-          page: 'whiteboard editor',
-          type: 'imported mind map',
-          other: 'success',
-          module: 'toolbar',
-        });
-      })
+      .then(() => {})
       .catch(e => {
         if (e.code === ErrorCode.UserAbortError) return;
-        this.std.getOptional(TelemetryProvider)?.track('CanvasElementAdded', {
-          page: 'whiteboard editor',
-          type: 'imported mind map',
-          other: 'failed',
-          module: 'toolbar',
-        });
         toast(this.edgeless.host, 'Import failed, please try again');
         console.error(e);
       })
