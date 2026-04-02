@@ -14,6 +14,7 @@ import { WorkspaceScope } from '../workspace';
 import { AIButtonProvider } from './provider/ai-button';
 import { AIButtonService } from './services/ai-button';
 import { AIDraftService } from './services/ai-draft';
+import { AIModelService } from './services/models';
 import { AIPlaygroundService } from './services/playground';
 import { AIReasoningService } from './services/reasoning';
 import { AIToolsConfigService } from './services/tools-config';
@@ -40,4 +41,8 @@ export function configureAIDraftModule(framework: Framework) {
 
 export function configureAIToolsConfigModule(framework: Framework) {
   framework.service(AIToolsConfigService, [GlobalStateService]);
+}
+
+export function configureAIModelModule(framework: Framework) {
+  framework.service(AIModelService, [GlobalStateService]);
 }
