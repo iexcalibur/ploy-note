@@ -12,8 +12,16 @@ import { AIModelService } from '@affine/core/modules/ai-button/services/models';
 import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
 import { FeatureFlagService } from '@affine/core/modules/feature-flag';
 import type { EditorHost } from '@blocksuite/affine/std';
-import { useFramework } from '@toeverything/infra';
+import { ServerDeploymentType } from '@affine/graphql';
+import { LiveData, useFramework } from '@toeverything/infra';
 import { useMemo } from 'react';
+
+const LOCAL_SERVER_STUB = {
+  server: { config$: new LiveData({ type: ServerDeploymentType.Selfhosted }) },
+} as any;
+const LOCAL_SUBSCRIPTION_STUB = {
+  subscription: { ai$: new LiveData(null), revalidate() {} },
+} as any;
 
 registerAIAppEffects();
 
@@ -44,12 +52,12 @@ export const AIChatBlockPeekView = ({
       docDisplayConfig,
       searchMenuConfig,
       reasoningConfig,
-      null as any, // serverService removed (cloud module deleted)
+      LOCAL_SERVER_STUB,
       affineFeatureFlagService,
       affineWorkspaceDialogService,
       aiDraftService,
       aiToolsConfigService,
-      null as any, // subscriptionService removed (cloud module deleted)
+      LOCAL_SUBSCRIPTION_STUB,
       aiModelService,
       handleAISubscribe
     );

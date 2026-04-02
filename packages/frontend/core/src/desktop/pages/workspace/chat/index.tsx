@@ -1,5 +1,6 @@
 import { observeResize, useConfirmModal } from '@affine/component';
 import { CopilotClient } from '@affine/core/blocksuite/ai';
+import { gqlFetcherFactory } from '@affine/graphql';
 import {
   AIChatContent,
   type ChatContextValue,
@@ -21,7 +22,19 @@ import {
   AIToolsConfigService,
 } from '@affine/core/modules/ai-button';
 import { AIModelService } from '@affine/core/modules/ai-button/services/models';
-// Cloud services (EventSourceService, GraphQLService, ServerService, SubscriptionService) have been removed
+import { ServerDeploymentType } from '@affine/graphql';
+import { LiveData } from '@toeverything/infra';
+
+// Stubs for removed cloud services — satisfy Lit component property access
+const LOCAL_SERVER_STUB = {
+  server: { config$: new LiveData({ type: ServerDeploymentType.Selfhosted }) },
+} as any;
+const LOCAL_SUBSCRIPTION_STUB = {
+  subscription: {
+    ai$: new LiveData(null),
+    revalidate() {},
+  },
+} as any;
 import { WorkspaceDialogService } from '@affine/core/modules/dialogs';
 import { FeatureFlagService } from '@affine/core/modules/feature-flag';
 import { PeekViewService } from '@affine/core/modules/peek-view';
@@ -49,11 +62,14 @@ import * as styles from './index.css';
 
 type CopilotSession = Awaited<ReturnType<CopilotClient['getSession']>>;
 
+const localGql = gqlFetcherFactory('/graphql', (input, init) =>
+  globalThis.fetch(input, { ...init, credentials: 'include' })
+);
+const localEventSource = (url: string, init?: EventSourceInit) =>
+  new EventSource(url.startsWith('http') ? url : `${location.origin}${url.startsWith('/') ? '' : '/'}${url}`, init);
+
 function useCopilotClient() {
-  return useMemo(
-    () => new CopilotClient(null as any, null as any),
-    []
-  );
+  return useMemo(() => new CopilotClient(localGql, localEventSource), []);
 }
 
 function createMockStd(workspace: Workspace) {
@@ -294,8 +310,8 @@ export const Component = () => {
     content.notificationService = notificationService;
     content.aiDraftService = framework.get(AIDraftService);
     content.aiToolsConfigService = framework.get(AIToolsConfigService);
-    content.serverService = null as any;
-    content.subscriptionService = null as any;
+    content.serverService = LOCAL_SERVER_STUB;
+    content.subscriptionService = LOCAL_SUBSCRIPTION_STUB;
     content.aiModelService = framework.get(AIModelService);
     content.onAISubscribe = handleAISubscribe;
 
