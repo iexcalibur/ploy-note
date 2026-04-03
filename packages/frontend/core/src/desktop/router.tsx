@@ -50,10 +50,6 @@ export const topLevelRoutes = [
         lazy: () => import('./pages/theme-editor'),
       },
       {
-        path: '/clipper/import',
-        lazy: () => import('./pages/import-clipper'),
-      },
-      {
         path: '/template/import',
         lazy: () => import('./pages/import-template'),
       },

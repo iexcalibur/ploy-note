@@ -5,7 +5,6 @@ import { EmbeddingSettings } from '@affine/core/modules/workspace-indexer-embedd
 import { useI18n } from '@affine/i18n';
 import {
   AiEmbeddingIcon,
-  IntegrationsIcon,
   PropertyIcon,
   SaveIcon,
   SettingsIcon,
@@ -14,7 +13,6 @@ import { useService } from '@toeverything/infra';
 import { useMemo } from 'react';
 
 import type { SettingSidebarItem, SettingState } from '../types';
-import { IntegrationSetting } from './integration';
 import { WorkspaceSettingDetail } from './preference';
 import { WorkspaceSettingProperties } from './properties';
 import { WorkspaceSettingStorage } from './storage';
@@ -34,8 +32,6 @@ export const WorkspaceSetting = ({
       return <WorkspaceSettingProperties />;
     case 'workspace:storage':
       return <WorkspaceSettingStorage onCloseSetting={onCloseSetting} />;
-    case 'workspace:integrations':
-      return <IntegrationSetting />;
     case 'workspace:embedding':
       return <EmbeddingSettings />;
     default:
@@ -61,12 +57,6 @@ export const useWorkspaceSettingList = (): SettingSidebarItem[] => {
         title: t['com.affine.settings.workspace.properties'](),
         icon: <PropertyIcon />,
         testId: 'workspace-setting:properties',
-      },
-      {
-        key: 'workspace:integrations',
-        title: t['com.affine.integration.integrations'](),
-        icon: <IntegrationsIcon />,
-        testId: 'workspace-setting:integrations',
       },
       {
         key: 'workspace:storage',

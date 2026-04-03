@@ -16,7 +16,6 @@ import {
   DocsService,
 } from '@affine/core/modules/doc';
 import { DocDisplayMetaService } from '@affine/core/modules/doc-display-meta';
-import { IntegrationService } from '@affine/core/modules/integration';
 import { JournalService } from '@affine/core/modules/journal';
 import {
   ViewService,
@@ -114,7 +113,6 @@ export const EditorJournalPanel = () => {
   const workbench = useService(WorkbenchService).workbench;
   const viewService = useService(ViewService);
   const journalService = useService(JournalService);
-  const calendar = useService(IntegrationService).calendar;
   const location = useLiveData(viewService.view.location$);
   const journalDateStr = useLiveData(
     doc ? journalService.journalDate$(doc.id) : null
@@ -142,8 +140,8 @@ export const EditorJournalPanel = () => {
   }, [calendarCursorMonthKey]);
   const docRecords = useLiveData(useService(DocsService).list.docs$);
   const allJournalDates = useLiveData(journalService.allJournalDates$);
-  const eventDates = useLiveData(calendar.eventDates$);
-  const workspaceCalendars = useLiveData(calendar.workspaceCalendars$);
+  const eventDates: string[] = [];
+  const workspaceCalendars: unknown[] = [];
   const workspaceCalendarId = workspaceCalendars[0]?.id;
 
   useEffect(() => {
@@ -200,21 +198,8 @@ export const EditorJournalPanel = () => {
   }, [docRecords]);
 
   useEffect(() => {
-    calendar.revalidateWorkspaceCalendars().catch(() => undefined);
-    calendar.loadAccountCalendars().catch(() => undefined);
-  }, [calendar]);
-
-  useEffect(() => {
-    const update = () => {
-      calendar
-        .revalidateEventsRange(calendarCursorMonthStart, calendarCursorMonthEnd)
-        .catch(() => undefined);
-    };
-    update();
-    const interval = setInterval(update, 5 * 60 * 1000);
-    return () => clearInterval(interval);
+    // no-op
   }, [
-    calendar,
     calendarCursorMonthEnd,
     calendarCursorMonthStart,
     workspaceCalendarId,

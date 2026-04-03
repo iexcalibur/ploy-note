@@ -31,9 +31,7 @@ import { configureFeatureFlagModule } from './feature-flag';
 import { configureGlobalContextModule } from './global-context';
 import { configureI18nModule } from './i18n';
 import { configureIconPickerModule } from './icon-picker';
-import { configureImportClipperModule } from './import-clipper';
 import { configureImportTemplateModule } from './import-template';
-import { configureIntegrationModule } from './integration';
 import { configureJournalModule } from './journal';
 import { configureLifecycleModule } from './lifecycle';
 import { configureMediaModule } from './media';
@@ -111,8 +109,6 @@ export function configureCommonModules(framework: Framework) {
   configureTemplateDocModule(framework);
   configureBlobManagementModule(framework);
   configureMediaModule(framework);
-  configureImportClipperModule(framework);
-  configureIntegrationModule(framework);
   configureWorkspacePropertyModule(framework);
   configureCollectionRulesModule(framework);
   configureIndexerEmbeddingModule(framework);

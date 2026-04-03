@@ -11,7 +11,7 @@ export type SettingTab =
   | 'editor'
   | 'meetings'
   | 'ai'
-  | `workspace:${'preference' | 'properties' | 'storage' | 'integrations' | 'embedding' | 'search'}`;
+  | `workspace:${'preference' | 'properties' | 'storage' | 'embedding' | 'search'}`;
 
 export type GLOBAL_DIALOG_SCHEMA = {
   'create-workspace': (props: { serverId?: string }) => {
