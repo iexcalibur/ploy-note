@@ -6,7 +6,7 @@ ROOT_DIR := $(shell pwd)
 
 ## Start everything (backend + frontend)
 dev:
-	@echo "🧠 Starting Ploy-Note..."
+	@echo "🧠 Starting PolyMind..."
 	@make backend &
 	@sleep 5
 	@make frontend
@@ -14,7 +14,7 @@ dev:
 ## Start frontend only (http://localhost:8080)
 frontend:
 	@echo "🌐 Starting frontend on http://localhost:8080..."
-	cd $(ROOT_DIR) && yarn r affine.ts bundle -p @affine/web --dev
+	cd $(ROOT_DIR) && yarn r affine.ts bundle -p @polymind/web --dev
 
 ## Start backend only (http://localhost:3010)
 backend:
@@ -40,12 +40,12 @@ db-push:
 ## Create database
 db-create:
 	@echo "🗄️  Creating database..."
-	createdb affine 2>/dev/null || echo "Database 'affine' already exists"
+	createdb polymind 2>/dev/null || echo "Database 'polymind' already exists"
 
 ## Drop database
 db-drop:
 	@echo "⚠️  Dropping database..."
-	dropdb affine 2>/dev/null || echo "Database 'affine' does not exist"
+	dropdb polymind 2>/dev/null || echo "Database 'polymind' does not exist"
 
 ## Reset database (drop + create + push schema)
 db-reset: db-drop db-create db-push
@@ -63,7 +63,7 @@ clean:
 ## Show this help
 help:
 	@echo ""
-	@echo "  Ploy-Note Commands:"
+	@echo "  PolyMind Commands:"
 	@echo "  ────────────────────────────────"
 	@echo "  make dev        - Start backend + frontend"
 	@echo "  make frontend   - Start frontend only (localhost:8080)"
