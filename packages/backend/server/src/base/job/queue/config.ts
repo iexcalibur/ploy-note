@@ -1,13 +1,11 @@
-import { DefaultJobOptions, WorkerOptions } from 'bullmq';
-
 import { defineModuleConfig, JSONSchema } from '../../config';
 import { Queue } from './def';
 
 declare global {
   interface AppConfigSchema {
     job: {
-      queue: ConfigItem<Omit<DefaultJobOptions, 'connection'>>;
-      worker: ConfigItem<Omit<WorkerOptions, 'connection'>>;
+      queue: ConfigItem<Record<string, unknown>>;
+      worker: ConfigItem<Record<string, unknown>>;
       queues: {
         [key in Queue]: ConfigItem<{
           concurrency: number;

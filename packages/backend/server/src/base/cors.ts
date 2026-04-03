@@ -4,8 +4,6 @@ const DEV_LOOPBACK_PROTOCOLS = new Set(['http:', 'https:']);
 const DEV_LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
 const MOBILE_CLIENT_ORIGINS = new Set([
   'https://localhost',
-  'capacitor://localhost',
-  'ionic://localhost',
 ]);
 const DESKTOP_CLIENT_ORIGINS = new Set([
   'assets://.',

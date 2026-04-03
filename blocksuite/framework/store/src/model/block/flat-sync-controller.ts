@@ -38,7 +38,7 @@ export class FlatSyncController {
   }
 
   private _createModel(props: Set<string>) {
-    const schema = this.schema.flavourSchemaMap.get(this.flavour);
+    const schema = this.schema.get(this.flavour);
     if (!schema) {
       throw new BlockSuiteError(
         ErrorCode.ModelCRUDError,
@@ -123,7 +123,7 @@ export class FlatSyncController {
       );
     }
 
-    const schema = this.schema.flavourSchemaMap.get(flavour);
+    const schema = this.schema.get(flavour);
     if (!schema) {
       throw new BlockSuiteError(
         ErrorCode.ModelCRUDError,

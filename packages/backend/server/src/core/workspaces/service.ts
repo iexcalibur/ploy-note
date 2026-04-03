@@ -102,38 +102,8 @@ export class WorkspaceService {
     return this.models.workspace.isTeamWorkspace(workspaceId);
   }
 
-  async sendTeamWorkspaceUpgradedEmail(workspaceId: string) {
-    const owner = await this.models.workspaceUser.getOwner(workspaceId);
-    const admins = await this.models.workspaceUser.getAdmins(workspaceId);
-
-    const link = this.url.link(`/workspace/${workspaceId}`);
-    await this.mailer.trySend({
-      name: 'TeamWorkspaceUpgraded',
-      to: owner.email,
-      props: {
-        workspace: {
-          $$workspaceId: workspaceId,
-        },
-        isOwner: true,
-        url: link,
-      },
-    });
-
-    await Promise.allSettled(
-      admins.map(async user => {
-        await this.mailer.trySend({
-          name: 'TeamWorkspaceUpgraded',
-          to: user.email,
-          props: {
-            workspace: {
-              $$workspaceId: workspaceId,
-            },
-            isOwner: false,
-            url: link,
-          },
-        });
-      })
-    );
+  async sendTeamWorkspaceUpgradedEmail(_workspaceId: string) {
+    // Team features removed — no-op in local single-user mode
   }
 
   async sendReviewRequestNotification(inviteId: string) {
@@ -176,40 +146,10 @@ export class WorkspaceService {
   }
 
   async sendRoleChangedEmail(
-    userId: string,
-    ws: { id: string; role: WorkspaceRole }
+    _userId: string,
+    _ws: { id: string; role: WorkspaceRole }
   ) {
-    const user = await this.models.user.getWorkspaceUser(userId);
-    if (!user) {
-      this.logger.warn(
-        `User not found for seeding role changed email: ${userId}`
-      );
-      return;
-    }
-
-    if (ws.role === WorkspaceRole.Admin) {
-      await this.mailer.trySend({
-        name: 'TeamBecomeAdmin',
-        to: user.email,
-        props: {
-          workspace: {
-            $$workspaceId: ws.id,
-          },
-          url: this.url.link(`/workspace/${ws.id}`),
-        },
-      });
-    } else {
-      await this.mailer.trySend({
-        name: 'TeamBecomeCollaborator',
-        to: user.email,
-        props: {
-          workspace: {
-            $$workspaceId: ws.id,
-          },
-          url: this.url.link(`/workspace/${ws.id}`),
-        },
-      });
-    }
+    // Team features removed — no-op in local single-user mode
   }
 
   async sendOwnershipTransferredEmail(email: string, ws: { id: string }) {

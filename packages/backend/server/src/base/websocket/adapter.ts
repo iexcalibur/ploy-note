@@ -1,6 +1,5 @@
 import { INestApplication } from '@nestjs/common';
 import { IoAdapter } from '@nestjs/platform-socket.io';
-import { createAdapter } from '@socket.io/redis-adapter';
 import { Server, Socket } from 'socket.io';
 
 import { Config } from '../config';
@@ -13,7 +12,6 @@ import {
 import { AuthenticationRequired } from '../error';
 import { URLHelper } from '../helpers';
 import { PolyMindLogger } from '../logger';
-import { SocketIoRedis } from '../redis';
 import { WEBSOCKET_OPTIONS } from './options';
 
 export class SocketIoAdapter extends IoAdapter {
@@ -70,20 +68,7 @@ export class SocketIoAdapter extends IoAdapter {
       });
     }
 
-    const pubClient = this.app.get(SocketIoRedis);
-    const subClient = pubClient.duplicate();
-
-    server.adapter(createAdapter(pubClient, subClient));
-    const close = server.close;
-
-    server.close = async fn => {
-      await close.call(server, fn);
-      // NOTE(@forehalo):
-      //   the lifecycle of duplicated redis client will not be controlled by nestjs lifecycle
-      //   we've got to manually disconnect it
-      subClient.disconnect();
-    };
-
+    // Uses Socket.io's default in-memory adapter (no Redis needed for single-server)
     return server;
   }
 }

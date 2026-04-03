@@ -10,7 +10,7 @@ import {
 import { AuthService } from '../auth/service';
 import { ServerService } from '../config';
 
-const LOCAL_USER_EMAIL = 'local@ploy-note.local';
+const LOCAL_USER_EMAIL = 'local@polymind.local';
 const LOCAL_USER_NAME = 'Local Admin';
 
 @Controller('/api/local')

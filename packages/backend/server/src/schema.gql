@@ -1864,7 +1864,7 @@ type ServerConfigType {
 }
 
 enum ServerDeploymentType {
-  Affine
+  Polymind
   Selfhosted
 }
 

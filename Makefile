@@ -14,7 +14,7 @@ dev:
 ## Start frontend only (http://localhost:8080)
 frontend:
 	@echo "🌐 Starting frontend on http://localhost:8080..."
-	cd $(ROOT_DIR) && yarn r affine.ts bundle -p @polymind/web --dev
+	cd $(ROOT_DIR) && yarn r polymind.ts bundle -p @polymind/web --dev
 
 ## Start backend only (http://localhost:3010)
 backend:

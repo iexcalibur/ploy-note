@@ -43,7 +43,6 @@ import { JournalConflictBlock } from './journal-conflict-block';
 import { JournalDatePicker } from './journal-date-picker';
 import * as styles from './mobile-detail-page.css';
 import { PageHeaderMenuButton } from './page-header-more-button';
-import { PageHeaderShareButton } from './page-header-share-button';
 
 const DetailPageImpl = () => {
   const {
@@ -281,7 +280,6 @@ const MobileDetailPage = ({
           contentClassName={styles.headerContent}
           suffix={
             <>
-              <PageHeaderShareButton />
               <PageHeaderMenuButton />
             </>
           }

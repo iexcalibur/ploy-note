@@ -2,17 +2,6 @@ import { render as rawRender } from '@react-email/components';
 import { type ComponentType, createElement, type ReactElement } from 'react';
 
 import { Comment, CommentMention, Mention } from './docs';
-import {
-  TeamBecomeAdmin,
-  TeamBecomeCollaborator,
-  TeamDeleteIn24Hours,
-  TeamDeleteInOneMonth,
-  TeamExpired,
-  TeamExpireSoon,
-  TeamLicense,
-  TeamWorkspaceDeleted,
-  TeamWorkspaceUpgraded,
-} from './teams';
 import TestMail from './test-mail';
 import {
   ChangeEmail,
@@ -135,51 +124,6 @@ export const Renderers = {
   ),
   //#endregion
 
-  //#region Team
-  TeamWorkspaceUpgraded: make(TeamWorkspaceUpgraded, props =>
-    props.isOwner
-      ? 'Your workspace has been upgraded to team workspace! 🎉'
-      : `${props.workspace.name} has been upgraded to team workspace! 🎉`
-  ),
-  TeamBecomeAdmin: make(
-    TeamBecomeAdmin,
-    props => `You are now an admin of ${props.workspace.name}`
-  ),
-  TeamBecomeCollaborator: make(
-    TeamBecomeCollaborator,
-    props => `Your role has been changed in ${props.workspace.name}`
-  ),
-  TeamDeleteIn24Hours: make(
-    TeamDeleteIn24Hours,
-    props =>
-      `[Action Required] Final warning: Your workspace ${props.workspace.name} will be deleted in 24 hours`
-  ),
-  TeamDeleteInOneMonth: make(
-    TeamDeleteInOneMonth,
-    props =>
-      `[Action Required] Important: Your workspace ${props.workspace.name} will be deleted soon`
-  ),
-  TeamWorkspaceDeleted: make(
-    TeamWorkspaceDeleted,
-    props => `Your workspace ${props.workspace.name} has been deleted`
-  ),
-  TeamWorkspaceExpireSoon: make(
-    TeamExpireSoon,
-    props =>
-      `[Action Required] Your ${props.workspace.name} team workspace will expire soon`
-  ),
-  TeamWorkspaceExpired: make(
-    TeamExpired,
-    props => `Your ${props.workspace.name} team workspace has expired`
-  ),
-  //#endregion
-
-  //#region License
-  TeamLicense: make(
-    TeamLicense,
-    'Your PolyMind Self-Hosted Team Workspace license is ready'
-  ),
-  //#endregion
 } as const;
 
 export type MailName = keyof typeof Renderers;

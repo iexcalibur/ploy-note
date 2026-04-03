@@ -17,7 +17,6 @@ import { WorkspaceDialogService } from '@polymind/core/modules/dialogs';
 import { EditorService } from '@polymind/core/modules/editor';
 import { OpenInAppService } from '@polymind/core/modules/open-in-app/services';
 import { GuardService } from '@polymind/core/modules/permissions';
-import { ShareMenuContent } from '@polymind/core/modules/share-menu';
 import { WorkbenchService } from '@polymind/core/modules/workbench';
 import { ViewService } from '@polymind/core/modules/workbench/services/view';
 import { WorkspaceService } from '@polymind/core/modules/workspace';
@@ -280,41 +279,9 @@ const PageHeaderMenuItem = ({
     toggleFavorite();
   }, [toggleFavorite]);
 
-  const showResponsiveMenu = hideShare;
+  const showResponsiveMenu = false;
   const ResponsiveMenuItems = (
     <>
-      {hideShare ? (
-        <MenuSub
-          subContentOptions={{
-            sideOffset: 12,
-            alignOffset: -8,
-
-            // to handle overflow when the width is not enough
-            collisionPadding: 20,
-          }}
-          items={
-            <div className={shareMenu}>
-              <ShareMenuContent
-                workspaceMetadata={workspace.meta}
-                currentPage={page}
-                onEnablePolymindCloud={() =>
-                  confirmEnableCloud(workspace, {
-                    openPageId: page.id,
-                  })
-                }
-              />
-            </div>
-          }
-          triggerOptions={{
-            prefixIcon: <ShareIcon />,
-          }}
-          subOptions={{
-            onOpenChange: handleShareMenuOpenChange,
-          }}
-        >
-          {t['com.polymind.share-menu.shareButton']()}
-        </MenuSub>
-      ) : null}
       <MenuSeparator />
     </>
   );

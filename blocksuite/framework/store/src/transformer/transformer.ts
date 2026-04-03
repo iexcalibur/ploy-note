@@ -502,7 +502,7 @@ export class Transformer {
   }
 
   private _getSchema(flavour: string) {
-    const schema = this.schema.flavourSchemaMap.get(flavour);
+    const schema = this.schema.get(flavour);
     if (!schema) {
       throw new BlockSuiteError(
         ErrorCode.TransformerError,

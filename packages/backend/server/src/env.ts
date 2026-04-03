@@ -101,6 +101,16 @@ export class Env implements AppEnv {
     return this.DEPLOYMENT_TYPE === DeploymentType.Selfhosted;
   }
 
+  /**
+   * When true, use in-memory alternatives for Redis (cache, mutex, job queue, socket.io adapter).
+   * Suitable for single-user local deployments that don't need distributed infrastructure.
+   */
+  LOCAL_MODE = readEnv('LOCAL_MODE', 'false') === 'true';
+
+  get localMode() {
+    return this.LOCAL_MODE;
+  }
+
   isFlavor(flavor: Flavor) {
     return this.FLAVOR === flavor || this.FLAVOR === Flavor.AllInOne;
   }

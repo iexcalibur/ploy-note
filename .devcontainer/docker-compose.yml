@@ -11,7 +11,7 @@ services:
     network_mode: service:db
     environment:
       DATABASE_URL: postgresql://polymind:polymind@db:5432/polymind
-      REDIS_SERVER_HOST: redis
+      LOCAL_MODE: 'true'
       POLYMIND_INDEXER_SEARCH_ENDPOINT: http://indexer:9308
 
   db:
@@ -23,9 +23,6 @@ services:
       POSTGRES_PASSWORD: polymind
       POSTGRES_USER: polymind
       POSTGRES_DB: polymind
-  redis:
-    image: redis
-
   indexer:
     image: manticoresearch/manticore:${MANTICORE_VERSION:-10.1.0}
     ulimits:

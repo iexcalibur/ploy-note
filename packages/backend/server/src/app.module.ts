@@ -24,7 +24,6 @@ import { LoggerModule } from './base/logger';
 import { MetricsModule } from './base/metrics';
 import { MutexModule } from './base/mutex';
 import { PrismaModule } from './base/prisma';
-import { RedisModule } from './base/redis';
 import { StorageProviderModule } from './base/storage';
 import { RateLimiterModule } from './base/throttler';
 import { WebSocketModule } from './base/websocket';
@@ -92,7 +91,6 @@ export const FunctionalityModules = [
   PrismaModule,
   EventModule,
   ConfigModule,
-  RedisModule,
   CacheModule,
   MutexModule,
   MetricsModule,

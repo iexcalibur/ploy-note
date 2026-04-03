@@ -922,7 +922,7 @@ export class Store {
         );
       }
 
-      const schema = this.schema.flavourSchemaMap.get(model.flavour);
+      const schema = this.schema.get(model.flavour);
       if (!schema) {
         throw new BlockSuiteError(
           ErrorCode.ModelCRUDError,

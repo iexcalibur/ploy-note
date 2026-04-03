@@ -19,7 +19,6 @@ import { DocService } from '@polymind/core/modules/doc';
 import { DocDisplayMetaService } from '@polymind/core/modules/doc-display-meta';
 import { EditorService } from '@polymind/core/modules/editor';
 import { JournalService } from '@polymind/core/modules/journal';
-import { SharePageButton } from '@polymind/core/modules/share-menu';
 import { TemplateDocService } from '@polymind/core/modules/template-doc';
 import { ViewIcon, ViewTitle } from '@polymind/core/modules/workbench';
 import type { Workspace } from '@polymind/core/modules/workspace';
@@ -92,7 +91,7 @@ export function JournalPageHeader({ page, workspace }: PageHeaderProps) {
     });
   }, []);
 
-  const { hideShare, hideToday } =
+  const { hideToday } =
     useDetailPageHeaderResponsive(containerWidth);
 
   const docDisplayMetaService = useService(DocDisplayMetaService);
@@ -115,9 +114,6 @@ export function JournalPageHeader({ page, workspace }: PageHeaderProps) {
         page={page}
         containerWidth={containerWidth}
       />
-      {page && !hideShare ? (
-        <SharePageButton workspace={workspace} page={page} />
-      ) : null}
     </Header>
   );
 }
@@ -135,7 +131,7 @@ export function NormalPageHeader({ page, workspace }: PageHeaderProps) {
     });
   }, []);
 
-  const { hideCollect, hideShare, hidePresent, showDivider } =
+  const { hideCollect, hidePresent } =
     useDetailPageHeaderResponsive(containerWidth);
 
   const onRename = useCallback(() => {
@@ -177,13 +173,6 @@ export function NormalPageHeader({ page, workspace }: PageHeaderProps) {
 
       {!hidePresent ? <DetailPageHeaderPresentButton /> : null}
 
-      {page && !hideShare ? (
-        <SharePageButton workspace={workspace} page={page} />
-      ) : null}
-
-      {showDivider ? (
-        <Divider orientation="vertical" style={{ height: 20, marginLeft: 4 }} />
-      ) : null}
     </Header>
   );
 }

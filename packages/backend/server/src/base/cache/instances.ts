@@ -1,18 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { CacheRedis, SessionRedis } from '../redis';
-import { CacheProvider } from './provider';
+import { InMemoryCacheProvider } from './memory-provider';
 
 @Injectable()
-export class Cache extends CacheProvider {
-  constructor(redis: CacheRedis) {
-    super(redis);
-  }
-}
+export class Cache extends InMemoryCacheProvider {}
 
 @Injectable()
-export class SessionCache extends CacheProvider {
-  constructor(redis: SessionRedis) {
-    super(redis);
-  }
-}
+export class SessionCache extends InMemoryCacheProvider {}

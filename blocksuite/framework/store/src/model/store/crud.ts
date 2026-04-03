@@ -12,7 +12,7 @@ export class DocCRUD {
     let rootId: string | null = null;
     this._yBlocks.forEach(yBlock => {
       const flavour = yBlock.get('sys:flavour') as string;
-      const schema = this._schema.flavourSchemaMap.get(flavour);
+      const schema = this._schema.get(flavour);
       if (!schema) return;
 
       if (schema.model.role === 'root') {
@@ -50,7 +50,7 @@ export class DocCRUD {
     parent?: string | null,
     parentIndex?: number
   ) {
-    const schema = this._schema.flavourSchemaMap.get(flavour);
+    const schema = this._schema.get(flavour);
     if (!schema) {
       throw new BlockSuiteError(
         ErrorCode.ModelCRUDError,
