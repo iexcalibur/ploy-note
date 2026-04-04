@@ -346,9 +346,6 @@ class ViewProvider {
     });
 
     // InlineCommentViewExtension not available in current blockmind version
-            // this._manager.configure(InlineCommentViewExtension, {
-      // enabled: enableComment,
-    });
 
     return this.config;
   };

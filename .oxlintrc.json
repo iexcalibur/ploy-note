@@ -39,8 +39,8 @@
     "packages/common/graphql/src/graphql/index.ts",
     "packages/frontend/native/index.d.ts",
     "packages/frontend/native/index.js",
-    "tests/blocksuite/snapshots",
-    "blocksuite/docs/api/**",
+    "tests/blockmind/snapshots",
+    "blockmind/packages/docs/api/**",
     "packages/frontend/admin/src/config.json",
     "**/test-docs.json",
     "**/test-blocks.json"
@@ -265,7 +265,7 @@
       }
     },
     {
-      "files": ["blocksuite/**/*.ts"],
+      "files": ["blockmind/**/*.ts"],
       "rules": {
         "eslint/eqeqeq": "off",
         "typescript/no-non-null-assertion": "off",
@@ -273,7 +273,7 @@
       }
     },
     {
-      "files": ["tests/blocksuite/**/*.ts"],
+      "files": ["tests/blockmind/**/*.ts"],
       "rules": {
         "typescript/ban-ts-comment": "off",
         "unicorn/prefer-dom-node-dataset": "off",
@@ -285,7 +285,7 @@
       "files": [
         "packages/**/*.{ts,tsx}",
         "tools/**/*.{ts,tsx}",
-        "blocksuite/**/*.{ts,tsx}"
+        "blockmind/**/*.{ts,tsx}"
       ],
       "rules": {
         "react/exhaustive-deps": [

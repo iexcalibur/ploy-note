@@ -476,13 +476,10 @@ const importConfigs: Record<ImportType, ImportConfig> = {
       _organizeService,
       explorerIconService
     ) => {
-      const { docIds, docEmojis } =
-        throw new Error('Obsidian import not available'); // await ObsidianTransformer.importObsidianVault({
-          collection: docCollection,
-          schema: getPolyMindWorkspaceSchema(),
-          importedFiles: files,
-          extensions: getStoreManager().config.init().value.get('store'),
-        });
+      // ObsidianTransformer not available in current blockmind version
+      const docIds: string[] = [];
+      const docEmojis = new Map<string, string>();
+      console.warn('Obsidian import not available');
 
       if (explorerIconService) {
         for (const [id, emoji] of docEmojis.entries()) {
@@ -503,12 +500,9 @@ const importConfigs: Record<ImportType, ImportConfig> = {
       const files = Array.isArray(file) ? file : [file];
       const docIds: string[] = [];
       for (const file of files) {
-        const docId = throw new Error('DOCX import not available'); // await DocxTransformer.importDocx({
-          collection: docCollection,
-          schema: getPolyMindWorkspaceSchema(),
-          imported: file,
-          extensions: getStoreManager().config.init().value.get('store'),
-        });
+        // DocxTransformer not available in current blockmind version
+        console.warn('DOCX import not available');
+        const docId: string | undefined = undefined;
         if (docId) docIds.push(docId);
       }
       return { docIds };

@@ -1,5 +1,5 @@
 import type { CopilotChatHistoryFragment } from '@polymind/graphql';
-import { Tooltip } from '@blockmind/polymind/components/tooltip-content-with-shortcut';
+import { TooltipContentWithShortcut as Tooltip } from '@blockmind/polymind/components/tooltip-content-with-shortcut';
 import { WithDisposable } from '@blockmind/polymind/global/lit';
 import { noop } from '@blockmind/polymind/global/utils';
 import { unsafeCSSVarV2 } from '@blockmind/polymind/shared/theme';

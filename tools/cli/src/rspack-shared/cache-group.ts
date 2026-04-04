@@ -40,9 +40,9 @@ export const productionCacheGroups = {
     priority: Number.MAX_SAFE_INTEGER,
     chunks: 'async' as const,
   },
-  blocksuite: {
-    name: `npm-blocksuite`,
-    test: testPackageName(/[\\/]node_modules[\\/](@blocksuite)[\\/]/),
+  blockmind: {
+    name: `npm-blockmind`,
+    test: testPackageName(/[\\/]node_modules[\\/](@blockmind)[\\/]/),
     priority: 200,
     enforce: true,
   },
