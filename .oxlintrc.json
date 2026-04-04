@@ -40,7 +40,7 @@
     "packages/frontend/native/index.d.ts",
     "packages/frontend/native/index.js",
     "tests/blockmind/snapshots",
-    "blockmind/packages/docs/api/**",
+    "blockmind/docs/api/**",
     "packages/frontend/admin/src/config.json",
     "**/test-docs.json",
     "**/test-blocks.json"
