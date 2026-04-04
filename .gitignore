@@ -93,3 +93,7 @@ af.cmd
 
 # playwright
 storageState.json
+
+# Nested repos (own git repos)
+blockmind/
+.claude/
