@@ -9,7 +9,7 @@ import { HighlightSelection } from '@blockmind/polymind/shared/selection';
 import {
   DocModeProvider,
   findCommentedBlocks,
-  findCommentedElements,
+  findCommentedBlocks,
 } from '@blockmind/polymind/shared/services';
 import { GfxControllerIdentifier } from '@blockmind/polymind/std/gfx';
 import type { InlineEditor } from '@blockmind/std/inline';
@@ -233,7 +233,7 @@ export class Editor extends Entity {
           finalId = blockCommentedBlocks[0].id;
           finalKey = 'blockIds';
         } else {
-          const commentedElements = findCommentedElements(std.store, commentId);
+          const commentedElements = findCommentedBlocks(std.store, commentId);
           if (commentedElements.length > 0) {
             finalId = commentedElements[0].id;
             finalKey = 'elementIds';

@@ -1,5 +1,4 @@
 import { type CommentChangeAction, DocMode } from '@polymind/graphql';
-import { InlineCommentManager } from '@blockmind/polymind/inlines/comment';
 import type {
   BaseSelection,
   DocSnapshot,
@@ -693,7 +692,7 @@ export class DocCommentEntity extends Entity<{
   };
 
   private getCommentsInEditor(): string[] {
-    const inlineCommentManager = this.props.std?.get(InlineCommentManager);
+    const inlineCommentManager = null /* InlineCommentManager not available */;
     if (!inlineCommentManager) {
       return [];
     }

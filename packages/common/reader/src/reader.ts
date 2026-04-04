@@ -6,7 +6,7 @@ import type {
   ImageBlockModel,
   TableBlockModel,
 } from '@blockmind/polymind/model';
-import { PolymindSchemas } from '@blockmind/polymind/schemas';
+import { AffineSchemas } from '@blockmind/polymind/schemas';
 import { MarkdownAdapter } from '@blockmind/polymind/shared/adapters';
 import type { PolymindTextAttributes } from '@blockmind/polymind/shared/types';
 import {
@@ -29,7 +29,7 @@ import {
 import { getStoreManager } from './bs-store';
 
 const blocksuiteSchema = new Schema();
-blocksuiteSchema.register([...PolymindSchemas]);
+blocksuiteSchema.register([...AffineSchemas]);
 
 export interface BlockDocumentInfo {
   docId: string;

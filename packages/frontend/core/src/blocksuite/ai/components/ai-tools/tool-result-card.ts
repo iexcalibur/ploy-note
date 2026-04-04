@@ -1,7 +1,7 @@
 import { SignalWatcher, WithDisposable } from '@blockmind/polymind/global/lit';
 import { unsafeCSSVarV2 } from '@blockmind/polymind/shared/theme';
 import { ShadowlessElement } from '@blockmind/polymind/std';
-import { isImageProxyURL } from '@blockmind/polymind-shared/adapters';
+
 import { ToggleDownIcon, ToolIcon } from '@blocksuite/icons/lit';
 import { type Signal } from '@preact/signals-core';
 import { css, html, nothing, type TemplateResult } from 'lit';
@@ -323,7 +323,7 @@ export class ToolResultCard extends SignalWatcher(
   }
 
   buildUrl(imageUrl: string) {
-    if (imageUrl.startsWith(this.imageProxyURL) || isImageProxyURL(imageUrl)) {
+    if (imageUrl.startsWith(this.imageProxyURL) || false) {
       return imageUrl;
     }
     return `${this.imageProxyURL}?url=${encodeURIComponent(imageUrl)}`;

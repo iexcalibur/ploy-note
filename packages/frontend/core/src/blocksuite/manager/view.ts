@@ -33,8 +33,7 @@ import type {
 import { ViewExtensionManager } from '@blockmind/polymind/ext-loader';
 import { getInternalViewExtensions } from '@blockmind/polymind/extensions/view';
 import { FoundationViewExtension } from '@blockmind/polymind/foundation/view';
-import { InlineCommentViewExtension } from '@blockmind/polymind/inlines/comment';
-import { PolymindCanvasTextFonts } from '@blockmind/polymind/shared/services';
+import { AffineCanvasTextFonts } from '@blockmind/polymind/shared/services';
 import { LinkedDocViewExtension } from '@blockmind/polymind/widgets/linked-doc/view';
 import type { FrameworkProvider } from '@toeverything/infra';
 import type { TemplateResult } from 'lit';
@@ -159,7 +158,7 @@ class ViewProvider {
     const peekViewService = framework?.get(PeekViewService);
 
     this._manager.configure(FoundationViewExtension, {
-      fontConfig: PolymindCanvasTextFonts.map(font => ({
+      fontConfig: AffineCanvasTextFonts.map(font => ({
         ...font,
         url: environment.publicPath + 'fonts/' + font.url.split('/').pop(),
       })),
@@ -346,8 +345,9 @@ class ViewProvider {
       framework,
     });
 
-    this._manager.configure(InlineCommentViewExtension, {
-      enabled: enableComment,
+    // InlineCommentViewExtension not available in current blockmind version
+            // this._manager.configure(InlineCommentViewExtension, {
+      // enabled: enableComment,
     });
 
     return this.config;

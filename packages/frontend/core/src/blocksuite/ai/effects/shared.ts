@@ -1,4 +1,4 @@
-import { effects as tooltipEffects } from '@blockmind/polymind-components/tooltip';
+import { effects as tooltipEffects } from '@blockmind/polymind-components/tooltip-content-with-shortcut';
 
 import { ArtifactSkeleton } from '../components/ai-artifact-skeleton';
 import { ChatContentImages } from '../components/ai-message-content/images';

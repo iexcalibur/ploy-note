@@ -8,7 +8,6 @@ export type {
   IconData,
   IconPickerService as IIconPickerService,
 } from '@blockmind/polymind-shared/services';
-export { IconPickerServiceIdentifier } from '@blockmind/polymind-shared/services';
 
 export class IconPickerService extends Service implements IIconPickerService {
   public readonly iconPickerComponent =

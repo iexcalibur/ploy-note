@@ -30,7 +30,6 @@ import {
 } from '@blockmind/polymind/std/gfx';
 import type { BlockModel, DocSnapshot, Store } from '@blockmind/polymind/store';
 import { Slice, toDraftModel } from '@blockmind/polymind/store';
-import { getElementProps } from '@blockmind/polymind-block-root';
 import { Doc as YDoc } from 'yjs';
 
 import { getStoreManager } from '../../manager/store';
@@ -118,7 +117,7 @@ async function extractEdgelessSelected(
           }
         } else if (element instanceof GfxPrimitiveElementModel) {
           needSnapshot = true;
-          const props = getElementProps(element, new Map());
+          const props = (element as any).serialize();
           surface.addElement(props);
         } else if (
           element instanceof EmbedSyncedDocModel ||

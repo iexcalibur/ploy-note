@@ -23,7 +23,6 @@ import {
   download,
   HtmlTransformer,
   MarkdownTransformer,
-  PdfTransformer,
   ZipTransformer,
 } from '@blockmind/polymind/widgets/linked-doc';
 import { useLiveData, useService } from '@toeverything/infra';
@@ -168,7 +167,7 @@ async function exportHandler({
       return;
     }
     case 'pdf-export': {
-      await PdfTransformer.exportDoc(page);
+      console.warn('PDF export not available');
       return;
     }
   }

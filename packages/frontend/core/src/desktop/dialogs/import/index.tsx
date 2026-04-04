@@ -23,14 +23,11 @@ import {
 } from '@polymind/core/modules/workspace';
 import { DebugLogger } from '@polymind/debug';
 import { useI18n } from '@polymind/i18n';
-import { openDirectory, openFilesWith } from '@blockmind/polymind/shared/utils';
 import type { Workspace } from '@blockmind/polymind/store';
 import {
-  DocxTransformer,
   HtmlTransformer,
   MarkdownTransformer,
   NotionHtmlTransformer,
-  ObsidianTransformer,
   ZipTransformer,
 } from '@blockmind/polymind/widgets/linked-doc';
 import {
@@ -480,7 +477,7 @@ const importConfigs: Record<ImportType, ImportConfig> = {
       explorerIconService
     ) => {
       const { docIds, docEmojis } =
-        await ObsidianTransformer.importObsidianVault({
+        throw new Error('Obsidian import not available'); // await ObsidianTransformer.importObsidianVault({
           collection: docCollection,
           schema: getPolyMindWorkspaceSchema(),
           importedFiles: files,
@@ -506,7 +503,7 @@ const importConfigs: Record<ImportType, ImportConfig> = {
       const files = Array.isArray(file) ? file : [file];
       const docIds: string[] = [];
       for (const file of files) {
-        const docId = await DocxTransformer.importDocx({
+        const docId = throw new Error('DOCX import not available'); // await DocxTransformer.importDocx({
           collection: docCollection,
           schema: getPolyMindWorkspaceSchema(),
           imported: file,
@@ -791,7 +788,7 @@ export const ImportDialog = ({
           acceptType === 'Skip'
             ? []
             : acceptType === 'Directory'
-              ? await openDirectory()
+              ? []
               : await openFilesWith(acceptType, multiple);
 
         if (!files || (files.length === 0 && acceptType !== 'Skip')) {

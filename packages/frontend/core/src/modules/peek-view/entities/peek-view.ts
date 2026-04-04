@@ -1,5 +1,5 @@
 import type { SurfaceRefBlockComponent } from '@blockmind/polymind/blocks/surface-ref';
-import { PolymindReference } from '@blockmind/polymind/inlines/reference';
+import { AffineReference } from '@blockmind/polymind/inlines/reference';
 import type {
   AttachmentBlockModel,
   DocMode,
@@ -36,7 +36,7 @@ export type DocReferenceInfo = {
 export type PeekViewElement =
   | HTMLElement
   | BlockComponent
-  | PolymindReference
+  | AffineReference
   | HTMLAnchorElement
   | Block;
 
@@ -138,7 +138,7 @@ function resolvePeekInfoFromPeekTarget(
   const element = peekTarget.element;
 
   if (element) {
-    if (element instanceof PolymindReference) {
+    if (element instanceof AffineReference) {
       const referenceInfo = element.referenceInfo;
       if (referenceInfo) {
         const { pageId: docId, params } = referenceInfo;

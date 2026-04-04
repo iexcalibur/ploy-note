@@ -1,4 +1,3 @@
-import { IconPickerServiceIdentifier } from '@blockmind/polymind/shared/services';
 import { type ExtensionType } from '@blockmind/polymind/store';
 import type { Container } from '@blockmind/global/di';
 import type { FrameworkProvider } from '@toeverything/infra';
@@ -15,7 +14,8 @@ export function patchIconPickerService(
 ): ExtensionType {
   return {
     setup: (di: Container) => {
-      di.override(IconPickerServiceIdentifier, () => {
+      // IconPickerServiceIdentifier not available
+            // di.override(IconPickerServiceIdentifier, () => {
         return framework.get(IconPickerService);
       });
     },

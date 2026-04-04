@@ -1,4 +1,4 @@
-import { PolymindCodeToolbarWidget } from '@blockmind/polymind/blocks/code';
+import { AffineCodeToolbarWidget } from '@blockmind/polymind/blocks/code';
 import { LifeCycleWatcher } from '@blockmind/polymind/std';
 
 import { setupCodeToolbarAIEntry } from '../entries/code-toolbar/setup-code-toolbar';
@@ -14,7 +14,7 @@ export class AICodeBlockWatcher extends LifeCycleWatcher {
         return;
       }
       const component = payload.view;
-      if (component instanceof PolymindCodeToolbarWidget) {
+      if (component instanceof AffineCodeToolbarWidget) {
         setupCodeToolbarAIEntry(component);
       }
     });
