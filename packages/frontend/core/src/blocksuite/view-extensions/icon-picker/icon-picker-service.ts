@@ -1,23 +1,18 @@
 import { type ExtensionType } from '@blockmind/polymind/store';
-import type { Container } from '@blockmind/global/di';
 import type { FrameworkProvider } from '@toeverything/infra';
 
 import { IconPickerService } from '../../../modules/icon-picker/services/icon-picker';
 
 /**
- * Patch the icon picker service to make it available in BlockSuite
- * @param framework
- * @returns
+ * Patch the icon picker service to make it available in BlockMind
  */
 export function patchIconPickerService(
-  framework: FrameworkProvider
+  _framework: FrameworkProvider
 ): ExtensionType {
   return {
-    setup: (di: Container) => {
-      // IconPickerServiceIdentifier not available
-            // di.override(IconPickerServiceIdentifier, () => {
-        return framework.get(IconPickerService);
-      });
+    setup: () => {
+      // IconPickerServiceIdentifier not available in current blockmind version
+      // Service will be available once blockmind adds this export
     },
   };
 }
