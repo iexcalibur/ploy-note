@@ -67,9 +67,7 @@ export class I18n extends Entity {
 
   private applyDocumentLanguage(language: Language) {
     document.documentElement.lang = language;
-    document.documentElement.dir = SUPPORTED_LANGUAGES[language]?.rtl
-      ? 'rtl'
-      : 'ltr';
+    document.documentElement.dir = 'ltr';
   }
 
   changeLanguage = effect(
